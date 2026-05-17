@@ -552,6 +552,253 @@ body{
 .d3{animation-delay:.15s;}
 .d4{animation-delay:.2s;}
 
+/* ══════════════════════════════════════════
+   MOBILE RESPONSIVE — FULL OVERHAUL
+   ══════════════════════════════════════════ */
+
+/* ── MOBILE BOTTOM NAV ── */
+.mobile-nav{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;
+  height:60px;
+  background:var(--s1);
+  border-top:1px solid var(--b2);
+  z-index:300;
+  align-items:stretch;
+}
+.mnav-item{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:3px;
+  cursor:pointer;border:none;background:none;
+  color:var(--td);font-family:'Outfit',sans-serif;
+  font-size:9px;transition:color .15s;
+  padding:6px 2px;
+}
+.mnav-item .mnav-ico{font-size:18px;line-height:1;}
+.mnav-item.active{color:var(--gold);}
+.mnav-item:active{opacity:.7;}
+
+/* ── MOBILE FAB (Quick Add) ── */
+.mobile-fab{
+  display:none;
+  position:fixed;bottom:70px;right:16px;
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--teal));
+  color:#08090a;font-size:22px;font-weight:700;
+  border:none;cursor:pointer;z-index:310;
+  box-shadow:0 4px 20px rgba(201,169,110,.35);
+  align-items:center;justify-content:center;
+  transition:transform .15s;
+}
+.mobile-fab:active{transform:scale(.93);}
+
+@media (max-width: 768px) {
+
+  /* ── BODY: allow scroll, remove overflow:hidden ── */
+  html, body { overflow: auto; height: auto; }
+  body { flex-direction: column; }
+
+  /* ── TOPBAR: compact mobile header ── */
+  .topbar {
+    height: 52px;
+    padding: 0 14px;
+    position: sticky; top: 0; z-index: 200;
+  }
+  .topbar-nav { display: none; }
+  .logo-sub { display: none; }
+  .logo-text { font-size: 13px; }
+
+  /* show keyboard shortcut hint only on desktop */
+  .topbar-right > span[title] { display: none; }
+
+  /* ── SHELL: stack vertically ── */
+  .shell { flex-direction: column; overflow: visible; }
+
+  /* ── SIDEBAR: hidden — replaced by bottom nav ── */
+  .sidebar { display: none; }
+
+  /* ── MAIN: full width, natural scroll ── */
+  .main { overflow: visible; }
+
+  /* ── VIEWS ── */
+  .view { padding: 14px 14px 80px; }
+
+  /* ── SHOW BOTTOM NAV & FAB ── */
+  .mobile-nav { display: flex; }
+  .mobile-fab { display: flex; }
+
+  /* ── KPI STRIP: 2×3 grid ── */
+  .kpi-strip {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .kpi { padding: 11px 12px; }
+  .kpi-v { font-size: 20px; }
+  .kpi-l { font-size: 8px; }
+  .kpi-s { font-size: 9px; }
+
+  /* ── PAGE HEADER ── */
+  .ph { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
+  .ph-title { font-size: 20px; }
+  .ph-right { width: 100%; }
+  .ph-right .btn { width: 100%; justify-content: center; }
+
+  /* ── GRIDS: all single column ── */
+  .g21 { display: flex; flex-direction: column; gap: 12px; }
+  .g3  { display: flex; flex-direction: column; gap: 12px; }
+  .col { display: flex; flex-direction: column; gap: 12px; }
+
+  /* ── PANELS ── */
+  .panel { margin-bottom: 0; }
+  .panel-b, .panel-b0 { max-height: none; overflow: visible; }
+  .panel-scroll { max-height: none; overflow: visible; }
+
+  /* ── SETUP BANNER ── */
+  .setup-banner {
+    flex-direction: column; align-items: flex-start; gap: 8px;
+    padding: 12px 14px;
+  }
+
+  /* ── QUICK CAPTURE ── */
+  .qcap { gap: 8px; padding: 10px 12px; }
+  .qcap-in { font-size: 12px; }
+  .qcap-cat { display: none; }
+  .kbd { display: none; }
+
+  /* ── TASK TABLE: switch to card view on mobile ── */
+  #taskTableWrap { display: none; }
+  #taskCardList { display: block !important; }
+  #masterTable { min-width: unset; }
+
+  /* ── TASK TABLE HEIGHT ── */
+  .panel-b0 { max-height: none !important; }
+
+  /* ── TASK ROW ── */
+  .task-row {
+    padding: 10px 12px;
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+  .task-name { font-size: 12px; }
+  .task-meta { flex-wrap: wrap; gap: 4px; }
+
+  /* Snooze buttons: always show on mobile (no hover) */
+  .task-row .snooze-actions { display: flex; }
+
+  /* ── WEEKLY 5-DAY GRID ── */
+  .wk-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .wk-col { min-width: unset; }
+  .week-grid { grid-template-columns: 1fr; }
+  .day-col { min-width: unset; }
+
+  /* ── TASK DRAWER: full screen on mobile ── */
+  .task-drawer {
+    width: 100% !important;
+    max-width: 100% !important;
+    right: -100% !important;
+    border-left: none !important;
+    border-top: 1px solid var(--b2);
+    border-radius: 16px 16px 0 0;
+    top: auto !important;
+    bottom: 0;
+    height: 92vh;
+  }
+  .task-drawer.open { right: 0 !important; }
+  .drawer-h { padding: 14px 16px; }
+  .drawer-title { font-size: 16px; }
+  .drawer-b { padding: 12px 14px; }
+
+  /* ── ACTION GRID IN DRAWER: 1 col ── */
+  .action-grid { grid-template-columns: 1fr 1fr; gap: 7px; }
+  .action-btn { font-size: 11px; padding: 9px 6px; }
+
+  /* ── MODALS: full screen ── */
+  .modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 95vh;
+    border-radius: 16px 16px 0 0;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    margin: 0;
+  }
+  .overlay { align-items: flex-end; padding: 0; }
+  .modal-h { padding: 14px 16px; }
+  .modal-b { padding: 14px 16px; gap: 12px; }
+  .modal-f { padding: 12px 16px; }
+  .frow { grid-template-columns: 1fr; }
+
+  /* ── FOCUS PANEL ── */
+  .focus {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px;
+  }
+  .focus .btn { width: 100%; justify-content: center; }
+
+  /* ── NETWORK CARDS ── */
+  .net-card { padding: 10px 12px; }
+
+  /* ── TASK DETAIL PH RIGHT ── */
+  .ph-right { flex-wrap: wrap; gap: 6px; }
+  .ph-right .btn { flex: 1; min-width: 100px; justify-content: center; font-size: 11px; }
+
+  /* ── INFO GRID IN DRAWER ── */
+  .info-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .info-box { padding: 7px; }
+  .info-v { font-size: 11px; }
+
+  /* ── TASK CARDS (mobile list view) ── */
+  .task-card-m {
+    background: var(--s1);
+    border: 0.5px solid var(--b2);
+    border-radius: var(--r2);
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: border-color .15s;
+  }
+  .task-card-m:active { border-color: var(--b3); }
+  .task-card-m-top { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+  .task-card-m-name { font-size: 13px; font-weight: 500; flex: 1; line-height: 1.4; }
+  .task-card-m-name.done { text-decoration: line-through; opacity: .5; }
+  .task-card-m-meta { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+  .task-card-m-actions { display: flex; gap: 6px; margin-top: 8px; border-top: 0.5px solid var(--b1); padding-top: 8px; }
+  .task-card-m-actions .snooze-btn { font-size: 10px; padding: 3px 8px; }
+
+  /* ── SNOOZE: always visible on mobile ── */
+  .snooze-actions { display: flex !important; opacity: 1 !important; }
+
+  /* ── WEEKLY EXEC GRID ── */
+  .exec-grid { overflow-x: auto; }
+
+  /* ── FILTER TABS: scrollable ── */
+  .cat-filter { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+  .cat-filter::-webkit-scrollbar { display: none; }
+
+  /* ── BUTTONS IN HEADER ── */
+  .filter-tabs { flex-wrap: nowrap; overflow-x: auto; }
+
+  /* ── KPI hint in tasks view ── */
+  #taskViewSub { font-size: 10px; }
+
+  /* ── PRIMARY ACTION BUTTON ── */
+  .primary-action { font-size: 14px; padding: 13px; }
+
+  /* ── MORE ACTIONS ── */
+  .more-actions-grid.open { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 400px) {
+  .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+  .kpi-v { font-size: 18px; }
+  .action-grid { grid-template-columns: 1fr; }
+  .info-grid { grid-template-columns: 1fr; }
+  .view { padding: 12px 10px 80px; }
+}
+
 /* ── SHEETS SETUP BANNER ── */
 .setup-banner{
   background:linear-gradient(135deg,rgba(123,157,224,.08),rgba(169,143,212,.06));
@@ -599,89 +846,6 @@ body{
 .icon-btn{width:27px;height:27px;border-radius:7px;border:1px solid var(--b2);background:var(--s2);color:var(--tm);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;}
 .icon-btn:hover{color:var(--gold);border-color:rgba(201,169,110,.3);}
 
-/* ── SNOOZE HOVER ACTIONS ── */
-.task-row .snooze-actions{
-  display:none;gap:3px;align-items:center;flex-shrink:0;
-}
-.task-row:hover .snooze-actions{display:flex;}
-.snooze-btn{
-  padding:2px 6px;font-size:9px;border-radius:4px;
-  border:1px solid var(--b2);background:var(--s3);
-  color:var(--tm);cursor:pointer;font-family:'JetBrains Mono',monospace;
-  transition:all .1s;white-space:nowrap;
-}
-.snooze-btn:hover{color:var(--amber);border-color:rgba(212,169,106,.3);background:var(--amberd);}
-
-/* ── OVERDUE COLLAPSIBLE ── */
-.overdue-toggle{
-  display:flex;align-items:center;gap:8px;
-  padding:8px 15px;cursor:pointer;
-  font-size:10px;color:var(--rose);
-  font-family:'JetBrains Mono',monospace;
-  letter-spacing:.05em;user-select:none;
-  transition:background .1s;
-}
-.overdue-toggle:hover{background:var(--s2);}
-.overdue-toggle .ov-arrow{transition:transform .2s;font-size:9px;}
-.overdue-toggle.open .ov-arrow{transform:rotate(90deg);}
-.overdue-list{display:none;}
-.overdue-list.open{display:block;}
-
-/* ── PRIMARY ACTION BUTTON (Drawer) ── */
-.primary-action{
-  width:100%;padding:11px;border-radius:10px;
-  font-size:13px;font-weight:600;cursor:pointer;
-  border:none;font-family:'Outfit',sans-serif;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  margin-bottom:8px;transition:all .15s;
-}
-.primary-action.gold{background:rgba(201,169,110,.18);color:var(--gold);border:1px solid rgba(201,169,110,.3);}
-.primary-action.green{background:rgba(109,184,130,.18);color:var(--green);border:1px solid rgba(109,184,130,.3);}
-.primary-action.rose{background:rgba(212,117,106,.18);color:var(--rose);border:1px solid rgba(212,117,106,.3);}
-.primary-action.blue{background:rgba(123,157,224,.18);color:var(--blue);border:1px solid rgba(123,157,224,.3);}
-.primary-action:hover{filter:brightness(1.12);}
-
-/* ── INLINE EDITABLE NEXT ACTION ── */
-.next-action-edit{
-  font-size:14px;color:var(--tx);line-height:1.6;
-  border:1px solid transparent;border-radius:6px;
-  padding:6px 8px;cursor:text;outline:none;
-  transition:border-color .15s;min-height:32px;
-  display:block;width:100%;
-}
-.next-action-edit:hover{border-color:var(--b2);}
-.next-action-edit:focus{border-color:rgba(201,169,110,.4);background:var(--s1);}
-.next-action-edit:empty::before{content:attr(data-placeholder);color:var(--td);}
-
-/* ── MORE ACTIONS COLLAPSE ── */
-.more-actions-toggle{
-  width:100%;padding:6px;font-size:11px;color:var(--tm);
-  background:none;border:1px dashed var(--b2);border-radius:8px;
-  cursor:pointer;font-family:'Outfit',sans-serif;
-  margin-top:2px;transition:all .15s;
-}
-.more-actions-toggle:hover{color:var(--tx);border-color:var(--b3);}
-.more-actions-grid{display:none;}
-.more-actions-grid.open{display:grid;}
-
-/* ── QCAP PREVIEW TAGS ── */
-.qcap-tag{
-  display:inline-flex;align-items:center;gap:3px;
-  padding:1px 6px;border-radius:3px;font-size:9px;
-  font-family:'JetBrains Mono',monospace;
-}
-.qcap-tag.date{background:var(--goldd);color:var(--gold);}
-.qcap-tag.cat{background:var(--blued);color:var(--blue);}
-.qcap-tag.person{background:var(--teald);color:var(--teal);}
-
-/* ── RECURRING BADGE ── */
-.rec-new-badge{
-  display:inline-flex;align-items:center;gap:4px;
-  padding:2px 7px;border-radius:3px;
-  background:var(--goldd);color:var(--gold);
-  font-size:9px;font-family:'JetBrains Mono',monospace;
-}
-
 </style>
 </head>
 <body>
@@ -710,6 +874,28 @@ body{
     <div class="pulse"></div>
   </div>
 </div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-nav" id="mobileNav">
+  <button class="mnav-item active" id="mnav-dashboard" onclick="showView('dashboard')">
+    <span class="mnav-ico">◈</span><span>Today</span>
+  </button>
+  <button class="mnav-item" id="mnav-tasks" onclick="showView('tasks')">
+    <span class="mnav-ico">≡</span><span>Tasks</span>
+  </button>
+  <button class="mnav-item" id="mnav-campaigns" onclick="showView('campaigns')">
+    <span class="mnav-ico">⚡</span><span>Campaigns</span>
+  </button>
+  <button class="mnav-item" id="mnav-growth" onclick="showView('growth')">
+    <span class="mnav-ico">🌱</span><span>Growth</span>
+  </button>
+  <button class="mnav-item" id="mnav-network" onclick="showView('network')">
+    <span class="mnav-ico">🤝</span><span>Network</span>
+  </button>
+</nav>
+
+<!-- MOBILE FAB -->
+<button class="mobile-fab" onclick="openAddModal()" title="New Task">+</button>
 
 <div class="shell">
 
@@ -769,15 +955,17 @@ body{
     <button class="btn btn-ghost btn-sm" onclick="document.getElementById('setupBanner').classList.add('hidden')" style="font-size:16px;padding:5px 8px;">×</button>
   </div>
 
-  <!-- Smart Quick Capture -->
-  <div class="qcap" id="qcapWrap">
+  <!-- Quick Capture -->
+  <div class="qcap">
     <span class="qcap-ico">⚡</span>
-    <input class="qcap-in" id="qcapIn" placeholder="اكتب تاسك... !غداً #Design @Ahmed — أو اضغط Enter للحفظ السريع" onkeydown="quickCapture(event)" oninput="previewCapture(this.value)">
-    <div id="qcapPreview" style="display:none;font-size:10px;font-family:'JetBrains Mono',monospace;gap:5px;align-items:center;flex-shrink:0;"></div>
+    <input class="qcap-in" id="qcapIn" placeholder="Quick capture — type task and press Enter..." onkeydown="quickCapture(event)">
+    <select class="qcap-cat" id="qcapCat">
+      <option>Marketing</option><option>Campaigns</option><option>Ecommerce</option>
+      <option>Design</option><option>Google Maps</option><option>Team</option>
+      <option>Reporting</option><option>Operations</option>
+      <option>Learning</option><option>Goal</option><option>Network</option>
+    </select>
     <span class="kbd">Enter</span>
-  </div>
-  <div id="qcapHint" style="font-size:10px;color:var(--td);margin:-10px 0 14px 16px;font-family:'JetBrains Mono',monospace;">
-    !اليوم · !غداً · !+3 · #Design · @اسم_الشخص
   </div>
 
   <!-- Page Header -->
@@ -851,9 +1039,8 @@ body{
           <button class="btn btn-ghost btn-sm" onclick="showView('tasks')">All →</button>
         </div>
       </div>
-      <div class="panel-b0">
-        <div id="todaySection"></div>
-        <div id="overdueSection" style="border-top:1px solid var(--b1);"></div>
+      <div class="panel-b0 panel-scroll" id="todayList">
+        <div style="padding:20px;text-align:center;color:var(--td);">Loading tasks...</div>
       </div>
     </div>
 
@@ -964,7 +1151,7 @@ body{
   </div>
 
   <div class="panel">
-    <div class="panel-b0" style="overflow-x:auto;max-height:calc(100vh - 220px);overflow-y:auto;">
+    <div class="panel-b0" id="taskTableWrap" style="overflow-x:auto;max-height:calc(100vh - 220px);overflow-y:auto;-webkit-overflow-scrolling:touch;">
       <table class="tbl" id="masterTable">
         <thead>
           <tr>
@@ -1008,6 +1195,8 @@ body{
         <tbody id="taskTbody"></tbody>
       </table>
     </div>
+    <!-- Mobile card list (shown instead of table on small screens) -->
+    <div id="taskCardList" style="display:none;"></div>
   </div>
 </div>
 
@@ -1669,58 +1858,11 @@ function init() {
     setTimeout(()=>loadFromSheets(false), 700);
   }
   nextId = tasks.length ? Math.max(...tasks.map(t=>t.id))+1 : 1;
-
-  // ── FIX 2: Auto-generate recurring tasks ──
-  autoGenerateRecurring();
-
   renderAll();
   updateDate();
   setInterval(updateDate, 60000);
   setInterval(()=>{ if(sheetsUrl) loadFromSheets(false); }, 60000);
   injectAppsScript();
-}
-
-// ════════════════════════════════════════
-// RECURRING AUTO-GENERATE
-// ════════════════════════════════════════
-function autoGenerateRecurring() {
-  const td = today();
-  const GAPS = { Daily:1, Weekly:7, 'Bi-weekly':14, Monthly:30 };
-  let added = 0;
-  const doneDone = tasks.filter(t => t.done && t.recurring && GAPS[t.recurring] && t.due && t.due < td);
-  doneDone.forEach(src => {
-    // Check if a future copy already exists with same name
-    const futureCopy = tasks.find(t =>
-      !t.done && t.name===src.name && t.recurring===src.recurring && t.due >= td
-    );
-    if(futureCopy) return;
-    const gap = GAPS[src.recurring];
-    const newDue = new Date(td+'T00:00:00');
-    // Place due date at today or next gap
-    const srcDue = new Date(src.due+'T00:00:00');
-    while(srcDue < newDue) srcDue.setDate(srcDue.getDate()+gap);
-    const dueDateStr = srcDue.toISOString().split('T')[0];
-    const newTask = normalizeTask({
-      ...src,
-      id: nextId++,
-      done: false,
-      status: 'To Do',
-      due: dueDateStr,
-      followUp: dueDateStr,
-      completedAt: '',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      commLog: [],
-      lastFollowUp: '',
-      lastResponse: '',
-    });
-    tasks.unshift(newTask);
-    added++;
-  });
-  if(added>0){
-    save(LS.tasks, tasks);
-    setTimeout(()=>toast(`↻ ${added} recurring task${added>1?'s':''} auto-created`, '↻'), 800);
-  }
 }
 
 // ════════════════════════════════════════
@@ -1895,54 +2037,18 @@ function renderAlerts() {
 // TODAY LIST
 // ════════════════════════════════════════
 function renderTodayList() {
-  const todayEl=document.getElementById('todaySection');
-  const ovEl=document.getElementById('overdueSection');
-  if(!todayEl||!ovEl) return;
-
-  const todayTasks=tasks.filter(t=>isTd(t)&&!t.done).sort((a,b)=>{
+  const el=document.getElementById('todayList'); if(!el) return;
+  const show=tasks.filter(t=>isTd(t)||isOv(t)).sort((a,b)=>{
     const po={Critical:0,High:1,Medium:2,Low:3,Backlog:4};
     return po[a.priority]-po[b.priority];
   });
-  const ovTasks=tasks.filter(t=>isOv(t)).sort((a,b)=>{
-    const po={Critical:0,High:1,Medium:2,Low:3,Backlog:4};
-    return po[a.priority]-po[b.priority];
-  });
-
-  // TODAY section
-  if(!todayTasks.length){
-    todayEl.innerHTML='<div style="padding:18px 15px;text-align:center;color:var(--td);font-size:11px;">✓ لا تاسكات اليوم</div>';
-  } else {
-    todayEl.innerHTML=`<div style="padding:8px 15px 4px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);font-family:\'JetBrains Mono\',monospace;">اليوم · ${todayTasks.length}</div>`+
-      todayTasks.map(t=>taskRowHTML(t,true)).join('');
-  }
-
-  // OVERDUE section — collapsible
-  if(!ovTasks.length){
-    ovEl.innerHTML='';
-    return;
-  }
-  const isOpen = ovEl.dataset.open==='1';
-  ovEl.innerHTML=`<div class="overdue-toggle ${isOpen?'open':''}" onclick="toggleOverdue(this)">
-    <span class="ov-arrow">▶</span>
-    <span>⚠ متأخر · ${ovTasks.length} تاسك</span>
-    <span style="margin-left:auto;color:var(--td);">${isOpen?'اطوِ':'اعرض'}</span>
-  </div>
-  <div class="overdue-list ${isOpen?'open':''}">
-    ${ovTasks.map(t=>taskRowHTML(t,true)).join('')}
-  </div>`;
-}
-
-function toggleOverdue(btn){
-  const ovEl=document.getElementById('overdueSection');
-  const isOpen=btn.classList.toggle('open');
-  ovEl.querySelector('.overdue-list').classList.toggle('open',isOpen);
-  btn.querySelector('span:last-child').textContent=isOpen?'اطوِ':'اعرض';
-  ovEl.dataset.open=isOpen?'1':'0';
+  if(!show.length){el.innerHTML='<div style="padding:20px;text-align:center;color:var(--td);font-size:11px;">No tasks due today</div>';return;}
+  el.innerHTML=show.map(t=>taskRowHTML(t,true)).join('');
 }
 
 function taskRowHTML(t, compact=false) {
   const ov=isOv(t), td2=isTd(t);
-  const dueCls=ov?'ov':td2?'td':'ok';
+  const dueCls=ov?'ov':td2?'td':'';
   const dueLabel=ov?`${Math.round((new Date(today())-new Date(t.due))/86400000)}d late`:fmtDate(t.due);
   return `<div class="task-row" onclick="openTaskPanel(${t.id})">
     <div class="chk ${t.done?'done':''}" onclick="event.stopPropagation();toggleDone(${t.id})">${t.done?'✓':''}</div>
@@ -1956,11 +2062,6 @@ function taskRowHTML(t, compact=false) {
       </div>
     </div>
     <div class="task-due ${dueCls}">${dueLabel}</div>
-    ${!t.done?`<div class="snooze-actions" onclick="event.stopPropagation()">
-      <button class="snooze-btn" onclick="snoozeTaskDue(${t.id},1)" title="Snooze 1 day">↷+1</button>
-      <button class="snooze-btn" onclick="snoozeTaskDue(${t.id},3)" title="Snooze 3 days">↷+3</button>
-      <button class="snooze-btn" onclick="snoozeTaskDue(${t.id},7)" title="Next week">↷wk</button>
-    </div>`:''}
   </div>`;
 }
 
@@ -2002,6 +2103,37 @@ function renderTaskTable() {
   const data=getFiltered();
   const sub=document.getElementById('taskViewSub');
   if(sub) sub.textContent=`${data.length} tasks${catFilter!=='all'?' · '+catFilter:''}${taskFilter!=='all'?' · '+taskFilter:''}${searchQuery.trim()?' · search: '+searchQuery.trim():''}`;
+
+  // Mobile: render card list
+  if(window.innerWidth<=768){
+    const cardList=document.getElementById('taskCardList');
+    if(cardList){
+      if(!data.length){cardList.innerHTML='<div style="padding:24px;text-align:center;color:var(--td);">No tasks found</div>';return;}
+      cardList.innerHTML=data.map(t=>`
+        <div class="task-card-m" onclick="openTaskPanel(${t.id})">
+          <div class="task-card-m-top">
+            <div class="chk ${t.done?'done':''}" onclick="event.stopPropagation();toggleDone(${t.id})" style="flex-shrink:0;">${t.done?'✓':''}</div>
+            <div class="task-card-m-name ${t.done?'done':''}">${esc(t.name)}</div>
+            <div class="task-due ${isOv(t)?'ov':isTd(t)?'td':''}" style="font-size:10px;font-family:'JetBrains Mono',monospace;flex-shrink:0;">${fmtDate(t.due)}</div>
+          </div>
+          <div class="task-card-m-meta">
+            <div class="pdot ${priClass[t.priority]||'p-low'}"></div>
+            <span class="tag ${catClass[t.category]||'t-ops'}">${esc(t.category)}</span>
+            <span class="status ${statClass[t.status]||'s-todo'}">${esc(t.status)}</span>
+            ${t.relatedPerson?`<span style="font-size:10px;color:var(--tm);">· ${esc(t.relatedPerson)}</span>`:''}
+          </div>
+          ${!t.done?`<div class="task-card-m-actions" onclick="event.stopPropagation()">
+            <button class="snooze-btn" onclick="snoozeTaskDue(${t.id},1)">↷+1d</button>
+            <button class="snooze-btn" onclick="snoozeTaskDue(${t.id},3)">↷+3d</button>
+            <button class="snooze-btn" onclick="snoozeTaskDue(${t.id},7)">↷+wk</button>
+            ${t.whatsapp?`<button class="snooze-btn" style="color:var(--green);border-color:rgba(109,184,130,.3);" onclick="openWhatsApp(${t.id})">☘ WA</button>`:''}
+          </div>`:''}
+        </div>`).join('');
+    }
+    return;
+  }
+
+  // Desktop: render table
   if(!data.length){tb.innerHTML='<tr><td colspan="35" style="text-align:center;padding:24px;color:var(--td);">No tasks found</td></tr>';return;}
   const visibleCols = TASK_COLUMNS;
   tb.innerHTML=data.map(t=>{
@@ -2311,101 +2443,19 @@ function toggleDone(id) {
 }
 
 // ════════════════════════════════════════
-// SMART QUICK CAPTURE PARSER
+// QUICK CAPTURE
 // ════════════════════════════════════════
-function parseCapture(raw) {
-  const CAT_MAP = {
-    design:'Design', des:'Design', تصميم:'Design',
-    marketing:'Marketing', ماركتينج:'Marketing', تسويق:'Marketing',
-    campaigns:'Campaigns', campaign:'Campaigns', حملة:'Campaigns',حملات:'Campaigns',
-    ecommerce:'Ecommerce', ecom:'Ecommerce', تجارة:'Ecommerce',
-    maps:'Google Maps', map:'Google Maps', خرائط:'Google Maps',
-    team:'Team', فريق:'Team',
-    reporting:'Reporting', report:'Reporting', تقرير:'Reporting',
-    operations:'Operations', ops:'Operations', عمليات:'Operations',
-  };
-  const today_str = today();
-  let text = raw;
-  let due = today_str;
-  let cat = 'Marketing';
-  let person = '';
-
-  // Extract !date
-  text = text.replace(/!(\S+)/g, (_, d) => {
-    const dl = d.toLowerCase();
-    if(dl==='اليوم'||dl==='today') due=today_str;
-    else if(dl==='غداً'||dl==='غدا'||dl==='tomorrow') {
-      const nd=new Date(today_str+'T00:00:00'); nd.setDate(nd.getDate()+1);
-      due=nd.toISOString().split('T')[0];
-    } else if(dl.startsWith('+')) {
-      const n=parseInt(dl.slice(1)); if(!isNaN(n)){
-        const nd=new Date(today_str+'T00:00:00'); nd.setDate(nd.getDate()+n);
-        due=nd.toISOString().split('T')[0];
-      }
-    } else {
-      // try yyyy-mm-dd or date strings
-      const nd=new Date(d); if(!isNaN(nd)) due=nd.toISOString().split('T')[0];
-    }
-    return '';
-  });
-
-  // Extract #category
-  text = text.replace(/#(\S+)/g, (_, c) => {
-    const mapped = CAT_MAP[c.toLowerCase()] || CAT_MAP[c];
-    if(mapped) cat=mapped; else cat=c;
-    return '';
-  });
-
-  // Extract @person
-  text = text.replace(/@(\S+)/g, (_, p) => {
-    person = p.replace(/_/g,' ');
-    return '';
-  });
-
-  const name = text.replace(/\s+/g,' ').trim();
-  return { name, due, cat, person };
-}
-
-function previewCapture(val) {
-  const prev = document.getElementById('qcapPreview');
-  if(!val.trim()){ prev.style.display='none'; return; }
-  const p = parseCapture(val);
-  let tags = '';
-  if(val.includes('!')) tags+=`<span class="qcap-tag date">📅 ${p.due}</span> `;
-  if(val.includes('#')) tags+=`<span class="qcap-tag cat"># ${p.cat}</span> `;
-  if(val.includes('@')) tags+=`<span class="qcap-tag person">@ ${p.person}</span> `;
-  if(tags){ prev.style.display='flex'; prev.innerHTML=tags; }
-  else { prev.style.display='none'; }
-}
-
 function quickCapture(e) {
   if(e.key!=='Enter') return;
-  const raw=document.getElementById('qcapIn').value.trim();
-  if(!raw) return;
-  const { name, due, cat, person } = parseCapture(raw);
-  if(!name){ toast('اكتب اسم التاسك','⚠'); return; }
-
-  // Auto-fill contact data if @person matches contacts
-  let wa='', email='', role='', comm='No', msg='';
-  if(person){
-    const c=findContactByName(person);
-    if(c){ wa=c.whatsapp||''; email=c.email||''; role=c.role||''; comm=c.defaultCommunication||'No'; msg=c.defaultMessage||''; }
-  }
-
-  const nowIso=new Date().toISOString();
-  const t=normalizeTask({
-    id:nextId++, name, category:cat, priority:'Medium', status:'To Do',
-    due, followUp:due, owner:'Self', recurring:'None',
-    relatedPerson:person, relatedPersonRole:role,
-    whatsapp:wa, email, communicationNeeded:comm, messageTemplate:msg,
-    nextAction:'', createdAt:nowIso, updatedAt:nowIso, commLog:[], done:false
-  });
+  const val=document.getElementById('qcapIn').value.trim();
+  if(!val) return;
+  const cat=document.getElementById('qcapCat').value;
+  const t=normalizeTask({id:nextId++,name:val,department:'',category:cat,priority:'Medium',status:'To Do',due:today(),owner:'Self',recurring:'None',relatedPerson:'',whatsapp:'',email:'',followUp:today(),nextAction:'Clarify next action',messageTemplate:'',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),commLog:[],done:false});
   tasks.unshift(t);
   save(LS.tasks, tasks);
   document.getElementById('qcapIn').value='';
-  document.getElementById('qcapPreview').style.display='none';
   renderAll();
-  toast(`✓ ${name}${person?' · @'+person:''}${due!==today()?` · ${fmtDate(due)}`:''}`, '⚡');
+  toast('Task captured ✓');
   pushTask(t);
 }
 
@@ -2428,26 +2478,7 @@ function openBothChannels(id){const t=tasks.find(x=>x.id===id); if(!t) return; c
 function openSelectedChannel(id){const t=tasks.find(x=>x.id===id); if(!t) return; const ch=String(t.communicationNeeded||'WhatsApp').toLowerCase(); if(ch.includes('whatsapp') && ch.includes('email')) return openBothChannels(id); if(ch.includes('email')) return openEmailDraft(id); if(ch.includes('whatsapp') || ch==='yes') return openWhatsApp(id); toast('Select WhatsApp or Email in Communication Channel','⚠');}
 function copyTaskMessage(id){const t=tasks.find(x=>x.id===id); if(!t) return; navigator.clipboard.writeText(getTaskMessage(t)).then(()=>toast('Message copied 📋','📋'));}
 function setTaskStatusQuick(id,status){const t=tasks.find(x=>x.id===id); if(!t) return; t.status=status; t.done=status==='Done'; t.updatedAt=new Date().toISOString(); t.completedAt=t.done?(t.completedAt||new Date().toISOString()):''; t.updatedAt=new Date().toISOString(); logComm(id,`Status changed to ${status}`,false); save(LS.tasks,tasks); renderAll(); openTaskPanel(id); pushTask(t);}
-function snoozeTaskDue(id,days){
-  const t=tasks.find(x=>x.id===id); if(!t) return;
-  const base=t.due&&t.due>=today()?t.due:today();
-  const d=new Date(base+'T00:00:00'); d.setDate(d.getDate()+days);
-  t.due=d.toISOString().split('T')[0];
-  t.followUp=t.due;
-  logComm(id,`Snoozed due date by ${days} day(s) → ${t.due}`,false);
-  save(LS.tasks,tasks);
-  renderAll();
-  toast(`↷ Snoozed +${days} ${days===1?'day':'days'}`, '↷');
-  pushTask(t);
-}
-function snoozeTask(id,days=1){
-  const t=tasks.find(x=>x.id===id); if(!t) return;
-  const d=new Date(); d.setDate(d.getDate()+days);
-  t.followUp=d.toISOString().split('T')[0];
-  t.status='Waiting';
-  logComm(id,`Snoozed for ${days} day(s)`,false);
-  save(LS.tasks,tasks); renderAll(); openTaskPanel(id);
-}
+function snoozeTask(id,days=1){const t=tasks.find(x=>x.id===id); if(!t) return; const d=new Date(); d.setDate(d.getDate()+days); t.followUp=d.toISOString().split('T')[0]; t.status='Waiting'; logComm(id,`Snoozed for ${days} day(s)`,false); save(LS.tasks,tasks); renderAll(); openTaskPanel(id);}
 function logComm(id, text, rerender=true){const t=tasks.find(x=>x.id===id); if(!t) return; if(!Array.isArray(t.commLog)) t.commLog=[]; t.lastCommunication=new Date().toISOString(); t.commLog.unshift({time:t.lastCommunication,text}); if(t.commLog.length>25) t.commLog=t.commLog.slice(0,25); if(rerender){save(LS.tasks,tasks); renderAll(); if(activeDrawerTaskId===id) openTaskPanel(id);}}
 function addQuickNote(id){const note=prompt('Quick note for this task:'); if(!note) return; logComm(id,'Note: '+note); toast('Note added ✓');}
 function openTaskPanel(id){
@@ -2457,29 +2488,7 @@ function openTaskPanel(id){
   const body=document.getElementById('drawerBody');
   const msg=esc(getTaskMessage(t));
   const log=(t.commLog||[]).slice(0,8).map(l=>`<div class="log-item"><div class="log-time">${new Date(l.time).toLocaleString()}</div><div class="log-text">${esc(l.text)}</div></div>`).join('')||'<div style="color:var(--td);font-size:11px;">No communication logged yet.</div>';
-
-  // ── FIX 3: Smart Primary Action based on status ──
-  let primaryBtn = '';
-  const hasWa = !!waUrl(t);
-  const hasMail = !!mailUrl(t);
-  if(t.status==='Waiting' && (hasWa||hasMail)){
-    primaryBtn = `<button class="primary-action gold" onclick="openSelectedChannel(${id});setTaskStatusQuick(${id},'Waiting')">☘ متابعة / Follow Up Again</button>`;
-  } else if(t.status==='In Progress'){
-    primaryBtn = `<button class="primary-action green" onclick="toggleDone(${id});closeTaskPanel()">✓ Mark Done</button>`;
-  } else if(t.status==='To Do' && (hasWa||hasMail)){
-    primaryBtn = `<button class="primary-action gold" onclick="openSelectedChannel(${id});setTaskStatusQuick(${id},'Waiting')">🚀 Send & Set Waiting</button>`;
-  } else if(t.status==='To Do'){
-    primaryBtn = `<button class="primary-action blue" onclick="setTaskStatusQuick(${id},'In Progress')">▶ Start — Set In Progress</button>`;
-  } else if(t.status==='Blocked'){
-    primaryBtn = `<button class="primary-action rose" onclick="openEditModal(${id})">✎ Edit — Resolve Blocker</button>`;
-  } else if(t.done){
-    primaryBtn = `<button class="primary-action blue" onclick="toggleDone(${id});closeTaskPanel()">↩ Reopen Task</button>`;
-  } else {
-    primaryBtn = `<button class="primary-action green" onclick="toggleDone(${id});closeTaskPanel()">✓ Mark Done</button>`;
-  }
-
   body.innerHTML=`
-    ${primaryBtn}
     <div class="drawer-sec"><div class="drawer-sec-title">Execution Snapshot</div>
       <div class="info-grid">
         <div class="info-box"><div class="info-l">Status</div><div class="info-v"><span class="status ${statClass[t.status]||'s-todo'}">${esc(t.status)}</span></div></div>
@@ -2490,23 +2499,15 @@ function openTaskPanel(id){
         <div class="info-box"><div class="info-l">Owner</div><div class="info-v">${esc(t.owner||'Self')}</div></div>
       </div>
     </div>
-    <div class="drawer-sec"><div class="drawer-sec-title">Next Action <span style="font-size:9px;color:var(--td);">— اضغط للتعديل المباشر</span></div>
-      <div class="next-action-edit"
-        contenteditable="true"
-        id="nextActionEdit"
-        data-placeholder="اكتب الخطوة التالية..."
-        onblur="saveNextActionInline(${id},this.textContent)"
-        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.blur();}"
-      >${esc(t.nextAction||'')}</div>
-      <div style="margin-top:8px;display:flex;gap:5px;flex-wrap:wrap;">
-        <span class="next-pill">☎ ${t.whatsapp||t.email?'Contact ready':'Missing contact'}</span>
+    <div class="drawer-sec"><div class="drawer-sec-title">Next Action</div>
+      <div style="font-size:14px;color:var(--tx);line-height:1.6;">${esc(t.nextAction||'No next action set')}</div>
+      <div style="margin-top:8px;">
+        <span class="next-pill">☎ Communication: ${t.whatsapp||t.email?'Ready':'Missing contact'}</span>
         <span class="next-pill">↻ ${esc(t.recurring||'None')}</span>
-        ${t.due?`<span class="next-pill ${isOv(t)?'':''}">📅 ${fmtDate(t.due)}</span>`:''}
       </div>
     </div>
-    <div class="drawer-sec"><div class="drawer-sec-title">More Actions</div>
-      <button class="more-actions-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'▲ Hide actions':'▾ Show all actions'">▾ Show all actions</button>
-      <div class="more-actions-grid action-grid" style="grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+    <div class="drawer-sec"><div class="drawer-sec-title">Action Buttons</div>
+      <div class="action-grid">
         <button class="action-btn gold" onclick="openSelectedChannel(${id})">🚀 Send Selected</button>
         <button class="action-btn green" onclick="openWhatsApp(${id})">☘ WhatsApp</button>
         <button class="action-btn" onclick="openEmailDraft(${id})">✉ Email</button>
@@ -2515,31 +2516,19 @@ function openTaskPanel(id){
         <button class="action-btn gold" onclick="setTaskStatusQuick(${id},'Waiting')">⏳ Waiting Reply</button>
         <button class="action-btn green" onclick="setTaskStatusQuick(${id},'Done')">✓ Mark Done</button>
         <button class="action-btn amber" onclick="setTaskStatusQuick(${id},'In Review')">👁 In Review</button>
-        <button class="action-btn" onclick="snoozeTaskDue(${id},1)">↷+1 Snooze Day</button>
-        <button class="action-btn" onclick="snoozeTaskDue(${id},7)">↷+7 Snooze Week</button>
+        <button class="action-btn" onclick="snoozeTask(${id},1)">↷ Snooze 1 Day</button>
+        <button class="action-btn" onclick="addQuickNote(${id})">＋ Quick Note</button>
         <button class="action-btn" onclick="openEditModal(${id})">✎ Edit Full Task</button>
         <button class="action-btn rose" onclick="setTaskStatusQuick(${id},'Blocked')">⚠ Blocked</button>
       </div>
     </div>
-    <div class="drawer-sec"><div class="drawer-sec-title">Prepared Message</div><textarea class="msg-box" id="drawerMsg">${msg}</textarea><div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;"><button class="action-btn" onclick="saveDrawerMessage(${id})">💾 Save</button><button class="action-btn gold" onclick="saveDrawerMessage(${id});openSelectedChannel(${id})">🚀 Save & Send</button><button class="action-btn green" onclick="saveDrawerMessage(${id});openWhatsApp(${id})">☘ WhatsApp</button><button class="action-btn" onclick="saveDrawerMessage(${id});openEmailDraft(${id})">✉ Email</button></div></div>
+    <div class="drawer-sec"><div class="drawer-sec-title">Prepared Message</div><textarea class="msg-box" id="drawerMsg">${msg}</textarea><div style="display:flex;gap:8px;margin-top:8px;"><button class="action-btn" onclick="saveDrawerMessage(${id})">💾 Save Message</button><button class="action-btn gold" onclick="saveDrawerMessage(${id});openSelectedChannel(${id})">🚀 Save & Send Selected</button><button class="action-btn green" onclick="saveDrawerMessage(${id});openWhatsApp(${id})">☘ WhatsApp</button><button class="action-btn" onclick="saveDrawerMessage(${id});openEmailDraft(${id})">✉ Email</button></div></div>
     <div class="drawer-sec"><div class="drawer-sec-title">Communication Log</div>${log}<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px;"><button class="action-btn" onclick="logComm(${id},'Sent WhatsApp')">Sent WhatsApp</button><button class="action-btn" onclick="logComm(${id},'Called')">Called</button><button class="action-btn" onclick="logComm(${id},'Reminder Sent')">Reminder</button><button class="action-btn green" onclick="logComm(${id},'Approved')">Approved</button><button class="action-btn amber" onclick="logComm(${id},'Delayed')">Delayed</button><button class="action-btn rose" onclick="logComm(${id},'Need Changes')">Need Changes</button></div></div>
   `;
   document.getElementById('drawerOverlay').classList.add('open');
   document.getElementById('taskDrawer').classList.add('open');
 }
 function saveDrawerMessage(id){const t=tasks.find(x=>x.id===id); if(!t) return; const v=document.getElementById('drawerMsg')?.value||''; t.messageTemplate=v; save(LS.tasks,tasks); pushTask(t); toast('Message saved ✓');}
-
-// FIX 5: Save inline-edited next action
-function saveNextActionInline(id, text){
-  const t=tasks.find(x=>x.id===id); if(!t) return;
-  const val=text.trim();
-  if(val===t.nextAction) return;
-  t.nextAction=val;
-  t.updatedAt=new Date().toISOString();
-  save(LS.tasks,tasks);
-  pushTask(t);
-  toast('Next action updated ✓','✎');
-}
 function closeTaskPanel(){document.getElementById('drawerOverlay').classList.remove('open');document.getElementById('taskDrawer').classList.remove('open');activeDrawerTaskId=null;}
 
 // ════════════════════════════════════════
@@ -2751,6 +2740,11 @@ function showView(v) {
   document.querySelectorAll('.tnav').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.tnav').forEach(x=>{if(x.textContent.toLowerCase().includes(v.substring(0,4)))x.classList.add('active');});
   document.querySelectorAll('.sb-item').forEach(x=>x.classList.remove('active'));
+  // Sync mobile bottom nav
+  document.querySelectorAll('.mnav-item').forEach(x=>x.classList.remove('active'));
+  const mb=document.getElementById('mnav-'+v); if(mb) mb.classList.add('active');
+  // Scroll to top on mobile
+  if(window.innerWidth<=768) window.scrollTo({top:0,behavior:'smooth'});
   if(v==='weekly'){renderWeekGrid();renderWeekKPIs();renderWeekRecurring();renderMgmtReport();}
   if(v==='tasks') renderTaskTable();
   if(v==='growth'){renderHabits();renderGoals();renderLearn();}
@@ -3104,24 +3098,6 @@ function copyScript() {
   const code=document.getElementById('appsScriptCode').textContent;
   navigator.clipboard.writeText(code).then(()=>toast('Code copied ✓','📋')).catch(()=>toast('Select and copy manually'));
 }
-
-// ════════════════════════════════════════
-// KEYBOARD SHORTCUTS
-// ════════════════════════════════════════
-document.addEventListener('keydown', function(e){
-  const active=document.activeElement;
-  const typing=active&&(active.tagName==='INPUT'||active.tagName==='TEXTAREA'||active.contentEditable==='true');
-  if(typing) return;
-  if(e.key==='Escape'){ closeTaskPanel(); document.querySelectorAll('.overlay.open').forEach(o=>o.classList.remove('open')); return; }
-  if(e.key==='n'||e.key==='N'){ e.preventDefault(); openAddModal(); return; }
-  if(e.key==='q'||e.key==='Q'){ e.preventDefault(); document.getElementById('qcapIn')?.focus(); return; }
-  if(e.key==='1'){ showView('dashboard'); }
-  if(e.key==='2'){ showView('tasks'); }
-  if(e.key==='3'){ showView('weekly'); }
-  if(e.key==='4'){ showView('campaigns'); }
-  if(e.key==='5'){ showView('growth'); }
-  if(e.key==='6'){ showView('network'); }
-});
 
 // ════════════════════════════════════════
 // START
