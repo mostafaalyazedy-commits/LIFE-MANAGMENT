@@ -1,0 +1,3132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pro Life OS — Command Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#08090a;
+  --s1:#0f1114;
+  --s2:#161a1f;
+  --s3:#1e2329;
+  --s4:#262d36;
+  --b1:rgba(255,255,255,0.05);
+  --b2:rgba(255,255,255,0.09);
+  --b3:rgba(255,255,255,0.14);
+  --tx:#edeae3;
+  --tm:#8a8680;
+  --td:#44403c;
+  --gold:#c9a96e;
+  --goldd:rgba(201,169,110,0.12);
+  --teal:#6bb8a0;
+  --teald:rgba(107,184,160,0.12);
+  --rose:#d4756a;
+  --rosed:rgba(212,117,106,0.12);
+  --blue:#7b9de0;
+  --blued:rgba(123,157,224,0.12);
+  --violet:#a98fd4;
+  --violetd:rgba(169,143,212,0.12);
+  --green:#6db882;
+  --greend:rgba(109,184,130,0.12);
+  --amber:#d4a96a;
+  --amberd:rgba(212,169,106,0.12);
+  --r:8px;
+  --r2:12px;
+  --r3:16px;
+  --sidebar:240px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;}
+body{
+  background:var(--bg);
+  color:var(--tx);
+  font-family:'Outfit',sans-serif;
+  font-size:13px;
+  display:flex;
+  flex-direction:column;
+}
+::-webkit-scrollbar{width:3px;height:3px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--s4);border-radius:2px;}
+
+/* ── TOPBAR ── */
+.topbar{
+  height:50px;
+  background:var(--s1);
+  border-bottom:1px solid var(--b1);
+  display:flex;
+  align-items:center;
+  padding:0 20px;
+  gap:16px;
+  flex-shrink:0;
+  z-index:100;
+}
+.logo{
+  display:flex;align-items:center;gap:10px;
+  text-decoration:none;
+}
+.logo-icon{
+  width:30px;height:30px;
+  background:linear-gradient(135deg,var(--gold),var(--teal));
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;
+  font-size:14px;font-weight:700;
+  color:#08090a;
+  flex-shrink:0;
+}
+.logo-text{
+  font-family:'Playfair Display',serif;
+  font-size:15px;font-weight:700;
+  color:var(--tx);
+  letter-spacing:0.01em;
+}
+.logo-sub{font-size:10px;color:var(--tm);letter-spacing:0.08em;font-family:'JetBrains Mono',monospace;}
+.topbar-nav{display:flex;gap:2px;margin-left:20px;}
+.tnav{
+  padding:5px 13px;
+  border-radius:6px;
+  font-size:11.5px;font-weight:500;
+  color:var(--tm);cursor:pointer;
+  border:none;background:none;
+  font-family:'Outfit',sans-serif;
+  transition:all .15s;letter-spacing:0.01em;
+}
+.tnav:hover{color:var(--tx);background:var(--s2);}
+.tnav.active{color:var(--gold);background:var(--goldd);}
+.topbar-right{
+  margin-left:auto;
+  display:flex;align-items:center;gap:14px;
+}
+.top-date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tm);}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+/* ── SHELL ── */
+.shell{display:flex;flex:1;overflow:hidden;}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:var(--sidebar);
+  background:var(--s1);
+  border-right:1px solid var(--b1);
+  display:flex;flex-direction:column;
+  overflow-y:auto;
+  flex-shrink:0;
+}
+.sb-section{padding:16px 10px 8px;}
+.sb-label{
+  font-size:9px;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--td);
+  padding:0 8px;margin-bottom:6px;
+  font-family:'JetBrains Mono',monospace;
+}
+.sb-item{
+  display:flex;align-items:center;gap:9px;
+  padding:7px 10px;border-radius:var(--r);
+  cursor:pointer;color:var(--tm);
+  font-size:12.5px;font-weight:500;
+  transition:all .15s;position:relative;
+  user-select:none;
+}
+.sb-item:hover{background:var(--s2);color:var(--tx);}
+.sb-item.active{background:var(--goldd);color:var(--gold);}
+.sb-item.active::before{
+  content:'';position:absolute;left:0;top:22%;bottom:22%;
+  width:2px;background:var(--gold);border-radius:1px;
+}
+.sb-dot{
+  width:7px;height:7px;border-radius:50%;flex-shrink:0;
+  margin-left:auto;
+}
+.sb-count{
+  margin-left:auto;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;padding:1px 5px;
+  border-radius:3px;
+  background:var(--s3);color:var(--tm);
+  min-width:18px;text-align:center;
+}
+.sb-count.hot{background:var(--rosed);color:var(--rose);}
+.sb-div{height:1px;background:var(--b1);margin:6px 10px 10px;}
+
+/* ── MAIN ── */
+.main{flex:1;overflow-y:auto;background:var(--bg);}
+.view{display:none;padding:22px 24px;}
+.view.active{display:block;}
+
+/* ── PAGE HEADER ── */
+.ph{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:22px;}
+.ph-title{
+  font-family:'Playfair Display',serif;
+  font-size:26px;font-weight:400;line-height:1;
+}
+.ph-title em{color:var(--gold);font-style:italic;}
+.ph-sub{font-size:11px;color:var(--tm);margin-top:5px;font-family:'JetBrains Mono',monospace;}
+.ph-right{display:flex;gap:8px;align-items:center;}
+
+/* ── BUTTONS ── */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:var(--r);
+  font-size:12px;font-weight:500;cursor:pointer;
+  border:none;font-family:'Outfit',sans-serif;
+  transition:all .15s;
+}
+.btn-ghost{background:var(--s2);border:1px solid var(--b2);color:var(--tm);}
+.btn-ghost:hover{color:var(--tx);border-color:var(--b3);}
+.btn-primary{background:var(--goldd);border:1px solid rgba(201,169,110,.25);color:var(--gold);}
+.btn-primary:hover{background:rgba(201,169,110,.2);}
+.btn-danger{background:var(--rosed);border:1px solid rgba(212,117,106,.25);color:var(--rose);}
+.btn-danger:hover{background:rgba(212,117,106,.2);}
+.btn-sm{padding:5px 10px;font-size:11px;}
+
+/* ── KPI STRIP ── */
+.kpi-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:18px;}
+.kpi{
+  background:var(--s1);border:1px solid var(--b1);
+  border-radius:var(--r2);padding:14px 15px;
+  position:relative;overflow:hidden;
+  transition:border-color .2s;cursor:default;
+}
+.kpi:hover{border-color:var(--b2);}
+.kpi::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--kc,var(--gold));opacity:.5;
+}
+.kpi-l{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--tm);margin-bottom:8px;font-family:'JetBrains Mono',monospace;}
+.kpi-v{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;line-height:1;margin-bottom:4px;}
+.kpi-s{font-size:10px;color:var(--tm);}
+.up{color:var(--green);}
+.dn{color:var(--rose);}
+
+/* ── GRID HELPERS ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;}
+.g21{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px;}
+.g12{display:grid;grid-template-columns:1fr 2fr;gap:14px;margin-bottom:14px;}
+.g13{display:grid;grid-template-columns:1fr 3fr;gap:14px;margin-bottom:14px;}
+.col{display:flex;flex-direction:column;gap:14px;}
+
+/* ── PANEL ── */
+.panel{
+  background:var(--s1);border:1px solid var(--b1);
+  border-radius:var(--r2);overflow:hidden;
+}
+.panel-h{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 15px;border-bottom:1px solid var(--b1);
+}
+.panel-t{
+  font-size:11px;font-weight:600;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--tx);font-family:'JetBrains Mono',monospace;
+}
+.panel-b{padding:14px 15px;}
+.panel-b0{padding:0;}
+
+/* ── TAGS / BADGES ── */
+.tag{
+  display:inline-flex;align-items:center;
+  font-size:9px;padding:2px 7px;border-radius:3px;
+  font-weight:600;letter-spacing:.04em;
+  font-family:'JetBrains Mono',monospace;
+}
+.t-mkt{background:var(--goldd);color:var(--gold);}
+.t-cam{background:var(--rosed);color:var(--rose);}
+.t-eco{background:var(--teald);color:var(--teal);}
+.t-des{background:var(--blued);color:var(--blue);}
+.t-map{background:var(--violetd);color:var(--violet);}
+.t-team{background:var(--greend);color:var(--green);}
+.t-rep{background:var(--amberd);color:var(--amber);}
+.t-ops{background:var(--s3);color:var(--tm);}
+.t-learn{background:rgba(107,184,160,.15);color:var(--teal);}
+.t-goal{background:rgba(169,143,212,.15);color:var(--violet);}
+.t-habit{background:rgba(109,184,130,.15);color:var(--green);}
+.t-fin{background:rgba(212,169,106,.15);color:var(--amber);}
+.t-net{background:rgba(123,157,224,.15);color:var(--blue);}
+
+.status{
+  display:inline-flex;align-items:center;
+  font-size:9px;padding:2px 8px;border-radius:20px;
+  font-weight:600;letter-spacing:.04em;
+}
+.s-todo{background:var(--s3);color:var(--tm);}
+.s-prog{background:var(--teald);color:var(--teal);}
+.s-wait{background:var(--amberd);color:var(--amber);}
+.s-rev{background:var(--blued);color:var(--blue);}
+.s-done{background:var(--greend);color:var(--green);}
+.s-block{background:var(--rosed);color:var(--rose);}
+
+.pdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.p-crit{background:var(--rose);box-shadow:0 0 5px var(--rose);}
+.p-high{background:var(--amber);}
+.p-med{background:var(--teal);}
+.p-low{background:var(--td);}
+
+/* ── TASK ROW ── */
+.task-row{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:9px 15px;border-bottom:1px solid var(--b1);
+  cursor:pointer;transition:background .1s;
+}
+.task-row:last-child{border-bottom:none;}
+.task-row:hover{background:var(--s2);}
+.chk{
+  width:15px;height:15px;border:1.5px solid var(--b3);
+  border-radius:3px;flex-shrink:0;margin-top:1px;
+  cursor:pointer;transition:all .15s;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;
+}
+.chk:hover{border-color:var(--gold);}
+.chk.done{background:var(--gold);border-color:var(--gold);color:var(--bg);}
+.task-body{flex:1;min-width:0;}
+.task-name{font-size:12.5px;color:var(--tx);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;}
+.task-name.done{text-decoration:line-through;color:var(--tm);}
+.task-meta{display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.task-due{font-size:10px;color:var(--tm);margin-left:auto;flex-shrink:0;font-family:'JetBrains Mono',monospace;}
+.task-due.ov{color:var(--rose);}
+.task-due.td{color:var(--amber);}
+.task-due.ok{color:var(--green);}
+.rec{font-size:9px;color:var(--td);font-family:'JetBrains Mono',monospace;}
+
+/* ── PROGRESS ── */
+.pbar{height:3px;background:var(--s3);border-radius:2px;overflow:hidden;margin-top:6px;}
+.pfill{height:100%;border-radius:2px;background:var(--pc,var(--gold));transition:width .5s ease;}
+
+/* ── FOCUS BANNER ── */
+.focus{
+  background:linear-gradient(135deg,rgba(201,169,110,.08),rgba(107,184,160,.05));
+  border:1px solid rgba(201,169,110,.15);
+  border-radius:var(--r2);padding:15px 18px;
+  display:flex;align-items:center;gap:15px;
+  margin-bottom:16px;
+}
+.focus-ico{font-size:26px;opacity:.6;flex-shrink:0;}
+.focus-l{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;font-family:'JetBrains Mono',monospace;}
+.focus-t{font-family:'Playfair Display',serif;font-size:16px;color:var(--tx);}
+.focus-s{font-size:10px;color:var(--tm);margin-top:3px;}
+
+/* ── ALERT ── */
+.alert{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 13px;border-radius:var(--r);
+  margin-bottom:6px;font-size:12px;
+}
+.alert-red{background:rgba(212,117,106,.07);border:1px solid rgba(212,117,106,.18);}
+.alert-amber{background:rgba(212,169,106,.07);border:1px solid rgba(212,169,106,.18);}
+.alert-green{background:rgba(109,184,130,.07);border:1px solid rgba(109,184,130,.18);}
+
+/* ── FOLLOW-UP ── */
+.fu-row{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 0;border-bottom:1px solid var(--b1);
+}
+.fu-row:last-child{border-bottom:none;}
+.fu-av{
+  width:30px;height:30px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;flex-shrink:0;
+}
+.fu-name{font-size:12.5px;font-weight:500;}
+.fu-task{font-size:10px;color:var(--tm);}
+.fu-age{margin-left:auto;font-size:10px;flex-shrink:0;font-family:'JetBrains Mono',monospace;}
+
+/* ── TABLE ── */
+.tbl{width:100%;border-collapse:collapse;}
+.tbl th{
+  text-align:left;font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--tm);
+  padding:9px 12px;border-bottom:1px solid var(--b1);
+  font-weight:600;font-family:'JetBrains Mono',monospace;
+  position:sticky;top:0;background:var(--s1);
+}
+.tbl td{padding:8px 12px;border-bottom:1px solid var(--b1);font-size:12px;vertical-align:middle;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:var(--s2);cursor:pointer;}
+
+/* ── WEEK GRID ── */
+.wk-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;}
+.wk-col{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r2);overflow:hidden;}
+.wk-col.today{border-color:rgba(201,169,110,.3);}
+.wk-h{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 12px;border-bottom:1px solid var(--b1);
+}
+.wk-col.today .wk-h{background:rgba(201,169,110,.06);}
+.wk-dn{font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+.wk-dd{font-size:10px;color:var(--tm);}
+.wk-body{padding:8px;}
+.mini-t{
+  padding:5px 8px;border-radius:5px;margin-bottom:4px;
+  font-size:10.5px;color:var(--tx);
+  border-left:2px solid var(--mc,var(--gold));
+  background:var(--s2);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  cursor:pointer;transition:opacity .15s;
+}
+.mini-t:hover{opacity:.75;}
+
+/* ── HABIT / GOAL CARDS ── */
+.habit-card{
+  background:var(--s2);border:1px solid var(--b1);
+  border-radius:var(--r);padding:12px;margin-bottom:8px;
+}
+.habit-name{font-size:13px;font-weight:600;margin-bottom:6px;}
+.habit-streak{font-size:10px;color:var(--tm);margin-bottom:8px;font-family:'JetBrains Mono',monospace;}
+.habit-dots{display:flex;gap:4px;}
+.hdot{
+  width:20px;height:20px;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;cursor:pointer;transition:all .15s;
+}
+.hdot.hit{background:var(--green);color:var(--bg);}
+.hdot.miss{background:var(--s3);color:var(--td);}
+.hdot.future{background:var(--s3);opacity:.4;}
+
+.goal-card{
+  background:var(--s2);border:1px solid var(--b1);
+  border-radius:var(--r);padding:12px;margin-bottom:8px;
+}
+.goal-title{font-size:13px;font-weight:600;margin-bottom:4px;}
+.goal-dead{font-size:10px;color:var(--tm);margin-bottom:8px;font-family:'JetBrains Mono',monospace;}
+.goal-prog-row{display:flex;justify-content:space-between;font-size:10px;color:var(--tm);margin-bottom:4px;}
+
+/* ── LEARNING ── */
+.learn-card{
+  background:var(--s2);border:1px solid var(--b1);
+  border-radius:var(--r);padding:12px;margin-bottom:8px;
+  display:flex;align-items:center;gap:12px;
+}
+.learn-icon{font-size:22px;flex-shrink:0;}
+.learn-title{font-size:13px;font-weight:600;margin-bottom:3px;}
+.learn-meta{font-size:10px;color:var(--tm);font-family:'JetBrains Mono',monospace;}
+
+/* ── FINANCE ── */
+.fin-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 0;border-bottom:1px solid var(--b1);font-size:12px;
+}
+.fin-row:last-child{border-bottom:none;}
+.fin-label{color:var(--tm);}
+.fin-val{font-family:'JetBrains Mono',monospace;font-weight:600;}
+
+/* ── QUICK CAPTURE ── */
+.qcap{
+  background:var(--s2);border:1px solid var(--b2);
+  border-radius:var(--r2);padding:12px 16px;
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:16px;transition:border-color .2s;
+}
+.qcap:focus-within{border-color:rgba(201,169,110,.35);}
+.qcap-ico{font-size:16px;opacity:.4;flex-shrink:0;}
+.qcap-in{
+  flex:1;background:none;border:none;outline:none;
+  color:var(--tx);font-family:'Outfit',sans-serif;
+  font-size:13px;
+}
+.qcap-in::placeholder{color:var(--td);}
+.qcap-cat{
+  background:var(--s3);border:1px solid var(--b2);
+  border-radius:5px;padding:4px 8px;
+  color:var(--tm);font-family:'Outfit',sans-serif;
+  font-size:11px;outline:none;cursor:pointer;
+}
+.qcap-cat option{background:var(--s2);}
+.kbd{
+  background:var(--s3);border:1px solid var(--b2);
+  border-radius:3px;padding:2px 6px;
+  font-size:9px;color:var(--tm);
+  font-family:'JetBrains Mono',monospace;
+}
+
+/* ── SMART TASK SEARCH ── */
+.search-strip{
+  background:var(--s1);border:1px solid var(--b1);
+  border-radius:var(--r2);padding:10px 12px;
+  display:flex;align-items:center;gap:10px;margin-bottom:14px;
+}
+.search-ico{font-size:14px;opacity:.45;flex-shrink:0;}
+.search-input{
+  flex:1;background:transparent;border:none;outline:none;color:var(--tx);
+  font-family:'Outfit',sans-serif;font-size:13px;
+}
+.search-input::placeholder{color:var(--td);}
+.search-hint{font-size:10px;color:var(--tm);font-family:'JetBrains Mono',monospace;white-space:nowrap;}
+
+/* ── SECTION TITLE ── */
+.sec-t{
+  font-size:10px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--tm);
+  margin-bottom:12px;display:flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;
+}
+.sec-t::after{content:'';flex:1;height:1px;background:var(--b1);}
+
+/* ── MODAL ── */
+.overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(5px);
+  z-index:500;align-items:center;justify-content:center;
+}
+.overlay.open{display:flex;}
+.modal{
+  background:var(--s1);border:1px solid var(--b2);
+  border-radius:var(--r3);width:530px;max-width:95vw;
+  max-height:90vh;overflow-y:auto;
+  animation:fadeUp .2s ease;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.modal-h{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 20px;border-bottom:1px solid var(--b1);
+}
+.modal-title{font-family:'Playfair Display',serif;font-size:16px;}
+.modal-x{
+  width:28px;height:28px;border-radius:6px;
+  background:var(--s2);border:1px solid var(--b2);
+  color:var(--tm);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:17px;
+  transition:all .15s;
+}
+.modal-x:hover{color:var(--tx);}
+.modal-b{padding:20px;display:flex;flex-direction:column;gap:14px;}
+.modal-f{
+  display:flex;justify-content:flex-end;gap:8px;
+  padding:14px 20px;border-top:1px solid var(--b1);
+}
+.fg{display:flex;flex-direction:column;gap:6px;}
+.flabel{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--tm);font-family:'JetBrains Mono',monospace;}
+.finput,.fselect{
+  background:var(--s2);border:1px solid var(--b2);
+  border-radius:8px;padding:9px 12px;
+  color:var(--tx);font-family:'Outfit',sans-serif;
+  font-size:13px;outline:none;transition:border-color .15s;width:100%;
+}
+.finput:focus,.fselect:focus{border-color:rgba(201,169,110,.4);}
+.fselect option{background:var(--s2);}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:22px;right:22px;
+  background:var(--s1);border:1px solid var(--b2);
+  border-radius:10px;padding:11px 16px;
+  font-size:12px;color:var(--tx);z-index:999;
+  display:flex;align-items:center;gap:8px;
+  box-shadow:0 8px 30px rgba(0,0,0,.5);
+  animation:fadeUp .2s ease;pointer-events:none;
+}
+.toast.hidden{display:none;}
+
+/* ── NETWORK ── */
+.net-card{
+  background:var(--s2);border:1px solid var(--b1);
+  border-radius:var(--r);padding:11px 13px;
+  margin-bottom:7px;display:flex;align-items:center;gap:11px;
+}
+.net-av{
+  width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;flex-shrink:0;
+}
+.net-name{font-size:13px;font-weight:600;}
+.net-role{font-size:10px;color:var(--tm);}
+.net-last{margin-left:auto;font-size:10px;color:var(--tm);font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+
+/* ── SCROLLABLE PANEL BODY ── */
+.panel-scroll{max-height:340px;overflow-y:auto;}
+
+/* ── REPORT METRIC ── */
+.rm{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--b1);}
+.rm:last-child{border-bottom:none;}
+.rm-l{font-size:11px;color:var(--tm);}
+.rm-v{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;}
+
+/* ── ANIM ── */
+.au{animation:fadeUp .35s ease both;}
+.d1{animation-delay:.05s;}
+.d2{animation-delay:.1s;}
+.d3{animation-delay:.15s;}
+.d4{animation-delay:.2s;}
+
+/* ── SHEETS SETUP BANNER ── */
+.setup-banner{
+  background:linear-gradient(135deg,rgba(123,157,224,.08),rgba(169,143,212,.06));
+  border:1px solid rgba(123,157,224,.2);
+  border-radius:var(--r2);padding:16px 20px;
+  margin-bottom:18px;
+  display:flex;align-items:center;gap:14px;
+}
+.setup-banner.hidden{display:none;}
+.setup-text{flex:1;}
+.setup-title{font-size:13px;font-weight:600;color:var(--blue);margin-bottom:3px;}
+.setup-sub{font-size:11px;color:var(--tm);}
+
+
+/* ── PRODUCTION TASK DETAIL DRAWER ── */
+.drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:450;backdrop-filter:blur(3px);}
+.drawer-overlay.open{display:block;}
+.task-drawer{position:fixed;top:0;right:-520px;width:500px;max-width:96vw;height:100vh;background:var(--s1);border-left:1px solid var(--b2);z-index:600;box-shadow:-18px 0 50px rgba(0,0,0,.45);transition:right .22s ease;display:flex;flex-direction:column;}
+.task-drawer.open{right:0;}
+.drawer-h{padding:16px 18px;border-bottom:1px solid var(--b1);display:flex;align-items:flex-start;gap:12px;}
+.drawer-title{font-family:'Playfair Display',serif;font-size:19px;line-height:1.25;color:var(--tx);}
+.drawer-sub{font-size:10px;color:var(--tm);font-family:'JetBrains Mono',monospace;margin-top:6px;}
+.drawer-close{margin-left:auto;width:30px;height:30px;border-radius:8px;border:1px solid var(--b2);background:var(--s2);color:var(--tm);cursor:pointer;font-size:18px;}
+.drawer-b{padding:14px 18px;overflow-y:auto;flex:1;}
+.drawer-sec{border:1px solid var(--b1);background:var(--s2);border-radius:var(--r2);padding:12px;margin-bottom:12px;}
+.drawer-sec-title{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--tm);font-family:'JetBrains Mono',monospace;margin-bottom:10px;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.info-box{background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:8px;}
+.info-l{font-size:9px;color:var(--td);text-transform:uppercase;letter-spacing:.08em;font-family:'JetBrains Mono',monospace;margin-bottom:4px;}
+.info-v{font-size:12px;color:var(--tx);min-height:16px;}
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.action-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 9px;border-radius:8px;border:1px solid var(--b2);background:var(--s1);color:var(--tx);font-size:11px;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .15s;text-decoration:none;}
+.action-btn:hover{border-color:var(--b3);background:var(--s3);}
+.action-btn.gold{color:var(--gold);border-color:rgba(201,169,110,.24);background:var(--goldd);}
+.action-btn.green{color:var(--green);border-color:rgba(109,184,130,.24);background:var(--greend);}
+.action-btn.amber{color:var(--amber);border-color:rgba(212,169,106,.24);background:var(--amberd);}
+.action-btn.rose{color:var(--rose);border-color:rgba(212,117,106,.24);background:var(--rosed);}
+.msg-box{width:100%;min-height:86px;resize:vertical;background:var(--s1);border:1px solid var(--b2);border-radius:8px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:12px;padding:9px;outline:none;line-height:1.6;}
+.log-item{padding:8px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:flex-start;}
+.log-item:last-child{border-bottom:none;}
+.log-time{font-size:9px;color:var(--td);font-family:'JetBrains Mono',monospace;min-width:86px;}
+.log-text{font-size:11.5px;color:var(--tm);line-height:1.45;}
+.next-pill{display:inline-flex;align-items:center;gap:5px;background:var(--s1);border:1px solid var(--b2);border-radius:99px;padding:4px 8px;font-size:10px;color:var(--tm);margin:2px;}
+.row-actions{display:flex;gap:5px;align-items:center;}
+.icon-btn{width:27px;height:27px;border-radius:7px;border:1px solid var(--b2);background:var(--s2);color:var(--tm);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;}
+.icon-btn:hover{color:var(--gold);border-color:rgba(201,169,110,.3);}
+
+/* ── SNOOZE HOVER ACTIONS ── */
+.task-row .snooze-actions{
+  display:none;gap:3px;align-items:center;flex-shrink:0;
+}
+.task-row:hover .snooze-actions{display:flex;}
+.snooze-btn{
+  padding:2px 6px;font-size:9px;border-radius:4px;
+  border:1px solid var(--b2);background:var(--s3);
+  color:var(--tm);cursor:pointer;font-family:'JetBrains Mono',monospace;
+  transition:all .1s;white-space:nowrap;
+}
+.snooze-btn:hover{color:var(--amber);border-color:rgba(212,169,106,.3);background:var(--amberd);}
+
+/* ── OVERDUE COLLAPSIBLE ── */
+.overdue-toggle{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 15px;cursor:pointer;
+  font-size:10px;color:var(--rose);
+  font-family:'JetBrains Mono',monospace;
+  letter-spacing:.05em;user-select:none;
+  transition:background .1s;
+}
+.overdue-toggle:hover{background:var(--s2);}
+.overdue-toggle .ov-arrow{transition:transform .2s;font-size:9px;}
+.overdue-toggle.open .ov-arrow{transform:rotate(90deg);}
+.overdue-list{display:none;}
+.overdue-list.open{display:block;}
+
+/* ── PRIMARY ACTION BUTTON (Drawer) ── */
+.primary-action{
+  width:100%;padding:11px;border-radius:10px;
+  font-size:13px;font-weight:600;cursor:pointer;
+  border:none;font-family:'Outfit',sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-bottom:8px;transition:all .15s;
+}
+.primary-action.gold{background:rgba(201,169,110,.18);color:var(--gold);border:1px solid rgba(201,169,110,.3);}
+.primary-action.green{background:rgba(109,184,130,.18);color:var(--green);border:1px solid rgba(109,184,130,.3);}
+.primary-action.rose{background:rgba(212,117,106,.18);color:var(--rose);border:1px solid rgba(212,117,106,.3);}
+.primary-action.blue{background:rgba(123,157,224,.18);color:var(--blue);border:1px solid rgba(123,157,224,.3);}
+.primary-action:hover{filter:brightness(1.12);}
+
+/* ── INLINE EDITABLE NEXT ACTION ── */
+.next-action-edit{
+  font-size:14px;color:var(--tx);line-height:1.6;
+  border:1px solid transparent;border-radius:6px;
+  padding:6px 8px;cursor:text;outline:none;
+  transition:border-color .15s;min-height:32px;
+  display:block;width:100%;
+}
+.next-action-edit:hover{border-color:var(--b2);}
+.next-action-edit:focus{border-color:rgba(201,169,110,.4);background:var(--s1);}
+.next-action-edit:empty::before{content:attr(data-placeholder);color:var(--td);}
+
+/* ── MORE ACTIONS COLLAPSE ── */
+.more-actions-toggle{
+  width:100%;padding:6px;font-size:11px;color:var(--tm);
+  background:none;border:1px dashed var(--b2);border-radius:8px;
+  cursor:pointer;font-family:'Outfit',sans-serif;
+  margin-top:2px;transition:all .15s;
+}
+.more-actions-toggle:hover{color:var(--tx);border-color:var(--b3);}
+.more-actions-grid{display:none;}
+.more-actions-grid.open{display:grid;}
+
+/* ── QCAP PREVIEW TAGS ── */
+.qcap-tag{
+  display:inline-flex;align-items:center;gap:3px;
+  padding:1px 6px;border-radius:3px;font-size:9px;
+  font-family:'JetBrains Mono',monospace;
+}
+.qcap-tag.date{background:var(--goldd);color:var(--gold);}
+.qcap-tag.cat{background:var(--blued);color:var(--blue);}
+.qcap-tag.person{background:var(--teald);color:var(--teal);}
+
+/* ── RECURRING BADGE ── */
+.rec-new-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 7px;border-radius:3px;
+  background:var(--goldd);color:var(--gold);
+  font-size:9px;font-family:'JetBrains Mono',monospace;
+}
+
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-icon">P</div>
+    <div>
+      <div class="logo-text">Pro Life OS</div>
+      <div class="logo-sub">Professional Command Center</div>
+    </div>
+  </div>
+  <div class="topbar-nav">
+    <button class="tnav active" onclick="showView('dashboard')">Dashboard</button>
+    <button class="tnav" onclick="showView('tasks')">Tasks</button>
+    <button class="tnav" onclick="showView('weekly')">Weekly</button>
+    <button class="tnav" onclick="showView('campaigns')">Campaigns</button>
+    <button class="tnav" onclick="showView('growth')">Growth</button>
+    <button class="tnav" onclick="showView('network')">Network</button>
+    <button class="tnav" onclick="showView('setup')">⚙ Setup</button>
+  </div>
+  <div class="topbar-right">
+    <span class="top-date" id="topDate">—</span>
+    <span style="font-size:9px;color:var(--td);font-family:'JetBrains Mono',monospace;" title="N=New Task · Q=Capture · 1-6=Views · Esc=Close">⌨ N·Q·1-6</span>
+    <div class="pulse"></div>
+  </div>
+</div>
+
+<div class="shell">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sb-section">
+    <div class="sb-label">Workspace</div>
+    <div class="sb-item active" onclick="showView('dashboard')">◈ &nbsp;Today</div>
+    <div class="sb-item" onclick="showView('tasks')">≡ &nbsp;All Tasks <span class="sb-count" id="sb-total">—</span></div>
+    <div class="sb-item" onclick="showView('weekly')">◫ &nbsp;Weekly</div>
+    <div class="sb-item" onclick="showView('campaigns')">⚡ &nbsp;Campaigns</div>
+  </div>
+  <div class="sb-div"></div>
+  <div class="sb-section">
+    <div class="sb-label">Work Areas</div>
+    <div class="sb-item" onclick="filterCat('Marketing')">📣 &nbsp;Marketing <span class="sb-count hot" id="sbc-mkt">0</span></div>
+    <div class="sb-item" onclick="filterCat('Campaigns')">🎯 &nbsp;Campaigns <span class="sb-count hot" id="sbc-cam">0</span></div>
+    <div class="sb-item" onclick="filterCat('Ecommerce')">🛒 &nbsp;Ecommerce <span class="sb-count" id="sbc-eco">0</span></div>
+    <div class="sb-item" onclick="filterCat('Design')">🎨 &nbsp;Design <span class="sb-count" id="sbc-des">0</span></div>
+    <div class="sb-item" onclick="filterCat('Google Maps')">📍 &nbsp;Maps <span class="sb-count" id="sbc-map">0</span></div>
+    <div class="sb-item" onclick="filterCat('Team')">👥 &nbsp;Team <span class="sb-count" id="sbc-team">0</span></div>
+    <div class="sb-item" onclick="filterCat('Reporting')">📊 &nbsp;Reporting <span class="sb-count" id="sbc-rep">0</span></div>
+  </div>
+  <div class="sb-div"></div>
+  <div class="sb-section">
+    <div class="sb-label">Personal</div>
+    <div class="sb-item" onclick="showView('growth')">🌱 &nbsp;Growth</div>
+    <div class="sb-item" onclick="showView('network')">🤝 &nbsp;Network</div>
+    <div class="sb-item" onclick="showView('setup')">⚙ &nbsp;Sheets Setup</div>
+  </div>
+  <div class="sb-div"></div>
+  <div class="sb-section">
+    <div style="padding:10px;background:var(--s2);border-radius:var(--r);border:1px solid var(--b1);">
+      <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--td);margin-bottom:6px;font-family:'JetBrains Mono',monospace;">Sheets Status</div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <div id="sheets-dot" style="width:7px;height:7px;border-radius:50%;background:var(--td);"></div>
+        <span id="sheets-status" style="font-size:11px;color:var(--tm);">Not connected</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- ══════════════ DASHBOARD ══════════════ -->
+<div class="view active au" id="view-dashboard">
+
+  <!-- Setup Banner -->
+  <div class="setup-banner" id="setupBanner">
+    <span style="font-size:28px;">📊</span>
+    <div class="setup-text">
+      <div class="setup-title">Connect Google Sheets to save your data permanently</div>
+      <div class="setup-sub">Your tasks are saved locally now. Connect Sheets to sync across all devices.</div>
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="showView('setup')">Setup Guide →</button>
+    <button class="btn btn-ghost btn-sm" onclick="document.getElementById('setupBanner').classList.add('hidden')" style="font-size:16px;padding:5px 8px;">×</button>
+  </div>
+
+  <!-- Smart Quick Capture -->
+  <div class="qcap" id="qcapWrap">
+    <span class="qcap-ico">⚡</span>
+    <input class="qcap-in" id="qcapIn" placeholder="اكتب تاسك... !غداً #Design @Ahmed — أو اضغط Enter للحفظ السريع" onkeydown="quickCapture(event)" oninput="previewCapture(this.value)">
+    <div id="qcapPreview" style="display:none;font-size:10px;font-family:'JetBrains Mono',monospace;gap:5px;align-items:center;flex-shrink:0;"></div>
+    <span class="kbd">Enter</span>
+  </div>
+  <div id="qcapHint" style="font-size:10px;color:var(--td);margin:-10px 0 14px 16px;font-family:'JetBrains Mono',monospace;">
+    !اليوم · !غداً · !+3 · #Design · @اسم_الشخص
+  </div>
+
+  <!-- Page Header -->
+  <div class="ph au d1">
+    <div>
+      <div class="ph-title">Good morning — <em>let's execute.</em></div>
+      <div class="ph-sub" id="dashSub">Loading...</div>
+    </div>
+    <div class="ph-right">
+      <button class="btn btn-primary" onclick="openAddModal()">+ New Task</button>
+    </div>
+  </div>
+
+  <!-- Alerts -->
+  <div id="alertArea" class="au d1"></div>
+
+  <!-- KPI Strip -->
+  <div class="kpi-strip au d2">
+    <div class="kpi" style="--kc:var(--gold)">
+      <div class="kpi-l">Tasks Today</div>
+      <div class="kpi-v" style="color:var(--gold)" id="k-today">—</div>
+      <div class="kpi-s">Active workload</div>
+    </div>
+    <div class="kpi" style="--kc:var(--green)">
+      <div class="kpi-l">Completed</div>
+      <div class="kpi-v" style="color:var(--green)" id="k-done">—</div>
+      <div class="kpi-s" id="k-done-pct">— done</div>
+    </div>
+    <div class="kpi" style="--kc:var(--rose)">
+      <div class="kpi-l">Overdue</div>
+      <div class="kpi-v" style="color:var(--rose)" id="k-ov">—</div>
+      <div class="kpi-s" id="k-ov-s">Needs action</div>
+    </div>
+    <div class="kpi" style="--kc:var(--amber)">
+      <div class="kpi-l">Waiting On</div>
+      <div class="kpi-v" style="color:var(--amber)" id="k-wait">—</div>
+      <div class="kpi-s">Blocked by others</div>
+    </div>
+    <div class="kpi" style="--kc:var(--blue)">
+      <div class="kpi-l">This Week</div>
+      <div class="kpi-v" style="color:var(--blue)" id="k-wk">—</div>
+      <div class="kpi-s">Open tasks</div>
+    </div>
+    <div class="kpi" style="--kc:var(--violet)">
+      <div class="kpi-l">Habit Score</div>
+      <div class="kpi-v" style="color:var(--violet)" id="k-habit">—</div>
+      <div class="kpi-s">This week</div>
+    </div>
+  </div>
+
+  <!-- Focus -->
+  <div class="focus au d2" id="focusPanel">
+    <span class="focus-ico">🎯</span>
+    <div style="flex:1;">
+      <div class="focus-l">Top Priority Right Now</div>
+      <div class="focus-t" id="focusTask">Loading top priority...</div>
+      <div class="focus-s" id="focusMeta">—</div>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="markFocusDone()">Mark Done</button>
+  </div>
+
+  <!-- Tasks + Team -->
+  <div class="g21 au d3">
+
+    <!-- Today Tasks -->
+    <div class="panel">
+      <div class="panel-h">
+        <div class="panel-t">Today's Tasks</div>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-ghost btn-sm" onclick="openAddModal()">+ Add</button>
+          <button class="btn btn-ghost btn-sm" onclick="showView('tasks')">All →</button>
+        </div>
+      </div>
+      <div class="panel-b0">
+        <div id="todaySection"></div>
+        <div id="overdueSection" style="border-top:1px solid var(--b1);"></div>
+      </div>
+    </div>
+
+    <!-- Right column -->
+    <div class="col">
+
+      <!-- Team Follow-up -->
+      <div class="panel">
+        <div class="panel-h">
+          <div class="panel-t">Team Follow-up</div>
+          <button class="btn btn-ghost btn-sm" onclick="showView('network')">All</button>
+        </div>
+        <div class="panel-b" id="teamFollowup">
+          <div style="color:var(--td);font-size:11px;">Add team contacts in Network tab</div>
+        </div>
+      </div>
+
+      <!-- Week Progress -->
+      <div class="panel">
+        <div class="panel-h"><div class="panel-t">Week Progress</div></div>
+        <div class="panel-b" id="weekProgress">
+          <div style="color:var(--td);font-size:11px;">Loading...</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom Row -->
+  <div class="g3 au d4">
+
+    <!-- Habits -->
+    <div class="panel">
+      <div class="panel-h">
+        <div class="panel-t">Daily Habits</div>
+        <button class="btn btn-ghost btn-sm" onclick="openHabitModal()">+ Habit</button>
+      </div>
+      <div class="panel-b" id="habitPanel">
+        <div style="color:var(--td);font-size:11px;">Add habits to track daily progress</div>
+      </div>
+    </div>
+
+    <!-- Goals -->
+    <div class="panel">
+      <div class="panel-h">
+        <div class="panel-t">Active Goals</div>
+        <button class="btn btn-ghost btn-sm" onclick="openGoalModal()">+ Goal</button>
+      </div>
+      <div class="panel-b" id="goalPanel">
+        <div style="color:var(--td);font-size:11px;">Add professional goals to track</div>
+      </div>
+    </div>
+
+    <!-- Reporting -->
+    <div class="panel">
+      <div class="panel-h">
+        <div class="panel-t">Reporting</div>
+        <span style="font-size:10px;color:var(--green);background:var(--greend);padding:2px 8px;border-radius:3px;">Dr. Kamal</span>
+      </div>
+      <div class="panel-b" id="reportPanel">
+        <div class="rm"><span class="rm-l">April Monthly Report</span><span class="rm-v" style="color:var(--rose);">Overdue</span></div>
+        <div class="rm"><span class="rm-l">Week 19 Summary</span><span class="rm-v" style="color:var(--green);">✓ Sent</span></div>
+        <div class="rm"><span class="rm-l">Campaign ROI Sheet</span><span class="rm-v" style="color:var(--amber);">Draft</span></div>
+        <div class="rm"><span class="rm-l">Ecom Performance</span><span class="rm-v" style="color:var(--tm);">May 22</span></div>
+        <div class="rm"><span class="rm-l">Google Maps Audit</span><span class="rm-v" style="color:var(--tm);">May 25</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ ALL TASKS ══════════════ -->
+<div class="view" id="view-tasks">
+  <div class="ph">
+    <div>
+      <div class="ph-title">Master <em>Tasks</em></div>
+      <div class="ph-sub" id="taskViewSub">All tasks</div>
+    </div>
+    <div class="ph-right">
+      <div style="display:flex;gap:4px;background:var(--s2);border-radius:8px;padding:3px;">
+        <button class="btn btn-ghost btn-sm" onclick="setFilter('all',this)" style="background:var(--s3);color:var(--tx);" id="ftab-all">All</button>
+        <button class="btn btn-ghost btn-sm" onclick="setFilter('open',this)" id="ftab-open">Open</button>
+        <button class="btn btn-ghost btn-sm" onclick="setFilter('urgent',this)" id="ftab-urgent">Urgent</button>
+        <button class="btn btn-ghost btn-sm" onclick="setFilter('done',this)" id="ftab-done">Done</button>
+      </div>
+      <button class="btn btn-primary" onclick="openAddModal()">+ New Task</button>
+    </div>
+  </div>
+
+  <!-- Smart Search -->
+  <div class="search-strip">
+    <span class="search-ico">⌕</span>
+    <input class="search-input" id="taskSearch" placeholder="Search anything: task name, related person, department, category, e-commerce, marketing, status, WhatsApp, email..." oninput="setSearch(this.value)">
+    <span class="search-hint" id="searchHint">All columns search</span>
+    <button class="btn btn-ghost btn-sm" onclick="clearSearch()">Clear</button>
+  </div>
+
+  <!-- Filter Pills -->
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;" id="catPills">
+    <span class="tag t-mkt" style="padding:4px 10px;cursor:pointer;font-size:10px;" onclick="filterCat('Marketing')">📣 Marketing</span>
+    <span class="tag t-cam" style="padding:4px 10px;cursor:pointer;font-size:10px;" onclick="filterCat('Campaigns')">🎯 Campaigns</span>
+    <span class="tag t-eco" style="padding:4px 10px;cursor:pointer;font-size:10px;" onclick="filterCat('Ecommerce')">🛒 Ecommerce</span>
+    <span class="tag t-des" style="padding:4px 10px;cursor:pointer;font-size:10px;" onclick="filterCat('Design')">🎨 Design</span>
+    <span class="tag t-map" style="padding:4px 10px;cursor:pointer;font-size:10px;" onclick="filterCat('Google Maps')">📍 Maps</span>
+    <span class="tag t-team" style="padding:4px 10px;cursor:pointer;font-size:10px;" onclick="filterCat('Team')">👥 Team</span>
+    <span class="tag t-rep" style="padding:4px 10px;cursor:pointer;font-size:10px;" onclick="filterCat('Reporting')">📊 Reporting</span>
+    <span style="padding:4px 10px;cursor:pointer;font-size:10px;color:var(--tm);background:var(--s2);border-radius:3px;font-family:'JetBrains Mono',monospace;" onclick="filterCat('all')">✕ Clear</span>
+  </div>
+
+  <div class="panel">
+    <div class="panel-b0" style="overflow-x:auto;max-height:calc(100vh - 220px);overflow-y:auto;">
+      <table class="tbl" id="masterTable">
+        <thead>
+          <tr>
+            <th style="width:30px;"></th>
+            <th>Task ID</th>
+            <th>Task Name</th>
+            <th>Department</th>
+            <th>Category</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Due Date</th>
+            <th>Follow-up Date</th>
+            <th>Owner</th>
+            <th>Related Person</th>
+            <th>Related Person Role</th>
+            <th>WhatsApp Number</th>
+            <th>WhatsApp Link</th>
+            <th>Email</th>
+            <th>Next Action</th>
+            <th>Communication Needed</th>
+            <th>Message Template</th>
+            <th>Last Follow-up</th>
+            <th>Last Response</th>
+            <th>Waiting On</th>
+            <th>KPI Impact</th>
+            <th>Effort Level</th>
+            <th>Risk Level</th>
+            <th>Management Visibility</th>
+            <th>Recurring</th>
+            <th>Recurrence Rule</th>
+            <th>Expected Output</th>
+            <th>Blocker</th>
+            <th>Quick Notes</th>
+            <th>Links / Files</th>
+            <th>Created Date</th>
+            <th>Updated Date</th>
+            <th>Completed Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="taskTbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ WEEKLY ══════════════ -->
+<div class="view" id="view-weekly">
+  <div class="ph">
+    <div>
+      <div class="ph-title">Week <em id="wkNum">—</em> — Executive View</div>
+      <div class="ph-sub" id="wkRange">—</div>
+    </div>
+    <button class="btn btn-primary" onclick="openAddModal()">+ Add Task</button>
+  </div>
+
+  <div class="kpi-strip" style="grid-template-columns:repeat(5,1fr);">
+    <div class="kpi" style="--kc:var(--gold)"><div class="kpi-l">Total</div><div class="kpi-v" style="color:var(--gold)" id="wk-total">—</div><div class="kpi-s">This week</div></div>
+    <div class="kpi" style="--kc:var(--green)"><div class="kpi-l">Done</div><div class="kpi-v" style="color:var(--green)" id="wk-done">—</div><div class="kpi-s" id="wk-pct">—</div></div>
+    <div class="kpi" style="--kc:var(--rose)"><div class="kpi-l">Overdue</div><div class="kpi-v" style="color:var(--rose)" id="wk-ov">—</div><div class="kpi-s">Needs recovery</div></div>
+    <div class="kpi" style="--kc:var(--amber)"><div class="kpi-l">Blocked</div><div class="kpi-v" style="color:var(--amber)" id="wk-blk">—</div><div class="kpi-s">Waiting on others</div></div>
+    <div class="kpi" style="--kc:var(--blue)"><div class="kpi-l">Campaigns</div><div class="kpi-v" style="color:var(--blue)" id="wk-cam">—</div><div class="kpi-s">Active</div></div>
+  </div>
+
+  <div class="sec-t">5-Day Execution Grid</div>
+  <div class="wk-grid" id="weekGrid"></div>
+
+  <div class="g2">
+    <div class="panel">
+      <div class="panel-h"><div class="panel-t">Recurring This Week</div><span style="font-size:10px;color:var(--tm);">Auto-generated</span></div>
+      <div class="panel-b0 panel-scroll" id="recurringList"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-h">
+        <div class="panel-t">Management Report</div>
+        <span style="font-size:10px;background:var(--greend);color:var(--green);padding:2px 8px;border-radius:3px;">Dr. Kamal</span>
+      </div>
+      <div class="panel-b" id="mgmtReport">
+        <div style="background:var(--s2);border-radius:var(--r);padding:12px;font-size:11px;color:var(--tm);line-height:1.8;" id="mgmtText">Loading report...</div>
+        <button class="btn btn-ghost btn-sm" style="margin-top:10px;width:100%;justify-content:center;" onclick="generateReport()">📋 Generate Weekly Summary</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CAMPAIGNS ══════════════ -->
+<div class="view" id="view-campaigns">
+  <div class="ph">
+    <div><div class="ph-title">Campaign <em>Control</em></div><div class="ph-sub">Paid · Organic · Content</div></div>
+    <button class="btn btn-primary" onclick="openAddModal('Campaigns')">+ Campaign Task</button>
+  </div>
+  <div class="g2">
+    <div class="panel">
+      <div class="panel-h"><div class="panel-t">Active Campaigns</div></div>
+      <div class="panel-b">
+        <div style="background:var(--s2);border:1px solid var(--b1);border-radius:var(--r);padding:12px;margin-bottom:10px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+            <div style="font-size:13px;font-weight:700;">May Wellness Promo — Meta</div>
+            <span class="status s-prog">Running</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;margin-bottom:10px;">
+            <div><div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);">4.2%</div><div style="font-size:9px;color:var(--tm);">CTR</div></div>
+            <div><div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);">AED 18</div><div style="font-size:9px;color:var(--tm);">CPC</div></div>
+            <div><div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);">142</div><div style="font-size:9px;color:var(--tm);">Leads</div></div>
+          </div>
+          <div class="pbar" style="--pc:var(--green);"><div class="pfill" style="width:65%;"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--tm);margin-top:4px;"><span>AED 5,000 / 7,700</span><span>Ends Jun 1</span></div>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--b1);border-radius:var(--r);padding:12px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+            <div style="font-size:13px;font-weight:700;">Branch Awareness — Google</div>
+            <span class="status s-prog">Running</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;margin-bottom:10px;">
+            <div><div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--teal);">3.8%</div><div style="font-size:9px;color:var(--tm);">CTR</div></div>
+            <div><div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--teal);">AED 12</div><div style="font-size:9px;color:var(--tm);">CPC</div></div>
+            <div><div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--teal);">88</div><div style="font-size:9px;color:var(--tm);">Clicks</div></div>
+          </div>
+          <div class="pbar" style="--pc:var(--blue);"><div class="pfill" style="width:42%;"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--tm);margin-top:4px;"><span>AED 2,100 / 5,000</span><span>Ends May 31</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><div class="panel-t">Campaign Tasks</div></div>
+      <div class="panel-b0 panel-scroll" id="campaignTasks"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ GROWTH ══════════════ -->
+<div class="view" id="view-growth">
+  <div class="ph">
+    <div><div class="ph-title">Personal <em>Growth</em></div><div class="ph-sub">Habits · Goals · Learning</div></div>
+    <div class="ph-right">
+      <button class="btn btn-ghost" onclick="openHabitModal()">+ Habit</button>
+      <button class="btn btn-ghost" onclick="openGoalModal()">+ Goal</button>
+      <button class="btn btn-primary" onclick="openLearnModal()">+ Course</button>
+    </div>
+  </div>
+  <div class="g2">
+    <div class="col">
+      <div class="panel">
+        <div class="panel-h"><div class="panel-t">Daily Habits</div><span id="habitScore" style="font-size:10px;color:var(--tm);">—</span></div>
+        <div class="panel-b" id="habitList2"><div style="color:var(--td);font-size:11px;">No habits yet. Add your first habit.</div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-h"><div class="panel-t">Learning & Development</div></div>
+        <div class="panel-b" id="learnList"><div style="color:var(--td);font-size:11px;">No courses added yet.</div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><div class="panel-t">Professional Goals</div></div>
+      <div class="panel-b" id="goalList"><div style="color:var(--td);font-size:11px;">No goals added yet. Set your first goal.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ NETWORK ══════════════ -->
+<div class="view" id="view-network">
+  <div class="ph">
+    <div><div class="ph-title">Professional <em>Network</em></div><div class="ph-sub">Team · Partners · Stakeholders</div></div>
+    <button class="btn btn-primary" onclick="openContactModal()">+ Contact</button>
+  </div>
+  <div class="g2">
+    <div class="panel">
+      <div class="panel-h"><div class="panel-t">Team & Collaborators</div></div>
+      <div class="panel-b" id="contactList"><div style="color:var(--td);font-size:11px;">No contacts added yet.</div></div>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><div class="panel-t">Follow-up Queue</div></div>
+      <div class="panel-b" id="fuQueue"><div style="color:var(--td);font-size:11px;">Add contacts to start tracking follow-ups.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SETUP ══════════════ -->
+<div class="view" id="view-setup">
+  <div class="ph">
+    <div><div class="ph-title">Google Sheets <em>Setup</em></div><div class="ph-sub">Connect your database in 5 minutes</div></div>
+  </div>
+
+  <div class="panel" style="margin-bottom:14px;">
+    <div class="panel-h"><div class="panel-t">Step 1 — Your Google Sheet URL</div></div>
+    <div class="panel-b">
+      <div class="fg">
+        <label class="flabel">Paste your Google Apps Script Web App URL</label>
+        <input class="finput" id="sheetsUrl" placeholder="https://script.google.com/macros/s/YOUR_ID/exec" value="">
+      </div>
+      <div style="margin-top:10px;display:flex;gap:8px;">
+        <button class="btn btn-primary" onclick="saveSheetUrl()">💾 Save & Connect</button>
+        <button class="btn btn-ghost" onclick="testConnection()">🔌 Test Connection</button>
+        <button class="btn btn-ghost" onclick="loadFromSheets(true)">⬇ Load From Sheets</button>
+        <button class="btn btn-ghost" onclick="pushToSheets()">⬆ Push Local Data to Sheets</button>
+      </div>
+      <div id="connStatus" style="margin-top:10px;font-size:11px;color:var(--tm);font-family:'JetBrains Mono',monospace;"></div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-bottom:14px;">
+    <div class="panel-h"><div class="panel-t">Step 2 — Google Apps Script Code</div></div>
+    <div class="panel-b">
+      <div style="font-size:12px;color:var(--tm);margin-bottom:12px;line-height:1.7;">
+        1. Go to <strong style="color:var(--blue);">sheets.google.com</strong> → create a new sheet named <strong style="color:var(--gold);">Pro Life OS</strong><br>
+        2. Go to <strong style="color:var(--blue);">Extensions → Apps Script</strong><br>
+        3. Delete everything and paste this code:<br>
+        4. Click <strong style="color:var(--gold);">Deploy → New Deployment → Web App</strong><br>
+        5. Set "Who has access" to <strong style="color:var(--gold);">Anyone</strong><br>
+        6. Copy the Web App URL and paste it above<br>        7. Any task added in the page writes to Sheets, and any row added in Sheets appears after refresh / Load From Sheets
+      </div>
+      <div style="background:var(--s2);border:1px solid var(--b2);border-radius:var(--r);padding:14px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--tx);overflow-x:auto;white-space:pre;line-height:1.7;" id="appsScriptCode"></div>
+      <button class="btn btn-ghost btn-sm" style="margin-top:10px;" onclick="copyScript()">📋 Copy Code</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-h"><div class="panel-t">Sheet Columns (Auto-created)</div></div>
+    <div class="panel-b">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+        <div style="background:var(--s2);border-radius:var(--r);padding:8px 10px;font-size:11px;"><div style="color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:9px;margin-bottom:3px;">Tasks Sheet</div>33 columns: Task ID → Completed Date</div>
+        <div style="background:var(--s2);border-radius:var(--r);padding:8px 10px;font-size:11px;"><div style="color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:9px;margin-bottom:3px;">Habits Sheet</div>id · name · color · streak · history (dates)</div>
+        <div style="background:var(--s2);border-radius:var(--r);padding:8px 10px;font-size:11px;"><div style="color:var(--violet);font-family:'JetBrains Mono',monospace;font-size:9px;margin-bottom:3px;">Goals Sheet</div>id · title · deadline · progress · notes</div>
+        <div style="background:var(--s2);border-radius:var(--r);padding:8px 10px;font-size:11px;"><div style="color:var(--blue);font-family:'JetBrains Mono',monospace;font-size:9px;margin-bottom:3px;">Related Persons Sheet</div>Person ID · Person Name · Role · Department · WhatsApp Number · WhatsApp Link · Email · Default Send Method</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+</div><!-- /shell -->
+
+
+
+<!-- Production Task Detail Drawer -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeTaskPanel()"></div>
+<aside class="task-drawer" id="taskDrawer">
+  <div class="drawer-h">
+    <div style="flex:1;min-width:0;">
+      <div class="drawer-title" id="drawerTaskTitle">Task Details</div>
+      <div class="drawer-sub" id="drawerTaskMeta">—</div>
+    </div>
+    <button class="drawer-close" onclick="closeTaskPanel()">×</button>
+  </div>
+  <div class="drawer-b" id="drawerBody"></div>
+</aside>
+
+<!-- ══════════════ MODALS ══════════════ -->
+
+<!-- Task Modal -->
+<div class="overlay" id="taskModal">
+  <div class="modal">
+    <div class="modal-h">
+      <div class="modal-title" id="modalTitle">New Task</div>
+      <div class="modal-x" onclick="closeModal('taskModal')">×</div>
+    </div>
+    <div class="modal-b">
+      <input type="hidden" id="editId">
+      <div class="fg"><label class="flabel">Task Name *</label><input class="finput" id="f-name" placeholder="e.g. Review ad creatives for May campaign"></div>
+      <div class="fg"><label class="flabel">Department</label><input class="finput" id="f-dept" placeholder="e.g. Marketing / E-commerce / Operations"></div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">Category</label>
+          <select class="fselect" id="f-cat">
+            <option>Marketing</option><option>Campaigns</option><option>Ecommerce</option>
+            <option>Design</option><option>Google Maps</option><option>Team</option>
+            <option>Reporting</option><option>Operations</option>
+          </select>
+        </div>
+        <div class="fg"><label class="flabel">Priority</label>
+          <select class="fselect" id="f-pri">
+            <option>Critical</option><option>High</option><option selected>Medium</option><option>Low</option><option>Backlog</option>
+          </select>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">Status</label>
+          <select class="fselect" id="f-status">
+            <option>To Do</option><option>In Progress</option><option>Waiting</option><option>In Review</option><option>Done</option><option>Blocked</option>
+          </select>
+        </div>
+        <div class="fg"><label class="flabel">Recurring</label>
+          <select class="fselect" id="f-rec">
+            <option>None</option><option>Daily</option><option>Weekly</option><option>Bi-weekly</option><option>Monthly</option>
+          </select>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">Due Date</label><input class="finput" id="f-due" type="date"></div>
+        <div class="fg"><label class="flabel">Owner</label><input class="finput" id="f-owner" placeholder="Self" value="Self"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">Related Person / To Inform</label><div style="display:flex;gap:6px;"><select class="fselect" id="f-person" onchange="applySelectedContactToTask()"><option value="">— Select saved person —</option></select><button type="button" class="btn btn-ghost btn-sm" onclick="openContactModal()" title="Add new person">+</button></div><div style="font-size:10px;color:var(--tm);margin-top:4px;">اختار الشخص مرة واحدة وسيتم ملء الرقم والإيميل والدور تلقائيًا من Contacts Database.</div></div>
+        <div class="fg"><label class="flabel">Related Person Role</label><input class="finput" id="f-role" placeholder="e.g. Manager / Designer / Supplier"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">WhatsApp Number</label><input class="finput" id="f-wa" placeholder="9665XXXXXXXX"></div>
+        <div class="fg"><label class="flabel">Send By / Communication Channel</label><select class="fselect" id="f-comm"><option>No</option><option>WhatsApp</option><option>Email</option><option>WhatsApp + Email</option><option>Call</option></select><div style="font-size:10px;color:var(--tm);margin-top:4px;">اختار هتبعت واتساب ولا إيميل ولا الاتنين.</div></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">Email</label><input class="finput" id="f-email" placeholder="name@email.com"></div>
+        <div class="fg"><label class="flabel">Follow-up Date</label><input class="finput" id="f-follow" type="date"></div>
+      </div>
+      <div class="fg"><label class="flabel">Next Action</label><input class="finput" id="f-next" placeholder="e.g. Send approval reminder / Upload banner"></div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">Waiting On</label><input class="finput" id="f-wait" placeholder="e.g. Designer / Supplier / Management"></div>
+        <div class="fg"><label class="flabel">KPI Impact</label><input class="finput" id="f-kpi" placeholder="e.g. Sales / Leads / Execution / Compliance"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">Effort Level</label><select class="fselect" id="f-effort"><option></option><option>Low</option><option>Medium</option><option>High</option></select></div>
+        <div class="fg"><label class="flabel">Risk Level</label><select class="fselect" id="f-risk"><option></option><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">Management Visibility</label><select class="fselect" id="f-vis"><option></option><option>Low</option><option>Medium</option><option>High</option><option>Executive</option></select></div>
+        <div class="fg"><label class="flabel">Recurrence Rule</label><input class="finput" id="f-rule" placeholder="e.g. Weekly Sunday / Monthly day 2"></div>
+      </div>
+      <div class="fg"><label class="flabel">Expected Output</label><input class="finput" id="f-output" placeholder="What final output should be delivered?"></div>
+      <div class="fg"><label class="flabel">Blocker</label><input class="finput" id="f-blocker" placeholder="Any blocker preventing completion?"></div>
+      <div class="fg"><label class="flabel">Quick Notes</label><input class="finput" id="f-notes" placeholder="Internal notes"></div>
+      <div class="fg"><label class="flabel">Links / Files</label><input class="finput" id="f-links" placeholder="Paste related links or file names"></div>
+      <div class="fg"><label class="flabel">Prepared Message</label><textarea class="finput" id="f-msg" rows="3" placeholder="Write or auto-generate the message you will send..."></textarea></div>
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-danger btn-sm" id="delBtn" onclick="deleteTask()" style="display:none;margin-right:auto;">🗑 Delete</button>
+      <button class="btn btn-ghost" onclick="closeModal('taskModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTask()">Save Task</button>
+    </div>
+  </div>
+</div>
+
+<!-- Habit Modal -->
+<div class="overlay" id="habitModal">
+  <div class="modal" style="width:400px;">
+    <div class="modal-h"><div class="modal-title">New Habit</div><div class="modal-x" onclick="closeModal('habitModal')">×</div></div>
+    <div class="modal-b">
+      <div class="fg"><label class="flabel">Habit Name</label><input class="finput" id="h-name" placeholder="e.g. Read 30 minutes"></div>
+      <div class="fg"><label class="flabel">Color</label>
+        <select class="fselect" id="h-color">
+          <option value="gold">Gold</option><option value="teal">Teal</option>
+          <option value="rose">Rose</option><option value="blue">Blue</option>
+          <option value="violet">Violet</option><option value="green">Green</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-ghost" onclick="closeModal('habitModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveHabit()">Add Habit</button>
+    </div>
+  </div>
+</div>
+
+<!-- Goal Modal -->
+<div class="overlay" id="goalModal">
+  <div class="modal" style="width:420px;">
+    <div class="modal-h"><div class="modal-title">New Goal</div><div class="modal-x" onclick="closeModal('goalModal')">×</div></div>
+    <div class="modal-b">
+      <div class="fg"><label class="flabel">Goal Title</label><input class="finput" id="g-title" placeholder="e.g. Launch 3 successful campaigns this quarter"></div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">Target Date</label><input class="finput" id="g-dead" type="date"></div>
+        <div class="fg"><label class="flabel">Progress %</label><input class="finput" id="g-prog" type="number" min="0" max="100" value="0" placeholder="0"></div>
+      </div>
+      <div class="fg"><label class="flabel">Notes</label><input class="finput" id="g-notes" placeholder="Key milestones or context"></div>
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-ghost" onclick="closeModal('goalModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveGoal()">Add Goal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Learn Modal -->
+<div class="overlay" id="learnModal">
+  <div class="modal" style="width:420px;">
+    <div class="modal-h"><div class="modal-title">New Course / Book</div><div class="modal-x" onclick="closeModal('learnModal')">×</div></div>
+    <div class="modal-b">
+      <div class="fg"><label class="flabel">Title</label><input class="finput" id="l-title" placeholder="e.g. Google Ads Mastery Course"></div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">Type</label>
+          <select class="fselect" id="l-type">
+            <option>Course</option><option>Book</option><option>Podcast</option><option>Workshop</option>
+          </select>
+        </div>
+        <div class="fg"><label class="flabel">Progress %</label><input class="finput" id="l-prog" type="number" min="0" max="100" value="0"></div>
+      </div>
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-ghost" onclick="closeModal('learnModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveLearn()">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- Contact Modal -->
+<div class="overlay" id="contactModal">
+  <div class="modal" style="width:520px;">
+    <div class="modal-h"><div class="modal-title">Contact Database — WhatsApp + Email</div><div class="modal-x" onclick="closeModal('contactModal')">×</div></div>
+    <div class="modal-b">
+      <div class="fg"><label class="flabel">Person Name *</label><input class="finput" id="c-name" placeholder="e.g. Dr. Kamal / Karim Designer / Moaz"></div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">Role</label><input class="finput" id="c-role" placeholder="Manager / Designer / E-commerce..."></div>
+        <div class="fg"><label class="flabel">Department / Section</label><input class="finput" id="c-dept" placeholder="Marketing / E-commerce / Management"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">WhatsApp Number *</label><input class="finput" id="c-wa" placeholder="+9665XXXXXXXX"></div>
+        <div class="fg"><label class="flabel">Email *</label><input class="finput" id="c-email" placeholder="name@email.com"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">Default Send Method</label><select class="fselect" id="c-comm"><option>WhatsApp</option><option>Email</option><option>WhatsApp + Email</option><option>Call</option><option>No</option></select></div>
+        <div class="fg"><label class="flabel">Color</label>
+          <select class="fselect" id="c-color">
+            <option value="gold">Gold</option><option value="teal">Teal</option>
+            <option value="rose">Rose</option><option value="blue">Blue</option>
+            <option value="violet">Violet</option><option value="green">Green</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label class="flabel">Default Message Template</label><textarea class="finput" id="c-msg" rows="3" placeholder="رسالة افتراضية تظهر تلقائيًا عند اختيار الشخص في أي Task"></textarea><div style="font-size:10px;color:var(--tm);margin-top:4px;">كل Contact محفوظ برقم واتساب + إيميل، وانت تختار في التاسك طريقة الإرسال.</div></div>
+      <div class="fg"><label class="flabel">Notes</label><input class="finput" id="c-note" placeholder="Any note about this person"></div>
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-ghost" onclick="closeModal('contactModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveContact()">Add Contact</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast hidden" id="toast">
+  <span id="toastIcon">✓</span>
+  <span id="toastMsg">Saved</span>
+</div>
+
+<script>
+// ════════════════════════════════════════
+// STORAGE KEYS
+// ════════════════════════════════════════
+const LS = {
+  tasks:    'prolife_tasks_v2',
+  habits:   'prolife_habits_v1',
+  goals:    'prolife_goals_v1',
+  learn:    'prolife_learn_v1',
+  contacts: 'prolife_contacts_v1',
+  sheetsUrl:'prolife_sheets_url',
+};
+
+// ════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════
+let tasks=[], habits=[], goals=[], learn=[], contacts=[];
+let sheetsUrl='';
+let taskFilter='all', catFilter='all', searchQuery='';
+let nextId = Date.now();
+
+const TASK_COLUMNS = [
+  "Task ID",
+  "Task Name",
+  "Department",
+  "Category",
+  "Priority",
+  "Status",
+  "Due Date",
+  "Follow-up Date",
+  "Owner",
+  "Related Person",
+  "Related Person Role",
+  "WhatsApp Number",
+  "WhatsApp Link",
+  "Email",
+  "Next Action",
+  "Communication Needed",
+  "Message Template",
+  "Last Follow-up",
+  "Last Response",
+  "Waiting On",
+  "KPI Impact",
+  "Effort Level",
+  "Risk Level",
+  "Management Visibility",
+  "Recurring",
+  "Recurrence Rule",
+  "Expected Output",
+  "Blocker",
+  "Quick Notes",
+  "Links / Files",
+  "Created Date",
+  "Updated Date",
+  "Completed Date"
+];
+
+function cleanPhoneForWa(n) {
+  return String(n||'').replace(/[^0-9]/g,'').replace(/^00/,'');
+}
+function taskIdLabel(id) {
+  const n = parseInt(id,10);
+  return isNaN(n) ? String(id||'') : `TASK-${String(n).padStart(3,'0')}`;
+}
+function getTaskCol(t, col) {
+  const map = {
+    "Task ID": taskIdLabel(t.id),
+    "Task Name": t.name || '',
+    "Department": t.department || '',
+    "Category": t.category || '',
+    "Priority": t.priority || '',
+    "Status": t.status || '',
+    "Due Date": t.due || '',
+    "Follow-up Date": t.followUp || '',
+    "Owner": t.owner || '',
+    "Related Person": t.relatedPerson || '',
+    "Related Person Role": t.relatedPersonRole || '',
+    "WhatsApp Number": t.whatsapp || '',
+    "WhatsApp Link": t.whatsappLink || (cleanPhoneForWa(t.whatsapp) ? `https://wa.me/${cleanPhoneForWa(t.whatsapp)}` : ''),
+    "Email": t.email || '',
+    "Next Action": t.nextAction || '',
+    "Communication Needed": t.communicationNeeded || '',
+    "Message Template": t.messageTemplate || '',
+    "Last Follow-up": t.lastFollowUp || '',
+    "Last Response": t.lastResponse || '',
+    "Waiting On": t.waitingOn || '',
+    "KPI Impact": t.kpiImpact || '',
+    "Effort Level": t.effortLevel || '',
+    "Risk Level": t.riskLevel || '',
+    "Management Visibility": t.managementVisibility || '',
+    "Recurring": t.recurring || 'None',
+    "Recurrence Rule": t.recurrenceRule || '',
+    "Expected Output": t.expectedOutput || '',
+    "Blocker": t.blocker || '',
+    "Quick Notes": t.quickNotes || '',
+    "Links / Files": t.linksFiles || '',
+    "Created Date": t.createdAt || '',
+    "Updated Date": t.updatedAt || '',
+    "Completed Date": t.completedAt || ''
+  };
+  return map[col] ?? '';
+}
+function normalizeTask(raw) {
+  raw = raw || {};
+  const rawId = raw.id || raw["Task ID"] || raw["id"] || nextId++;
+  const nId = parseInt(String(rawId).replace(/[^0-9]/g,''),10);
+  const status = raw.status || raw["Status"] || 'To Do';
+  const created = raw.createdAt || raw["Created Date"] || raw.created || '';
+  const updated = raw.updatedAt || raw["Updated Date"] || created || '';
+  const completed = raw.completedAt || raw["Completed Date"] || '';
+  const wa = raw.whatsapp || raw["WhatsApp Number"] || raw.whatsappNumber || '';
+  return {
+    id: isNaN(nId) ? nextId++ : nId,
+    name: raw.name || raw["Task Name"] || raw.task || '',
+    department: raw.department || raw["Department"] || '',
+    category: raw.category || raw["Category"] || 'Marketing',
+    priority: raw.priority || raw["Priority"] || 'Medium',
+    status,
+    due: raw.due || raw["Due Date"] || '',
+    followUp: raw.followUp || raw["Follow-up Date"] || '',
+    owner: raw.owner || raw["Owner"] || 'Self',
+    relatedPerson: raw.relatedPerson || raw["Related Person"] || '',
+    relatedPersonRole: raw.relatedPersonRole || raw["Related Person Role"] || '',
+    whatsapp: wa,
+    whatsappLink: raw.whatsappLink || raw["WhatsApp Link"] || (cleanPhoneForWa(wa) ? `https://wa.me/${cleanPhoneForWa(wa)}` : ''),
+    email: raw.email || raw["Email"] || '',
+    nextAction: raw.nextAction || raw["Next Action"] || '',
+    communicationNeeded: raw.communicationNeeded || raw["Communication Needed"] || '',
+    messageTemplate: raw.messageTemplate || raw["Message Template"] || '',
+    lastFollowUp: raw.lastFollowUp || raw["Last Follow-up"] || '',
+    lastResponse: raw.lastResponse || raw["Last Response"] || '',
+    waitingOn: raw.waitingOn || raw["Waiting On"] || '',
+    kpiImpact: raw.kpiImpact || raw["KPI Impact"] || '',
+    effortLevel: raw.effortLevel || raw["Effort Level"] || '',
+    riskLevel: raw.riskLevel || raw["Risk Level"] || '',
+    managementVisibility: raw.managementVisibility || raw["Management Visibility"] || '',
+    recurring: raw.recurring || raw["Recurring"] || 'None',
+    recurrenceRule: raw.recurrenceRule || raw["Recurrence Rule"] || '',
+    expectedOutput: raw.expectedOutput || raw["Expected Output"] || '',
+    blocker: raw.blocker || raw["Blocker"] || '',
+    quickNotes: raw.quickNotes || raw["Quick Notes"] || '',
+    linksFiles: raw.linksFiles || raw["Links / Files"] || '',
+    createdAt: created,
+    updatedAt: updated,
+    completedAt: completed,
+    commLog: raw.commLog || [],
+    done: raw.done === true || raw.done === 'TRUE' || status === 'Done' || status === 'Completed'
+  };
+}
+function taskSheetRow(t) { return TASK_COLUMNS.reduce((o,c)=>{o[c]=getTaskCol(t,c); return o;},{}); }
+
+const CONTACT_COLUMNS = ["Person ID","Person Name","Role","Department","WhatsApp Number","WhatsApp Link","Email","Default Communication","Default Message Template","Notes","Color","Created Date","Updated Date"];
+function contactIdLabel(id){ const n=parseInt(id,10); return isNaN(n)?String(id||''):`PERSON-${String(n).padStart(3,'0')}`; }
+function getContactCol(c, col){
+  const phone = c.whatsapp || '';
+  const map = {
+    "Person ID": contactIdLabel(c.id),
+    "Person Name": c.name || '',
+    "Role": c.role || '',
+    "Department": c.department || '',
+    "WhatsApp Number": phone,
+    "WhatsApp Link": c.whatsappLink || (cleanPhoneForWa(phone) ? `https://wa.me/${cleanPhoneForWa(phone)}` : ''),
+    "Email": c.email || '',
+    "Default Communication": c.defaultCommunication || 'WhatsApp',
+    "Default Message Template": c.defaultMessage || '',
+    "Notes": c.note || '',
+    "Color": c.color || 'gold',
+    "Created Date": c.createdAt || '',
+    "Updated Date": c.updatedAt || ''
+  };
+  return map[col] ?? '';
+}
+function normalizeContact(raw){
+  raw = raw || {};
+  const rawId = raw.id || raw["Person ID"] || raw["id"] || nextId++;
+  const nId = parseInt(String(rawId).replace(/[^0-9]/g,''),10);
+  let wa = raw.whatsapp || raw["WhatsApp Number"] || raw.whatsappNumber || '';
+  let email = raw.email || raw["Email"] || '';
+  let waLink = raw.whatsappLink || raw["WhatsApp Link"] || '';
+  if (!email && String(waLink).includes('@')) { email = waLink; waLink = ''; }
+  if (!wa && waLink && !String(waLink).includes('@')) wa = waLink;
+  return {
+    id: isNaN(nId) ? nextId++ : nId,
+    name: raw.name || raw["Person Name"] || raw["Name"] || '',
+    role: raw.role || raw["Role"] || '',
+    department: raw.department || raw["Department"] || '',
+    whatsapp: wa,
+    whatsappLink: waLink || (cleanPhoneForWa(wa) ? `https://wa.me/${cleanPhoneForWa(wa)}` : ''),
+    email: email,
+    defaultCommunication: raw.defaultCommunication || raw["Default Communication"] || raw["Default Send Method"] || 'WhatsApp',
+    defaultMessage: raw.defaultMessage || raw["Default Message Template"] || '',
+    note: raw.note || raw["Notes"] || raw["Pending Task / Note"] || '',
+    color: raw.color || raw["Color"] || 'gold',
+    createdAt: raw.createdAt || raw["Created Date"] || '',
+    updatedAt: raw.updatedAt || raw["Updated Date"] || ''
+  };
+}
+function contactSheetRow(c){ return CONTACT_COLUMNS.reduce((o,col)=>{o[col]=getContactCol(c,col); return o;},{}); }
+function findContactByName(name){ const q=String(name||'').trim().toLowerCase(); return contacts.find(c=>String(c.name||'').trim().toLowerCase()===q); }
+function refreshContactDropdown(selectedName=''){
+  const sel=document.getElementById('f-person'); if(!sel) return;
+  const current = selectedName || sel.value || '';
+  const opts=['<option value="">— Select saved person —</option>'].concat(contacts.map(c=>`<option value="${esc(c.name)}">${esc(c.name)}${c.role?' — '+esc(c.role):''}</option>`));
+  sel.innerHTML=opts.join('');
+  if(current){
+    const exists=[...sel.options].some(o=>o.value===current);
+    if(!exists) sel.insertAdjacentHTML('beforeend',`<option value="${esc(current)}">${esc(current)} — unsaved</option>`);
+    sel.value=current;
+  }
+}
+function applySelectedContactToTask(){
+  const name=document.getElementById('f-person')?.value || '';
+  const c=findContactByName(name); if(!c) return;
+  document.getElementById('f-role').value=c.role||'';
+  document.getElementById('f-wa').value=c.whatsapp||'';
+  document.getElementById('f-email').value=c.email||'';
+  document.getElementById('f-comm').value=c.defaultCommunication||'WhatsApp';
+  const msgEl=document.getElementById('f-msg');
+  if(c.defaultMessage && !msgEl.value.trim()) msgEl.value=c.defaultMessage;
+}
+
+
+const DEFAULT_TASKS=[
+  {id:1,name:'Review & approve ad creatives for Meta campaign',category:'Campaigns',priority:'Critical',status:'In Progress',due:'2026-05-16',owner:'Self',recurring:'None',done:false},
+  {id:2,name:'Send video assets to editor — campaign reel',category:'Marketing',priority:'High',status:'To Do',due:'2026-05-16',owner:'Self',recurring:'Weekly',done:false},
+  {id:3,name:'Check campaign performance metrics — Meta Ads',category:'Campaigns',priority:'High',status:'Done',due:'2026-05-16',owner:'Self',recurring:'Daily',done:true},
+  {id:4,name:'Follow up with designer — branch signage designs',category:'Design',priority:'High',status:'Waiting',due:'2026-05-14',owner:'Self',recurring:'None',done:false},
+  {id:5,name:'Upload 5 ecommerce product descriptions',category:'Ecommerce',priority:'Medium',status:'In Progress',due:'2026-05-18',owner:'Self',recurring:'None',done:false},
+  {id:6,name:'Coordinate printing for new promo materials',category:'Design',priority:'Medium',status:'To Do',due:'2026-05-20',owner:'Self',recurring:'None',done:false},
+  {id:7,name:'Follow up on Google Maps branch verification',category:'Google Maps',priority:'Medium',status:'Waiting',due:'2026-05-13',owner:'Self',recurring:'None',done:false},
+  {id:8,name:'Review influencer UGC content submissions',category:'Marketing',priority:'Low',status:'Done',due:'2026-05-15',owner:'Self',recurring:'None',done:true},
+  {id:9,name:'Draft April monthly performance report',category:'Reporting',priority:'Critical',status:'In Progress',due:'2026-05-14',owner:'Self',recurring:'Monthly',done:false},
+  {id:10,name:'Coordinate WhatsApp campaign broadcast',category:'Campaigns',priority:'High',status:'To Do',due:'2026-05-18',owner:'Self',recurring:'None',done:false},
+  {id:11,name:'Review business card data for new branch staff',category:'Design',priority:'Medium',status:'To Do',due:'2026-05-19',owner:'Self',recurring:'None',done:false},
+  {id:12,name:'Follow up on pharmacist product review — Batch #4',category:'Ecommerce',priority:'High',status:'Waiting',due:'2026-05-17',owner:'Mariam',recurring:'None',done:false},
+  {id:13,name:'Optimize Google Maps listing — add photos & posts',category:'Google Maps',priority:'Medium',status:'To Do',due:'2026-05-22',owner:'Self',recurring:'Monthly',done:false},
+  {id:14,name:'Brief designer on new offer creative',category:'Design',priority:'High',status:'To Do',due:'2026-05-17',owner:'Self',recurring:'None',done:false},
+  {id:15,name:'Monitor offer performance after launch',category:'Campaigns',priority:'High',status:'In Progress',due:'2026-05-31',owner:'Self',recurring:'Daily',done:false},
+  {id:16,name:'Audit ecom product categorization — skincare',category:'Ecommerce',priority:'Low',status:'To Do',due:'2026-05-25',owner:'Self',recurring:'None',done:false},
+  {id:17,name:'Add cross-selling attributes to top 10 products',category:'Ecommerce',priority:'Low',status:'Backlog',due:'2026-05-30',owner:'Self',recurring:'None',done:false},
+  {id:18,name:'Review & respond to branch Google reviews',category:'Google Maps',priority:'Medium',status:'To Do',due:'2026-05-17',owner:'Self',recurring:'Weekly',done:false},
+  {id:19,name:'Coordinate influencer brief for June campaign',category:'Marketing',priority:'Medium',status:'To Do',due:'2026-05-24',owner:'Self',recurring:'None',done:false},
+  {id:20,name:'Follow up with print supplier on delivery',category:'Design',priority:'Medium',status:'Waiting',due:'2026-05-19',owner:'Supplier',recurring:'None',done:false},
+  {id:21,name:'Draft week 20 summary for management',category:'Reporting',priority:'High',status:'To Do',due:'2026-05-17',owner:'Self',recurring:'Weekly',done:false},
+  {id:22,name:'Set up QR system for new branch',category:'Google Maps',priority:'Low',status:'Backlog',due:'2026-06-01',owner:'Self',recurring:'None',done:false},
+  {id:23,name:'Social media posting schedule — June planning',category:'Marketing',priority:'Medium',status:'To Do',due:'2026-05-24',owner:'Self',recurring:'Monthly',done:false},
+  {id:24,name:'Ecom product SEO review — top 20 products',category:'Ecommerce',priority:'Medium',status:'To Do',due:'2026-05-28',owner:'Self',recurring:'Monthly',done:false},
+];
+
+// ════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════
+function load(key, def=[]) {
+  try { const v=localStorage.getItem(key); return v?JSON.parse(v):def; } catch(e){ return def; }
+}
+function save(key, data) {
+  try { localStorage.setItem(key, JSON.stringify(data)); } catch(e) {}
+}
+
+function init() {
+  tasks    = load(LS.tasks, DEFAULT_TASKS).map(normalizeTask);
+  habits   = load(LS.habits, []);
+  goals    = load(LS.goals, []);
+  learn    = load(LS.learn, []);
+  contacts = load(LS.contacts, []).map(normalizeContact);
+  sheetsUrl= localStorage.getItem(LS.sheetsUrl) || '';
+
+  if(sheetsUrl) {
+    document.getElementById('sheetsUrl').value = sheetsUrl;
+    setSheetsStatus('connected');
+    document.getElementById('setupBanner').classList.add('hidden');
+    setTimeout(()=>loadFromSheets(false), 700);
+  }
+  nextId = tasks.length ? Math.max(...tasks.map(t=>t.id))+1 : 1;
+
+  // ── FIX 2: Auto-generate recurring tasks ──
+  autoGenerateRecurring();
+
+  renderAll();
+  updateDate();
+  setInterval(updateDate, 60000);
+  setInterval(()=>{ if(sheetsUrl) loadFromSheets(false); }, 60000);
+  injectAppsScript();
+}
+
+// ════════════════════════════════════════
+// RECURRING AUTO-GENERATE
+// ════════════════════════════════════════
+function autoGenerateRecurring() {
+  const td = today();
+  const GAPS = { Daily:1, Weekly:7, 'Bi-weekly':14, Monthly:30 };
+  let added = 0;
+  const doneDone = tasks.filter(t => t.done && t.recurring && GAPS[t.recurring] && t.due && t.due < td);
+  doneDone.forEach(src => {
+    // Check if a future copy already exists with same name
+    const futureCopy = tasks.find(t =>
+      !t.done && t.name===src.name && t.recurring===src.recurring && t.due >= td
+    );
+    if(futureCopy) return;
+    const gap = GAPS[src.recurring];
+    const newDue = new Date(td+'T00:00:00');
+    // Place due date at today or next gap
+    const srcDue = new Date(src.due+'T00:00:00');
+    while(srcDue < newDue) srcDue.setDate(srcDue.getDate()+gap);
+    const dueDateStr = srcDue.toISOString().split('T')[0];
+    const newTask = normalizeTask({
+      ...src,
+      id: nextId++,
+      done: false,
+      status: 'To Do',
+      due: dueDateStr,
+      followUp: dueDateStr,
+      completedAt: '',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      commLog: [],
+      lastFollowUp: '',
+      lastResponse: '',
+    });
+    tasks.unshift(newTask);
+    added++;
+  });
+  if(added>0){
+    save(LS.tasks, tasks);
+    setTimeout(()=>toast(`↻ ${added} recurring task${added>1?'s':''} auto-created`, '↻'), 800);
+  }
+}
+
+// ════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════
+const today = () => new Date().toISOString().split('T')[0];
+const isOv  = t => !t.done && t.due && t.due < today();
+const isTd  = t => t.due === today();
+const thisWeekStart = () => {
+  const d=new Date(); d.setDate(d.getDate()-d.getDay()+1); return d.toISOString().split('T')[0];
+};
+const thisWeekEnd = () => {
+  const d=new Date(); d.setDate(d.getDate()-d.getDay()+7); return d.toISOString().split('T')[0];
+};
+const isThisWeek = t => t.due >= thisWeekStart() && t.due <= thisWeekEnd();
+
+const priClass = {Critical:'p-crit',High:'p-high',Medium:'p-med',Low:'p-low',Backlog:'p-low'};
+const statClass= {'To Do':'s-todo','In Progress':'s-prog','Waiting':'s-wait','In Review':'s-rev','Done':'s-done','Blocked':'s-block','Backlog':'s-todo'};
+const catClass = {Marketing:'t-mkt',Campaigns:'t-cam',Ecommerce:'t-eco',Design:'t-des','Google Maps':'t-map',Team:'t-team',Reporting:'t-rep',Operations:'t-ops',Learning:'t-learn',Goal:'t-goal',Network:'t-net'};
+const catColors= {Marketing:'var(--gold)',Campaigns:'var(--rose)',Ecommerce:'var(--teal)',Design:'var(--blue)','Google Maps':'var(--violet)',Team:'var(--green)',Reporting:'var(--amber)',Operations:'var(--tm)'};
+const colMap   = {gold:'var(--gold)',teal:'var(--teal)',rose:'var(--rose)',blue:'var(--blue)',violet:'var(--violet)',green:'var(--green)',amber:'var(--amber)'};
+
+function fmtDate(iso) {
+  if(!iso) return '—';
+  const d=new Date(iso+'T00:00:00');
+  const m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${m[d.getMonth()]} ${d.getDate()}`;
+}
+
+function getWeekNum(d=new Date()) {
+  const s=new Date(d.getFullYear(),0,1);
+  return Math.ceil(((d-s)/86400000+s.getDay()+1)/7);
+}
+
+function toast(msg,icon='✓') {
+  const el=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  document.getElementById('toastIcon').textContent=icon;
+  el.classList.remove('hidden');
+  setTimeout(()=>el.classList.add('hidden'),2200);
+}
+
+// ════════════════════════════════════════
+// DATE
+// ════════════════════════════════════════
+function updateDate() {
+  const now=new Date();
+  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const str=`${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+  const el=document.getElementById('topDate'); if(el) el.textContent=str;
+  const el2=document.getElementById('dashSub');
+  if(el2) {
+    const open=tasks.filter(t=>!t.done).length;
+    const ov=tasks.filter(t=>isOv(t)).length;
+    el2.textContent=`Week ${getWeekNum()} · Q2 · ${open} open tasks · ${ov} overdue`;
+  }
+  const el3=document.getElementById('wkNum'); if(el3) el3.textContent=getWeekNum();
+  const el4=document.getElementById('wkRange');
+  if(el4) el4.textContent=`${fmtDate(thisWeekStart())} – ${fmtDate(thisWeekEnd())}, 2026`;
+}
+
+// ════════════════════════════════════════
+// RENDER ALL
+// ════════════════════════════════════════
+function renderAll() {
+  updateKPIs();
+  renderTodayList();
+  renderTaskTable();
+  renderFocus();
+  renderAlerts();
+  renderWeekGrid();
+  renderWeekKPIs();
+  renderHabits();
+  renderGoals();
+  renderLearn();
+  renderContacts();
+  renderCampaignTasks();
+  renderWeekProgress();
+  renderTeamFollowup();
+  updateSidebarCounts();
+  renderMgmtReport();
+}
+
+// ════════════════════════════════════════
+// KPIs
+// ════════════════════════════════════════
+function updateKPIs() {
+  const td=tasks.filter(t=>isTd(t));
+  const done=tasks.filter(t=>t.done).length;
+  const total=tasks.length;
+  const ov=tasks.filter(t=>isOv(t)).length;
+  const wait=tasks.filter(t=>t.status==='Waiting'&&!t.done).length;
+  const wk=tasks.filter(t=>isThisWeek(t)&&!t.done).length;
+  const hScore=habitScore();
+
+  setText('k-today', td.length);
+  setText('k-done', done);
+  setText('k-done-pct', total?`${Math.round(done/total*100)}% done`:'—');
+  setText('k-ov', ov);
+  setText('k-ov-s', ov>0?'⚠ Needs action':'✓ On track');
+  setText('k-wait', wait);
+  setText('k-wk', wk);
+  setText('k-habit', hScore+'%');
+
+  // Weekly KPIs
+  const wAll=tasks.filter(t=>isThisWeek(t));
+  const wDone=wAll.filter(t=>t.done).length;
+  const wOv=wAll.filter(t=>isOv(t)).length;
+  const wBlk=wAll.filter(t=>t.status==='Blocked'||t.status==='Waiting').length;
+  const wCam=tasks.filter(t=>t.category==='Campaigns'&&!t.done).length;
+  setText('wk-total', wAll.length);
+  setText('wk-done', wDone);
+  setText('wk-pct', wAll.length?`${Math.round(wDone/wAll.length*100)}% done`:'—');
+  setText('wk-ov', wOv);
+  setText('wk-blk', wBlk);
+  setText('wk-cam', wCam);
+  setText('sb-total', tasks.filter(t=>!t.done).length);
+}
+
+function setText(id, val) { const e=document.getElementById(id); if(e) e.textContent=val; }
+
+function updateSidebarCounts() {
+  const cats={Marketing:'sbc-mkt',Campaigns:'sbc-cam',Ecommerce:'sbc-eco',Design:'sbc-des','Google Maps':'sbc-map',Team:'sbc-team',Reporting:'sbc-rep'};
+  for(const [cat,id] of Object.entries(cats)) {
+    const el=document.getElementById(id);
+    if(el) el.textContent=tasks.filter(t=>t.category===cat&&!t.done).length;
+  }
+}
+
+// ════════════════════════════════════════
+// FOCUS
+// ════════════════════════════════════════
+let focusTaskId=null;
+function renderFocus() {
+  const open=tasks.filter(t=>!t.done).sort((a,b)=>{
+    const po={Critical:0,High:1,Medium:2,Low:3,Backlog:4};
+    if(po[a.priority]!==po[b.priority]) return po[a.priority]-po[b.priority];
+    if(a.due&&b.due) return a.due.localeCompare(b.due);
+    return 0;
+  });
+  const ft=open[0];
+  if(!ft){
+    setText('focusTask','All tasks complete — great work!');
+    setText('focusMeta','—');
+    return;
+  }
+  focusTaskId=ft.id;
+  setText('focusTask', ft.name);
+  setText('focusMeta', `${ft.category} · ${ft.priority} · Due: ${fmtDate(ft.due)}`);
+}
+function markFocusDone() {
+  if(!focusTaskId) return;
+  const t=tasks.find(x=>x.id===focusTaskId);
+  if(t){ t.done=true; t.status='Done'; save(LS.tasks,tasks); renderAll(); toast('Task completed ✓'); pushTask(t); }
+}
+
+// ════════════════════════════════════════
+// ALERTS
+// ════════════════════════════════════════
+function renderAlerts() {
+  const el=document.getElementById('alertArea'); if(!el) return;
+  const ov=tasks.filter(t=>isOv(t));
+  const td=tasks.filter(t=>isTd(t)&&!t.done);
+  let html='';
+  if(ov.length) html+=`<div class="alert alert-red"><span style="color:var(--rose)">⚠</span><span><strong>Overdue (${ov.length}):</strong> ${ov.slice(0,2).map(t=>t.name).join(' · ')}${ov.length>2?` + ${ov.length-2} more`:''}</span></div>`;
+  if(td.length) html+=`<div class="alert alert-amber"><span style="color:var(--amber)">◉</span><span><strong>Due Today (${td.length}):</strong> ${td.slice(0,2).map(t=>t.name).join(' · ')}</span></div>`;
+  el.innerHTML=html;
+}
+
+// ════════════════════════════════════════
+// TODAY LIST
+// ════════════════════════════════════════
+function renderTodayList() {
+  const todayEl=document.getElementById('todaySection');
+  const ovEl=document.getElementById('overdueSection');
+  if(!todayEl||!ovEl) return;
+
+  const todayTasks=tasks.filter(t=>isTd(t)&&!t.done).sort((a,b)=>{
+    const po={Critical:0,High:1,Medium:2,Low:3,Backlog:4};
+    return po[a.priority]-po[b.priority];
+  });
+  const ovTasks=tasks.filter(t=>isOv(t)).sort((a,b)=>{
+    const po={Critical:0,High:1,Medium:2,Low:3,Backlog:4};
+    return po[a.priority]-po[b.priority];
+  });
+
+  // TODAY section
+  if(!todayTasks.length){
+    todayEl.innerHTML='<div style="padding:18px 15px;text-align:center;color:var(--td);font-size:11px;">✓ لا تاسكات اليوم</div>';
+  } else {
+    todayEl.innerHTML=`<div style="padding:8px 15px 4px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);font-family:\'JetBrains Mono\',monospace;">اليوم · ${todayTasks.length}</div>`+
+      todayTasks.map(t=>taskRowHTML(t,true)).join('');
+  }
+
+  // OVERDUE section — collapsible
+  if(!ovTasks.length){
+    ovEl.innerHTML='';
+    return;
+  }
+  const isOpen = ovEl.dataset.open==='1';
+  ovEl.innerHTML=`<div class="overdue-toggle ${isOpen?'open':''}" onclick="toggleOverdue(this)">
+    <span class="ov-arrow">▶</span>
+    <span>⚠ متأخر · ${ovTasks.length} تاسك</span>
+    <span style="margin-left:auto;color:var(--td);">${isOpen?'اطوِ':'اعرض'}</span>
+  </div>
+  <div class="overdue-list ${isOpen?'open':''}">
+    ${ovTasks.map(t=>taskRowHTML(t,true)).join('')}
+  </div>`;
+}
+
+function toggleOverdue(btn){
+  const ovEl=document.getElementById('overdueSection');
+  const isOpen=btn.classList.toggle('open');
+  ovEl.querySelector('.overdue-list').classList.toggle('open',isOpen);
+  btn.querySelector('span:last-child').textContent=isOpen?'اطوِ':'اعرض';
+  ovEl.dataset.open=isOpen?'1':'0';
+}
+
+function taskRowHTML(t, compact=false) {
+  const ov=isOv(t), td2=isTd(t);
+  const dueCls=ov?'ov':td2?'td':'ok';
+  const dueLabel=ov?`${Math.round((new Date(today())-new Date(t.due))/86400000)}d late`:fmtDate(t.due);
+  return `<div class="task-row" onclick="openTaskPanel(${t.id})">
+    <div class="chk ${t.done?'done':''}" onclick="event.stopPropagation();toggleDone(${t.id})">${t.done?'✓':''}</div>
+    <div class="task-body">
+      <div class="task-name ${t.done?'done':''}">${t.name}</div>
+      <div class="task-meta">
+        <div class="pdot ${priClass[t.priority]||'p-low'}"></div>
+        <span class="tag ${catClass[t.category]||'t-ops'}">${t.category}</span>
+        <span class="status ${statClass[t.status]||'s-todo'}">${t.status}</span>
+        ${t.recurring!=='None'?`<span class="rec">↻${t.recurring}</span>`:''}
+      </div>
+    </div>
+    <div class="task-due ${dueCls}">${dueLabel}</div>
+    ${!t.done?`<div class="snooze-actions" onclick="event.stopPropagation()">
+      <button class="snooze-btn" onclick="snoozeTaskDue(${t.id},1)" title="Snooze 1 day">↷+1</button>
+      <button class="snooze-btn" onclick="snoozeTaskDue(${t.id},3)" title="Snooze 3 days">↷+3</button>
+      <button class="snooze-btn" onclick="snoozeTaskDue(${t.id},7)" title="Next week">↷wk</button>
+    </div>`:''}
+  </div>`;
+}
+
+// ════════════════════════════════════════
+// TASK TABLE
+// ════════════════════════════════════════
+function normalizeSearchText(v) {
+  return String(v||'')
+    .toLowerCase()
+    .replace(/[أإآ]/g,'ا')
+    .replace(/ة/g,'ه')
+    .replace(/ى/g,'ي')
+    .replace(/[-_–—/\\|.,;:()\[\]{}]+/g,' ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+function taskSearchBlob(t) {
+  // Searches every database column, not only the visible task name.
+  return normalizeSearchText(TASK_COLUMNS.map(col=>getTaskCol(t,col)).join(' '));
+}
+function matchesSearch(t, q) {
+  const tokens = normalizeSearchText(q).split(' ').filter(Boolean);
+  if(!tokens.length) return true;
+  const blob = taskSearchBlob(t);
+  return tokens.every(tok => blob.includes(tok));
+}
+function getFiltered() {
+  let d=[...tasks];
+  if(catFilter!=='all') d=d.filter(t=>t.category===catFilter || t.department===catFilter);
+  if(taskFilter==='open') d=d.filter(t=>!t.done);
+  if(taskFilter==='urgent') d=d.filter(t=>t.priority==='Critical'||t.priority==='High');
+  if(taskFilter==='done') d=d.filter(t=>t.done);
+  if(searchQuery.trim()) d=d.filter(t=>matchesSearch(t, searchQuery));
+  return d.sort((a,b)=>{const po={Critical:0,High:1,Medium:2,Low:3,Backlog:4};return po[a.priority]-po[b.priority];});
+}
+
+function renderTaskTable() {
+  const tb=document.getElementById('taskTbody'); if(!tb) return;
+  const data=getFiltered();
+  const sub=document.getElementById('taskViewSub');
+  if(sub) sub.textContent=`${data.length} tasks${catFilter!=='all'?' · '+catFilter:''}${taskFilter!=='all'?' · '+taskFilter:''}${searchQuery.trim()?' · search: '+searchQuery.trim():''}`;
+  if(!data.length){tb.innerHTML='<tr><td colspan="35" style="text-align:center;padding:24px;color:var(--td);">No tasks found</td></tr>';return;}
+  const visibleCols = TASK_COLUMNS;
+  tb.innerHTML=data.map(t=>{
+    const cells = visibleCols.map(col=>{
+      const v = esc(getTaskCol(t,col));
+      if(col==='Task Name') return `<td style="min-width:260px;max-width:320px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;${t.done?'text-decoration:line-through;color:var(--tm);':''}">${v}</td>`;
+      if(col==='Category') return `<td><span class="tag ${catClass[t.category]||'t-ops'}">${esc(t.category)}</span></td>`;
+      if(col==='Priority') return `<td><div style="display:flex;align-items:center;gap:5px;"><div class="pdot ${priClass[t.priority]||'p-low'}"></div>${esc(t.priority)}</div></td>`;
+      if(col==='Status') return `<td><span class="status ${statClass[t.status]||'s-todo'}">${esc(t.status)}</span></td>`;
+      if(col==='Due Date') { const ov=isOv(t), td2=isTd(t); return `<td class="task-due ${ov?'ov':td2?'td':''}" style="font-family:'JetBrains Mono',monospace;">${esc(fmtDate(t.due))}</td>`; }
+      if(col==='WhatsApp Link' && getTaskCol(t,col)) return `<td><a class="icon-btn" style="width:auto;padding:0 8px;" href="${esc(getTaskCol(t,col))}" target="_blank">Open</a></td>`;
+      return `<td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--tm);" title="${v}">${v||'—'}</td>`;
+    }).join('');
+    return `<tr onclick="openTaskPanel(${t.id})">
+      <td onclick="event.stopPropagation()"><div class="chk ${t.done?'done':''}" onclick="toggleDone(${t.id})" style="margin:auto;">${t.done?'✓':''}</div></td>
+      ${cells}
+      <td onclick="event.stopPropagation()"><div class="row-actions">${t.whatsapp?`<button class="icon-btn" title="WhatsApp" onclick="openWhatsApp(${t.id})">☘</button>`:''}<button class="icon-btn" title="Details" onclick="openTaskPanel(${t.id})">›</button></div></td>
+    </tr>`;
+  }).join('');
+}
+
+function setSearch(q) {
+  searchQuery = q || '';
+  const h=document.getElementById('searchHint');
+  if(h) h.textContent = searchQuery.trim() ? 'Searching all database columns' : 'All columns search';
+  renderTaskTable();
+}
+function clearSearch() {
+  searchQuery='';
+  const i=document.getElementById('taskSearch'); if(i) i.value='';
+  const h=document.getElementById('searchHint'); if(h) h.textContent='All columns search';
+  renderTaskTable();
+}
+
+function setFilter(f, btn) {
+  taskFilter=f;
+  document.querySelectorAll('[id^="ftab-"]').forEach(b=>{b.style.background='';b.style.color='';});
+  btn.style.background='var(--s3)'; btn.style.color='var(--tx)';
+  renderTaskTable();
+}
+
+function filterCat(cat) {
+  catFilter=cat==='all'?'all':cat;
+  showView('tasks');
+  renderTaskTable();
+}
+
+// ════════════════════════════════════════
+// WEEK GRID
+// ════════════════════════════════════════
+function renderWeekGrid() {
+  const el=document.getElementById('weekGrid'); if(!el) return;
+  const days=['MON','TUE','WED','THU','FRI'];
+  const now=new Date();
+  const mon=new Date(now); mon.setDate(now.getDate()-((now.getDay()||7)-1));
+  const td=today();
+  el.innerHTML=days.map((d,i)=>{
+    const dt=new Date(mon); dt.setDate(mon.getDate()+i);
+    const iso=dt.toISOString().split('T')[0];
+    const isT=iso===td;
+    const dayTasks=tasks.filter(t=>t.due===iso);
+    return `<div class="wk-col ${isT?'today':''}">
+      <div class="wk-h">
+        <div class="wk-dn" style="${isT?'color:var(--gold);':''}">${d}${isT?' ◈':''}</div>
+        <div class="wk-dd">${dt.getDate()}/${dt.getMonth()+1}</div>
+      </div>
+      <div class="wk-body">
+        ${dayTasks.slice(0,4).map(t=>`<div class="mini-t" style="--mc:${catColors[t.category]||'var(--tm)'};" onclick="openTaskPanel(${t.id})" title="${t.name}" ${t.done?'style="opacity:.4;text-decoration:line-through;"':''}>
+          ${t.done?'✓ ':''}${t.name}
+        </div>`).join('')}
+        ${dayTasks.length>4?`<div style="font-size:9px;color:var(--td);padding:2px 4px;">+${dayTasks.length-4} more</div>`:''}
+        ${!dayTasks.length?`<div style="font-size:10px;color:var(--td);padding:4px 4px;">—</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════
+// WEEK PROGRESS
+// ════════════════════════════════════════
+function renderWeekProgress() {
+  const el=document.getElementById('weekProgress'); if(!el) return;
+  const cats=['Marketing','Campaigns','Ecommerce','Design'];
+  const colors={Marketing:'var(--gold)',Campaigns:'var(--rose)',Ecommerce:'var(--teal)',Design:'var(--blue)'};
+  el.innerHTML=cats.map(cat=>{
+    const all=tasks.filter(t=>t.category===cat);
+    const done=all.filter(t=>t.done).length;
+    const pct=all.length?Math.round(done/all.length*100):0;
+    return `<div style="margin-bottom:12px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+        <span style="font-size:11px;color:var(--tm);">${cat}</span>
+        <span style="font-size:11px;color:${colors[cat]};font-family:'JetBrains Mono',monospace;">${done}/${all.length}</span>
+      </div>
+      <div class="pbar" style="--pc:${colors[cat]};"><div class="pfill" style="width:${pct}%;"></div></div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════
+// TEAM FOLLOW-UP
+// ════════════════════════════════════════
+function renderTeamFollowup() {
+  const el=document.getElementById('teamFollowup'); if(!el) return;
+  if(!contacts.length){el.innerHTML='<div style="color:var(--td);font-size:11px;">Add contacts in Network tab</div>';return;}
+  el.innerHTML=contacts.slice(0,4).map(c=>{
+    const col=colMap[c.color]||'var(--gold)';
+    const initials=c.name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+    return `<div class="fu-row">
+      <div class="fu-av" style="background:rgba(0,0,0,.3);border:1px solid ${col};color:${col};">${initials}</div>
+      <div><div class="fu-name">${c.name}</div><div class="fu-task">${c.note||c.role}</div></div>
+      <div class="fu-age" style="color:var(--tm);">${c.role}</div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════
+// RECURRING
+// ════════════════════════════════════════
+function renderCampaignTasks() {
+  const el=document.getElementById('campaignTasks'); if(!el) return;
+  const cam=tasks.filter(t=>t.category==='Campaigns');
+  if(!cam.length){el.innerHTML='<div style="padding:16px;color:var(--td);">No campaign tasks</div>';return;}
+  el.innerHTML=cam.map(t=>taskRowHTML(t)).join('');
+}
+
+function renderWeekRecurring() {
+  const el=document.getElementById('recurringList'); if(!el) return;
+  const rec=tasks.filter(t=>t.recurring!=='None');
+  if(!rec.length){el.innerHTML='<div style="padding:16px;color:var(--td);">No recurring tasks</div>';return;}
+  el.innerHTML=rec.map(t=>taskRowHTML(t)).join('');
+}
+
+// ════════════════════════════════════════
+// HABITS
+// ════════════════════════════════════════
+const colorVal={gold:'var(--gold)',teal:'var(--teal)',rose:'var(--rose)',blue:'var(--blue)',violet:'var(--violet)',green:'var(--green)'};
+
+function habitScore() {
+  if(!habits.length) return 0;
+  const t=today();
+  const hits=habits.filter(h=>(h.history||[]).includes(t)).length;
+  return Math.round(hits/habits.length*100);
+}
+
+function renderHabits() {
+  const el1=document.getElementById('habitPanel');
+  const el2=document.getElementById('habitList2');
+  const score=document.getElementById('habitScore');
+  const hs=habitScore();
+  if(score) score.textContent=hs+'% today';
+  setText('k-habit', hs+'%');
+
+  const now=new Date();
+  const last7=Array.from({length:7},(_,i)=>{const d=new Date(now);d.setDate(d.getDate()-6+i);return d.toISOString().split('T')[0];});
+  const days=['M','T','W','T','F','S','S'];
+
+  const html=habits.length?habits.map(h=>{
+    const col=colorVal[h.color]||'var(--gold)';
+    const t=today();
+    const hit=(h.history||[]).includes(t);
+    return `<div class="habit-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div class="habit-name">${h.name}</div>
+        <div class="chk ${hit?'done':''}" style="border-color:${col};${hit?`background:${col};color:var(--bg);`:''}" onclick="toggleHabit(${h.id})">${hit?'✓':''}</div>
+      </div>
+      <div class="habit-streak" style="color:${col};">🔥 ${h.streak||0} day streak</div>
+      <div class="habit-dots">
+        ${last7.map((d,i)=>{
+          const isHit=(h.history||[]).includes(d);
+          const isFut=d>t;
+          return `<div class="hdot ${isFut?'future':isHit?'hit':'miss'}" style="${isHit?`background:${col};`:''}" title="${d}">${days[i]}</div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join(''):'<div style="color:var(--td);font-size:11px;">No habits yet. Add your first habit.</div>';
+
+  if(el1) el1.innerHTML=html;
+  if(el2) el2.innerHTML=html;
+}
+
+function toggleHabit(id) {
+  const h=habits.find(x=>x.id===id); if(!h) return;
+  const t=today();
+  if(!h.history) h.history=[];
+  if(h.history.includes(t)) {
+    h.history=h.history.filter(d=>d!==t);
+    h.streak=Math.max(0,(h.streak||1)-1);
+  } else {
+    h.history.push(t);
+    h.streak=(h.streak||0)+1;
+  }
+  save(LS.habits, habits);
+  renderHabits();
+  updateKPIs();
+}
+
+// ════════════════════════════════════════
+// GOALS
+// ════════════════════════════════════════
+function renderGoals() {
+  const el1=document.getElementById('goalPanel');
+  const el2=document.getElementById('goalList');
+  const html=goals.length?goals.map(g=>`
+    <div class="goal-card" onclick="openGoalEdit(${g.id})">
+      <div class="goal-title">${g.title}</div>
+      <div class="goal-dead">📅 ${fmtDate(g.deadline)}</div>
+      <div class="goal-prog-row"><span>Progress</span><span>${g.progress}%</span></div>
+      <div class="pbar" style="--pc:var(--violet);"><div class="pfill" style="width:${g.progress}%;"></div></div>
+      ${g.notes?`<div style="font-size:10px;color:var(--tm);margin-top:6px;">${g.notes}</div>`:''}
+    </div>`).join(''):'<div style="color:var(--td);font-size:11px;">No goals added yet.</div>';
+  if(el1) el1.innerHTML=html;
+  if(el2) el2.innerHTML=html;
+}
+
+// ════════════════════════════════════════
+// LEARNING
+// ════════════════════════════════════════
+const learnIcons={Course:'📚',Book:'📖',Podcast:'🎧',Workshop:'🎓'};
+function renderLearn() {
+  const el=document.getElementById('learnList'); if(!el) return;
+  if(!learn.length){el.innerHTML='<div style="color:var(--td);font-size:11px;">No courses added yet.</div>';return;}
+  el.innerHTML=learn.map(l=>`
+    <div class="learn-card">
+      <div class="learn-icon">${learnIcons[l.type]||'📚'}</div>
+      <div style="flex:1;">
+        <div class="learn-title">${l.title}</div>
+        <div class="learn-meta">${l.type} · ${l.progress}% complete</div>
+        <div class="pbar" style="margin-top:6px;--pc:var(--teal);"><div class="pfill" style="width:${l.progress}%;"></div></div>
+      </div>
+    </div>`).join('');
+}
+
+// ════════════════════════════════════════
+// CONTACTS
+// ════════════════════════════════════════
+function renderContacts() {
+  const el1=document.getElementById('contactList');
+  const el2=document.getElementById('fuQueue');
+  if(!contacts.length){
+    if(el1) el1.innerHTML='<div style="color:var(--td);font-size:11px;">No contacts yet.</div>';
+    if(el2) el2.innerHTML='<div style="color:var(--td);font-size:11px;">Add contacts to track follow-ups.</div>';
+    renderTeamFollowup();
+    return;
+  }
+  if(el1) el1.innerHTML=contacts.map(c=>{
+    const col=colMap[c.color]||'var(--gold)';
+    const initials=(c.name||'?').split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+    const wa=cleanPhoneForWa(c.whatsapp);
+    return `<div class="net-card">
+      <div class="net-av" style="background:rgba(0,0,0,.3);border:1px solid ${col};color:${col};">${initials}</div>
+      <div style="min-width:0;flex:1;"><div class="net-name">${esc(c.name)}</div><div class="net-role">${esc(c.role||'—')} · ${esc(c.department||'—')}</div><div style="font-size:10px;color:var(--tm);">☘ ${wa?('+'+wa):'No WhatsApp'} · ✉ ${esc(c.email||'No Email')}</div></div>
+      <div class="row-actions"><a class="icon-btn" title="WhatsApp" href="${wa?'https://wa.me/'+wa:'#'}" target="_blank">☘</a><a class="icon-btn" title="Email" href="${c.email?'mailto:'+esc(c.email):'#'}">✉</a></div>
+    </div>`;
+  }).join('');
+  if(el2) el2.innerHTML=contacts.map(c=>{
+    const col=colMap[c.color]||'var(--gold)';
+    const initials=c.name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+    return `<div class="fu-row">
+      <div class="fu-av" style="background:rgba(0,0,0,.3);border:1px solid ${col};color:${col};">${initials}</div>
+      <div><div class="fu-name">${c.name}</div><div class="fu-task">${c.note||'—'}</div></div>
+      <div class="fu-age" style="color:var(--tm);">${c.role}</div>
+    </div>`;
+  }).join('');
+  renderTeamFollowup();
+}
+
+// ════════════════════════════════════════
+// MANAGEMENT REPORT
+// ════════════════════════════════════════
+function renderMgmtReport() {
+  const el=document.getElementById('mgmtText'); if(!el) return;
+  const done=tasks.filter(t=>t.done&&isThisWeek(t)).length;
+  const open=tasks.filter(t=>!t.done&&isThisWeek(t)).length;
+  const ov=tasks.filter(t=>isOv(t)).length;
+  const cam=tasks.filter(t=>t.category==='Campaigns'&&!t.done).length;
+  el.innerHTML=`<div style="font-size:12px;color:var(--tx);line-height:2;">
+    ✅ Completed this week: <strong>${done} tasks</strong><br>
+    🔄 Still open: <strong>${open} tasks</strong><br>
+    ⚠ Overdue: <strong style="color:${ov>0?'var(--rose)':'var(--green)'}">${ov} tasks</strong><br>
+    🎯 Active campaigns monitored: <strong>${cam}</strong><br>
+    📊 Reporting: <strong style="color:var(--amber);">In progress</strong>
+  </div>`;
+}
+
+function generateReport() {
+  const done=tasks.filter(t=>t.done&&isThisWeek(t));
+  const open=tasks.filter(t=>!t.done&&isThisWeek(t));
+  const ov=tasks.filter(t=>isOv(t));
+  const report=`WEEKLY MARKETING REPORT — Week ${getWeekNum()}, 2026\n\n` +
+    `✅ COMPLETED (${done.length}):\n${done.map(t=>`  • ${t.name}`).join('\n')}\n\n` +
+    `📌 IN PROGRESS (${open.length}):\n${open.slice(0,8).map(t=>`  • [${t.priority}] ${t.name}`).join('\n')}\n\n` +
+    `⚠ OVERDUE (${ov.length}):\n${ov.map(t=>`  • ${t.name} (due ${fmtDate(t.due)})`).join('\n')}\n\n` +
+    `FOCUS NEXT WEEK: Continue campaign execution, complete overdue items.`;
+  navigator.clipboard.writeText(report).then(()=>toast('Report copied to clipboard 📋','📋')).catch(()=>toast('Report generated','📋'));
+}
+
+// ════════════════════════════════════════
+// TOGGLE TASK DONE
+// ════════════════════════════════════════
+function toggleDone(id) {
+  const t=tasks.find(x=>x.id===id); if(!t) return;
+  t.done=!t.done; t.status=t.done?'Done':t.status==='Done'?'To Do':t.status;
+  save(LS.tasks, tasks);
+  renderAll();
+  toast(t.done?'Task completed ✓':'Task reopened ↩', t.done?'✓':'↩');
+  pushTask(t);
+}
+
+// ════════════════════════════════════════
+// SMART QUICK CAPTURE PARSER
+// ════════════════════════════════════════
+function parseCapture(raw) {
+  const CAT_MAP = {
+    design:'Design', des:'Design', تصميم:'Design',
+    marketing:'Marketing', ماركتينج:'Marketing', تسويق:'Marketing',
+    campaigns:'Campaigns', campaign:'Campaigns', حملة:'Campaigns',حملات:'Campaigns',
+    ecommerce:'Ecommerce', ecom:'Ecommerce', تجارة:'Ecommerce',
+    maps:'Google Maps', map:'Google Maps', خرائط:'Google Maps',
+    team:'Team', فريق:'Team',
+    reporting:'Reporting', report:'Reporting', تقرير:'Reporting',
+    operations:'Operations', ops:'Operations', عمليات:'Operations',
+  };
+  const today_str = today();
+  let text = raw;
+  let due = today_str;
+  let cat = 'Marketing';
+  let person = '';
+
+  // Extract !date
+  text = text.replace(/!(\S+)/g, (_, d) => {
+    const dl = d.toLowerCase();
+    if(dl==='اليوم'||dl==='today') due=today_str;
+    else if(dl==='غداً'||dl==='غدا'||dl==='tomorrow') {
+      const nd=new Date(today_str+'T00:00:00'); nd.setDate(nd.getDate()+1);
+      due=nd.toISOString().split('T')[0];
+    } else if(dl.startsWith('+')) {
+      const n=parseInt(dl.slice(1)); if(!isNaN(n)){
+        const nd=new Date(today_str+'T00:00:00'); nd.setDate(nd.getDate()+n);
+        due=nd.toISOString().split('T')[0];
+      }
+    } else {
+      // try yyyy-mm-dd or date strings
+      const nd=new Date(d); if(!isNaN(nd)) due=nd.toISOString().split('T')[0];
+    }
+    return '';
+  });
+
+  // Extract #category
+  text = text.replace(/#(\S+)/g, (_, c) => {
+    const mapped = CAT_MAP[c.toLowerCase()] || CAT_MAP[c];
+    if(mapped) cat=mapped; else cat=c;
+    return '';
+  });
+
+  // Extract @person
+  text = text.replace(/@(\S+)/g, (_, p) => {
+    person = p.replace(/_/g,' ');
+    return '';
+  });
+
+  const name = text.replace(/\s+/g,' ').trim();
+  return { name, due, cat, person };
+}
+
+function previewCapture(val) {
+  const prev = document.getElementById('qcapPreview');
+  if(!val.trim()){ prev.style.display='none'; return; }
+  const p = parseCapture(val);
+  let tags = '';
+  if(val.includes('!')) tags+=`<span class="qcap-tag date">📅 ${p.due}</span> `;
+  if(val.includes('#')) tags+=`<span class="qcap-tag cat"># ${p.cat}</span> `;
+  if(val.includes('@')) tags+=`<span class="qcap-tag person">@ ${p.person}</span> `;
+  if(tags){ prev.style.display='flex'; prev.innerHTML=tags; }
+  else { prev.style.display='none'; }
+}
+
+function quickCapture(e) {
+  if(e.key!=='Enter') return;
+  const raw=document.getElementById('qcapIn').value.trim();
+  if(!raw) return;
+  const { name, due, cat, person } = parseCapture(raw);
+  if(!name){ toast('اكتب اسم التاسك','⚠'); return; }
+
+  // Auto-fill contact data if @person matches contacts
+  let wa='', email='', role='', comm='No', msg='';
+  if(person){
+    const c=findContactByName(person);
+    if(c){ wa=c.whatsapp||''; email=c.email||''; role=c.role||''; comm=c.defaultCommunication||'No'; msg=c.defaultMessage||''; }
+  }
+
+  const nowIso=new Date().toISOString();
+  const t=normalizeTask({
+    id:nextId++, name, category:cat, priority:'Medium', status:'To Do',
+    due, followUp:due, owner:'Self', recurring:'None',
+    relatedPerson:person, relatedPersonRole:role,
+    whatsapp:wa, email, communicationNeeded:comm, messageTemplate:msg,
+    nextAction:'', createdAt:nowIso, updatedAt:nowIso, commLog:[], done:false
+  });
+  tasks.unshift(t);
+  save(LS.tasks, tasks);
+  document.getElementById('qcapIn').value='';
+  document.getElementById('qcapPreview').style.display='none';
+  renderAll();
+  toast(`✓ ${name}${person?' · @'+person:''}${due!==today()?` · ${fmtDate(due)}`:''}`, '⚡');
+  pushTask(t);
+}
+
+// ════════════════════════════════════════
+// PRODUCTION TASK DETAIL DRAWER + COMMUNICATION
+// ════════════════════════════════════════
+let activeDrawerTaskId=null;
+function esc(s){return String(s||'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+function normalizePhone(n){return String(n||'').replace(/[^0-9]/g,'').replace(/^00/,'');}
+function defaultTaskMessage(t){
+  const person=t.relatedPerson||'';
+  return `السلام عليكم ${person?person+'،':'،'}\nمتابعة بخصوص: ${t.name||''}\n\nالحالة الحالية: ${t.status||'To Do'}\nالمطلوب حاليًا: ${t.nextAction||'يرجى المراجعة والتحديث'}\nالموعد المستهدف: ${t.due?fmtDate(t.due):'—'}\n\nشكرًا لك.`;
+}
+function getTaskMessage(t){return t.messageTemplate||defaultTaskMessage(t);}
+function waUrl(t){const phone=normalizePhone(t.whatsapp); if(!phone) return ''; return `https://wa.me/${phone}?text=${encodeURIComponent(getTaskMessage(t))}`;}
+function mailUrl(t){if(!t.email) return ''; return `mailto:${t.email}?subject=${encodeURIComponent('Follow-up: '+(t.name||''))}&body=${encodeURIComponent(getTaskMessage(t))}`;}
+function openWhatsApp(id){const t=tasks.find(x=>x.id===id); if(!t) return; const u=waUrl(t); if(!u){toast('Add WhatsApp number first','⚠');return;} logComm(id,'WhatsApp opened / message prepared'); window.open(u,'_blank');}
+function openEmailDraft(id){const t=tasks.find(x=>x.id===id); if(!t) return; const u=mailUrl(t); if(!u){toast('Add email first','⚠');return;} logComm(id,'Email draft opened'); window.location.href=u;}
+function openBothChannels(id){const t=tasks.find(x=>x.id===id); if(!t) return; const hasWa=!!waUrl(t); const hasMail=!!mailUrl(t); if(!hasWa && !hasMail){toast('Add WhatsApp number or email first','⚠');return;} if(hasWa) window.open(waUrl(t),'_blank'); if(hasMail) setTimeout(()=>{window.location.href=mailUrl(t);},350); logComm(id,'WhatsApp + Email opened / message prepared');}
+function openSelectedChannel(id){const t=tasks.find(x=>x.id===id); if(!t) return; const ch=String(t.communicationNeeded||'WhatsApp').toLowerCase(); if(ch.includes('whatsapp') && ch.includes('email')) return openBothChannels(id); if(ch.includes('email')) return openEmailDraft(id); if(ch.includes('whatsapp') || ch==='yes') return openWhatsApp(id); toast('Select WhatsApp or Email in Communication Channel','⚠');}
+function copyTaskMessage(id){const t=tasks.find(x=>x.id===id); if(!t) return; navigator.clipboard.writeText(getTaskMessage(t)).then(()=>toast('Message copied 📋','📋'));}
+function setTaskStatusQuick(id,status){const t=tasks.find(x=>x.id===id); if(!t) return; t.status=status; t.done=status==='Done'; t.updatedAt=new Date().toISOString(); t.completedAt=t.done?(t.completedAt||new Date().toISOString()):''; t.updatedAt=new Date().toISOString(); logComm(id,`Status changed to ${status}`,false); save(LS.tasks,tasks); renderAll(); openTaskPanel(id); pushTask(t);}
+function snoozeTaskDue(id,days){
+  const t=tasks.find(x=>x.id===id); if(!t) return;
+  const base=t.due&&t.due>=today()?t.due:today();
+  const d=new Date(base+'T00:00:00'); d.setDate(d.getDate()+days);
+  t.due=d.toISOString().split('T')[0];
+  t.followUp=t.due;
+  logComm(id,`Snoozed due date by ${days} day(s) → ${t.due}`,false);
+  save(LS.tasks,tasks);
+  renderAll();
+  toast(`↷ Snoozed +${days} ${days===1?'day':'days'}`, '↷');
+  pushTask(t);
+}
+function snoozeTask(id,days=1){
+  const t=tasks.find(x=>x.id===id); if(!t) return;
+  const d=new Date(); d.setDate(d.getDate()+days);
+  t.followUp=d.toISOString().split('T')[0];
+  t.status='Waiting';
+  logComm(id,`Snoozed for ${days} day(s)`,false);
+  save(LS.tasks,tasks); renderAll(); openTaskPanel(id);
+}
+function logComm(id, text, rerender=true){const t=tasks.find(x=>x.id===id); if(!t) return; if(!Array.isArray(t.commLog)) t.commLog=[]; t.lastCommunication=new Date().toISOString(); t.commLog.unshift({time:t.lastCommunication,text}); if(t.commLog.length>25) t.commLog=t.commLog.slice(0,25); if(rerender){save(LS.tasks,tasks); renderAll(); if(activeDrawerTaskId===id) openTaskPanel(id);}}
+function addQuickNote(id){const note=prompt('Quick note for this task:'); if(!note) return; logComm(id,'Note: '+note); toast('Note added ✓');}
+function openTaskPanel(id){
+  const t=tasks.find(x=>x.id===id); if(!t) return; activeDrawerTaskId=id;
+  document.getElementById('drawerTaskTitle').textContent=t.name||'Task Details';
+  document.getElementById('drawerTaskMeta').textContent=`${t.category||'—'} · ${t.priority||'—'} · Due ${t.due?fmtDate(t.due):'—'}`;
+  const body=document.getElementById('drawerBody');
+  const msg=esc(getTaskMessage(t));
+  const log=(t.commLog||[]).slice(0,8).map(l=>`<div class="log-item"><div class="log-time">${new Date(l.time).toLocaleString()}</div><div class="log-text">${esc(l.text)}</div></div>`).join('')||'<div style="color:var(--td);font-size:11px;">No communication logged yet.</div>';
+
+  // ── FIX 3: Smart Primary Action based on status ──
+  let primaryBtn = '';
+  const hasWa = !!waUrl(t);
+  const hasMail = !!mailUrl(t);
+  if(t.status==='Waiting' && (hasWa||hasMail)){
+    primaryBtn = `<button class="primary-action gold" onclick="openSelectedChannel(${id});setTaskStatusQuick(${id},'Waiting')">☘ متابعة / Follow Up Again</button>`;
+  } else if(t.status==='In Progress'){
+    primaryBtn = `<button class="primary-action green" onclick="toggleDone(${id});closeTaskPanel()">✓ Mark Done</button>`;
+  } else if(t.status==='To Do' && (hasWa||hasMail)){
+    primaryBtn = `<button class="primary-action gold" onclick="openSelectedChannel(${id});setTaskStatusQuick(${id},'Waiting')">🚀 Send & Set Waiting</button>`;
+  } else if(t.status==='To Do'){
+    primaryBtn = `<button class="primary-action blue" onclick="setTaskStatusQuick(${id},'In Progress')">▶ Start — Set In Progress</button>`;
+  } else if(t.status==='Blocked'){
+    primaryBtn = `<button class="primary-action rose" onclick="openEditModal(${id})">✎ Edit — Resolve Blocker</button>`;
+  } else if(t.done){
+    primaryBtn = `<button class="primary-action blue" onclick="toggleDone(${id});closeTaskPanel()">↩ Reopen Task</button>`;
+  } else {
+    primaryBtn = `<button class="primary-action green" onclick="toggleDone(${id});closeTaskPanel()">✓ Mark Done</button>`;
+  }
+
+  body.innerHTML=`
+    ${primaryBtn}
+    <div class="drawer-sec"><div class="drawer-sec-title">Execution Snapshot</div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-l">Status</div><div class="info-v"><span class="status ${statClass[t.status]||'s-todo'}">${esc(t.status)}</span></div></div>
+        <div class="info-box"><div class="info-l">Priority</div><div class="info-v"><span class="pdot ${priClass[t.priority]||'p-low'}" style="display:inline-block;margin-right:6px;"></span>${esc(t.priority)}</div></div>
+        <div class="info-box"><div class="info-l">Related Person</div><div class="info-v">${esc(t.relatedPerson||'—')}</div></div>
+        <div class="info-box"><div class="info-l">Waiting On</div><div class="info-v">${esc(t.waitingOn||t.relatedPerson||'—')}</div></div>
+        <div class="info-box"><div class="info-l">Follow-up</div><div class="info-v">${t.followUp?fmtDate(t.followUp):'—'}</div></div>
+        <div class="info-box"><div class="info-l">Owner</div><div class="info-v">${esc(t.owner||'Self')}</div></div>
+      </div>
+    </div>
+    <div class="drawer-sec"><div class="drawer-sec-title">Next Action <span style="font-size:9px;color:var(--td);">— اضغط للتعديل المباشر</span></div>
+      <div class="next-action-edit"
+        contenteditable="true"
+        id="nextActionEdit"
+        data-placeholder="اكتب الخطوة التالية..."
+        onblur="saveNextActionInline(${id},this.textContent)"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.blur();}"
+      >${esc(t.nextAction||'')}</div>
+      <div style="margin-top:8px;display:flex;gap:5px;flex-wrap:wrap;">
+        <span class="next-pill">☎ ${t.whatsapp||t.email?'Contact ready':'Missing contact'}</span>
+        <span class="next-pill">↻ ${esc(t.recurring||'None')}</span>
+        ${t.due?`<span class="next-pill ${isOv(t)?'':''}">📅 ${fmtDate(t.due)}</span>`:''}
+      </div>
+    </div>
+    <div class="drawer-sec"><div class="drawer-sec-title">More Actions</div>
+      <button class="more-actions-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'▲ Hide actions':'▾ Show all actions'">▾ Show all actions</button>
+      <div class="more-actions-grid action-grid" style="grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+        <button class="action-btn gold" onclick="openSelectedChannel(${id})">🚀 Send Selected</button>
+        <button class="action-btn green" onclick="openWhatsApp(${id})">☘ WhatsApp</button>
+        <button class="action-btn" onclick="openEmailDraft(${id})">✉ Email</button>
+        <button class="action-btn" onclick="openBothChannels(${id})">☘+✉ Both</button>
+        <button class="action-btn" onclick="copyTaskMessage(${id})">📋 Copy Message</button>
+        <button class="action-btn gold" onclick="setTaskStatusQuick(${id},'Waiting')">⏳ Waiting Reply</button>
+        <button class="action-btn green" onclick="setTaskStatusQuick(${id},'Done')">✓ Mark Done</button>
+        <button class="action-btn amber" onclick="setTaskStatusQuick(${id},'In Review')">👁 In Review</button>
+        <button class="action-btn" onclick="snoozeTaskDue(${id},1)">↷+1 Snooze Day</button>
+        <button class="action-btn" onclick="snoozeTaskDue(${id},7)">↷+7 Snooze Week</button>
+        <button class="action-btn" onclick="openEditModal(${id})">✎ Edit Full Task</button>
+        <button class="action-btn rose" onclick="setTaskStatusQuick(${id},'Blocked')">⚠ Blocked</button>
+      </div>
+    </div>
+    <div class="drawer-sec"><div class="drawer-sec-title">Prepared Message</div><textarea class="msg-box" id="drawerMsg">${msg}</textarea><div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;"><button class="action-btn" onclick="saveDrawerMessage(${id})">💾 Save</button><button class="action-btn gold" onclick="saveDrawerMessage(${id});openSelectedChannel(${id})">🚀 Save & Send</button><button class="action-btn green" onclick="saveDrawerMessage(${id});openWhatsApp(${id})">☘ WhatsApp</button><button class="action-btn" onclick="saveDrawerMessage(${id});openEmailDraft(${id})">✉ Email</button></div></div>
+    <div class="drawer-sec"><div class="drawer-sec-title">Communication Log</div>${log}<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px;"><button class="action-btn" onclick="logComm(${id},'Sent WhatsApp')">Sent WhatsApp</button><button class="action-btn" onclick="logComm(${id},'Called')">Called</button><button class="action-btn" onclick="logComm(${id},'Reminder Sent')">Reminder</button><button class="action-btn green" onclick="logComm(${id},'Approved')">Approved</button><button class="action-btn amber" onclick="logComm(${id},'Delayed')">Delayed</button><button class="action-btn rose" onclick="logComm(${id},'Need Changes')">Need Changes</button></div></div>
+  `;
+  document.getElementById('drawerOverlay').classList.add('open');
+  document.getElementById('taskDrawer').classList.add('open');
+}
+function saveDrawerMessage(id){const t=tasks.find(x=>x.id===id); if(!t) return; const v=document.getElementById('drawerMsg')?.value||''; t.messageTemplate=v; save(LS.tasks,tasks); pushTask(t); toast('Message saved ✓');}
+
+// FIX 5: Save inline-edited next action
+function saveNextActionInline(id, text){
+  const t=tasks.find(x=>x.id===id); if(!t) return;
+  const val=text.trim();
+  if(val===t.nextAction) return;
+  t.nextAction=val;
+  t.updatedAt=new Date().toISOString();
+  save(LS.tasks,tasks);
+  pushTask(t);
+  toast('Next action updated ✓','✎');
+}
+function closeTaskPanel(){document.getElementById('drawerOverlay').classList.remove('open');document.getElementById('taskDrawer').classList.remove('open');activeDrawerTaskId=null;}
+
+// ════════════════════════════════════════
+// TASK MODAL
+// ════════════════════════════════════════
+function openAddModal(defaultCat='Marketing') {
+  document.getElementById('modalTitle').textContent='New Task';
+  document.getElementById('editId').value='';
+  document.getElementById('f-name').value='';
+  document.getElementById('f-dept').value='';
+  document.getElementById('f-cat').value=defaultCat;
+  document.getElementById('f-pri').value='Medium';
+  document.getElementById('f-status').value='To Do';
+  document.getElementById('f-rec').value='None';
+  document.getElementById('f-due').value=today();
+  document.getElementById('f-owner').value='Self';
+  refreshContactDropdown('');
+  document.getElementById('f-person').value='';
+  document.getElementById('f-wa').value='';
+  document.getElementById('f-email').value='';
+  document.getElementById('f-follow').value=today();
+  document.getElementById('f-next').value='';
+    document.getElementById('f-role').value='';
+  document.getElementById('f-comm').value='No';
+  document.getElementById('f-wait').value='';
+  document.getElementById('f-kpi').value='';
+  document.getElementById('f-effort').value='';
+  document.getElementById('f-risk').value='';
+  document.getElementById('f-vis').value='';
+  document.getElementById('f-rule').value='';
+  document.getElementById('f-output').value='';
+  document.getElementById('f-blocker').value='';
+  document.getElementById('f-notes').value='';
+  document.getElementById('f-links').value='';
+  document.getElementById('f-msg').value='';
+  document.getElementById('delBtn').style.display='none';
+  openModal('taskModal');
+  setTimeout(()=>document.getElementById('f-name').focus(),100);
+}
+
+function openEditModal(id) {
+  const t=tasks.find(x=>x.id===id); if(!t) return;
+  document.getElementById('modalTitle').textContent='Edit Task';
+  document.getElementById('editId').value=id;
+  document.getElementById('f-name').value=t.name;
+  document.getElementById('f-dept').value=t.department||'';
+  document.getElementById('f-cat').value=t.category;
+  document.getElementById('f-pri').value=t.priority;
+  document.getElementById('f-status').value=t.status;
+  document.getElementById('f-rec').value=t.recurring;
+  document.getElementById('f-due').value=t.due||'';
+  document.getElementById('f-owner').value=t.owner||'Self';
+  refreshContactDropdown(t.relatedPerson||'');
+  document.getElementById('f-person').value=t.relatedPerson||'';
+  document.getElementById('f-wa').value=t.whatsapp||'';
+  document.getElementById('f-email').value=t.email||'';
+  document.getElementById('f-follow').value=t.followUp||'';
+  document.getElementById('f-next').value=t.nextAction||'';
+  document.getElementById('f-role').value=t.relatedPersonRole||'';
+  document.getElementById('f-comm').value=t.communicationNeeded||'No';
+  document.getElementById('f-wait').value=t.waitingOn||'';
+  document.getElementById('f-kpi').value=t.kpiImpact||'';
+  document.getElementById('f-effort').value=t.effortLevel||'';
+  document.getElementById('f-risk').value=t.riskLevel||'';
+  document.getElementById('f-vis').value=t.managementVisibility||'';
+  document.getElementById('f-rule').value=t.recurrenceRule||'';
+  document.getElementById('f-output').value=t.expectedOutput||'';
+  document.getElementById('f-blocker').value=t.blocker||'';
+  document.getElementById('f-notes').value=t.quickNotes||'';
+  document.getElementById('f-links').value=t.linksFiles||'';
+  document.getElementById('f-msg').value=t.messageTemplate||defaultTaskMessage(t);
+  document.getElementById('delBtn').style.display='block';
+  openModal('taskModal');
+}
+
+function saveTask() {
+  const name=document.getElementById('f-name').value.trim();
+  if(!name){document.getElementById('f-name').style.borderColor='var(--rose)';return;}
+  document.getElementById('f-name').style.borderColor='';
+  const editId=document.getElementById('editId').value;
+  const nowIso=new Date().toISOString();
+  const data={name,department:document.getElementById('f-dept').value.trim(),category:document.getElementById('f-cat').value,priority:document.getElementById('f-pri').value,status:document.getElementById('f-status').value,recurring:document.getElementById('f-rec').value,due:document.getElementById('f-due').value,owner:document.getElementById('f-owner').value||'Self',relatedPerson:document.getElementById('f-person').value.trim(),relatedPersonRole:document.getElementById('f-role').value.trim(),whatsapp:document.getElementById('f-wa').value.trim(),email:document.getElementById('f-email').value.trim(),followUp:document.getElementById('f-follow').value,nextAction:document.getElementById('f-next').value.trim(),communicationNeeded:document.getElementById('f-comm').value,messageTemplate:document.getElementById('f-msg').value.trim(),waitingOn:document.getElementById('f-wait').value.trim(),kpiImpact:document.getElementById('f-kpi').value.trim(),effortLevel:document.getElementById('f-effort').value,riskLevel:document.getElementById('f-risk').value,managementVisibility:document.getElementById('f-vis').value,recurrenceRule:document.getElementById('f-rule').value.trim(),expectedOutput:document.getElementById('f-output').value.trim(),blocker:document.getElementById('f-blocker').value.trim(),quickNotes:document.getElementById('f-notes').value.trim(),linksFiles:document.getElementById('f-links').value.trim(),updatedAt:nowIso};
+  if(editId) {
+    const idx=tasks.findIndex(x=>x.id===parseInt(editId));
+    if(idx!==-1){tasks[idx]=normalizeTask({...tasks[idx],...data,done:data.status==='Done',completedAt:data.status==='Done'?(tasks[idx].completedAt||nowIso):''});}
+    toast('Task updated ✎','✎');
+    pushTask(tasks[idx>-1?idx:0]);
+  } else {
+    const t=normalizeTask({id:nextId++,...data,createdAt:nowIso,completedAt:data.status==='Done'?nowIso:'',commLog:[],done:data.status==='Done'});
+    tasks.unshift(t);
+    toast('Task added ✓','✓');
+    pushTask(t);
+  }
+  save(LS.tasks, tasks);
+  closeModal('taskModal');
+  renderAll();
+}
+
+function deleteTask() {
+  const editId=parseInt(document.getElementById('editId').value);
+  if(!editId||!confirm('Delete this task?')) return;
+  tasks=tasks.filter(x=>x.id!==editId);
+  save(LS.tasks, tasks);
+  closeModal('taskModal');
+  renderAll();
+  toast('Task deleted','🗑');
+}
+
+// ════════════════════════════════════════
+// HABIT MODAL
+// ════════════════════════════════════════
+function openHabitModal(){openModal('habitModal');setTimeout(()=>document.getElementById('h-name').focus(),100);}
+function saveHabit(){
+  const name=document.getElementById('h-name').value.trim();
+  if(!name) return;
+  habits.push({id:nextId++,name,color:document.getElementById('h-color').value,streak:0,history:[]});
+  save(LS.habits, habits);
+  closeModal('habitModal');
+  renderHabits();
+  toast('Habit added ✓');
+}
+
+// ════════════════════════════════════════
+// GOAL MODAL
+// ════════════════════════════════════════
+function openGoalModal(){openModal('goalModal');setTimeout(()=>document.getElementById('g-title').focus(),100);}
+function saveGoal(){
+  const title=document.getElementById('g-title').value.trim();
+  if(!title) return;
+  goals.push({id:nextId++,title,deadline:document.getElementById('g-dead').value,progress:parseInt(document.getElementById('g-prog').value)||0,notes:document.getElementById('g-notes').value});
+  save(LS.goals, goals);
+  closeModal('goalModal');
+  renderGoals();
+  toast('Goal added ✓');
+}
+function openGoalEdit(id){
+  // For now just open goal modal for new; can expand later
+}
+
+// ════════════════════════════════════════
+// LEARN MODAL
+// ════════════════════════════════════════
+function openLearnModal(){openModal('learnModal');setTimeout(()=>document.getElementById('l-title').focus(),100);}
+function saveLearn(){
+  const title=document.getElementById('l-title').value.trim();
+  if(!title) return;
+  learn.push({id:nextId++,title,type:document.getElementById('l-type').value,progress:parseInt(document.getElementById('l-prog').value)||0});
+  save(LS.learn, learn);
+  closeModal('learnModal');
+  renderLearn();
+  toast('Added ✓');
+}
+
+// ════════════════════════════════════════
+// CONTACT MODAL
+// ════════════════════════════════════════
+function openContactModal(){
+  ['c-name','c-role','c-dept','c-wa','c-email','c-msg','c-note'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
+  const comm=document.getElementById('c-comm'); if(comm) comm.value='WhatsApp';
+  const color=document.getElementById('c-color'); if(color) color.value='gold';
+  openModal('contactModal');
+  setTimeout(()=>document.getElementById('c-name').focus(),100);
+}
+function saveContact(){
+  const name=document.getElementById('c-name').value.trim();
+  if(!name) return;
+  const waVal=document.getElementById('c-wa').value.trim();
+  const emailVal=document.getElementById('c-email').value.trim();
+  if(!waVal && !emailVal){toast('Add WhatsApp or Email for this contact','⚠'); return;}
+  const nowIso=new Date().toISOString();
+  const existingIdx=contacts.findIndex(c=>String(c.name||'').trim().toLowerCase()===name.toLowerCase());
+  const contact=normalizeContact({
+    id: existingIdx>=0 ? contacts[existingIdx].id : nextId++,
+    name,
+    role:document.getElementById('c-role').value.trim(),
+    department:document.getElementById('c-dept').value.trim(),
+    whatsapp:waVal,
+    email:emailVal,
+    defaultCommunication:document.getElementById('c-comm').value,
+    defaultMessage:document.getElementById('c-msg').value.trim(),
+    color:document.getElementById('c-color').value,
+    note:document.getElementById('c-note').value.trim(),
+    createdAt: existingIdx>=0 ? contacts[existingIdx].createdAt : nowIso,
+    updatedAt: nowIso
+  });
+  if(existingIdx>=0) contacts[existingIdx]=contact; else contacts.push(contact);
+  save(LS.contacts, contacts);
+  closeModal('contactModal');
+  renderContacts();
+  refreshContactDropdown(name);
+  pushContact(contact);
+  toast(existingIdx>=0?'Contact updated ✓':'Contact added ✓');
+}
+
+// ════════════════════════════════════════
+// MODAL HELPERS
+// ════════════════════════════════════════
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');}));
+
+// ════════════════════════════════════════
+// VIEW SWITCHER
+// ════════════════════════════════════════
+function showView(v) {
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  const el=document.getElementById('view-'+v);
+  if(el) el.classList.add('active');
+  document.querySelectorAll('.tnav').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tnav').forEach(x=>{if(x.textContent.toLowerCase().includes(v.substring(0,4)))x.classList.add('active');});
+  document.querySelectorAll('.sb-item').forEach(x=>x.classList.remove('active'));
+  if(v==='weekly'){renderWeekGrid();renderWeekKPIs();renderWeekRecurring();renderMgmtReport();}
+  if(v==='tasks') renderTaskTable();
+  if(v==='growth'){renderHabits();renderGoals();renderLearn();}
+  if(v==='network') renderContacts();
+}
+
+function renderWeekKPIs() { updateKPIs(); }
+
+// ════════════════════════════════════════
+// GOOGLE SHEETS INTEGRATION
+// ════════════════════════════════════════
+function setSheetsStatus(state) {
+  const dot=document.getElementById('sheets-dot');
+  const txt=document.getElementById('sheets-status');
+  if(state==='connected'){dot.style.background='var(--green)';dot.style.boxShadow='0 0 6px var(--green)';if(txt)txt.textContent='Connected';}
+  else if(state==='error'){dot.style.background='var(--rose)';dot.style.boxShadow='';if(txt)txt.textContent='Error';}
+  else{dot.style.background='var(--td)';dot.style.boxShadow='';if(txt)txt.textContent='Not connected';}
+}
+
+function saveSheetUrl() {
+  const url=document.getElementById('sheetsUrl').value.trim();
+  if(!url){toast('Please enter a URL','⚠');return;}
+  sheetsUrl=url;
+  localStorage.setItem(LS.sheetsUrl, url);
+  setSheetsStatus('connected');
+  document.getElementById('setupBanner').classList.add('hidden');
+  toast('Sheets URL saved ✓');
+  setText('connStatus','✓ URL saved. Creating/refreshing Tasks and Related Persons sheets...');
+  // Force sheet setup after saving the URL so the Related Persons tab is created immediately.
+  fetch(sheetsUrl+'?action=setup&_=' + Date.now(), {method:'GET', cache:'no-store'})
+    .then(()=>loadFromSheets(false))
+    .catch(()=>loadFromSheets(false));
+}
+
+async function testConnection() {
+  if(!sheetsUrl){toast('No URL saved yet','⚠');return;}
+  setText('connStatus','Testing connection...');
+  try {
+    const r=await fetch(sheetsUrl+'?action=ping&_=' + Date.now(), {method:'GET', cache:'no-store'});
+    const txt=await r.text();
+    if(txt.includes('OK') || txt.includes('Pro Life')) {
+      setSheetsStatus('connected');
+      setText('connStatus','✓ Connection successful! Sheets is ready.');
+      toast('Connected to Google Sheets ✓');
+      loadFromSheets(false);
+    } else {
+      setSheetsStatus('error');
+      setText('connStatus','Connection reached, but response was unexpected. Check deployment permissions.');
+    }
+  } catch(e) {
+    setSheetsStatus('error');
+    setText('connStatus','Connection blocked or failed. Make sure Web App access = Anyone and deploy a NEW version.');
+    toast('Check Apps Script deployment','⚠');
+  }
+}
+
+function postViaHiddenForm(payload) {
+  if(!sheetsUrl) return false;
+  try {
+    let iframe=document.getElementById('sheetsPostFrame');
+    if(!iframe){
+      iframe=document.createElement('iframe');
+      iframe.name='sheetsPostFrame';
+      iframe.id='sheetsPostFrame';
+      iframe.style.display='none';
+      document.body.appendChild(iframe);
+    }
+    const form=document.createElement('form');
+    form.method='POST';
+    form.action=sheetsUrl;
+    form.target='sheetsPostFrame';
+    form.style.display='none';
+    const input=document.createElement('input');
+    input.type='hidden';
+    input.name='payload';
+    input.value=JSON.stringify(payload);
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
+    setTimeout(()=>form.remove(), 1500);
+    return true;
+  } catch(e) {
+    console.warn('Hidden form POST failed', e);
+    return false;
+  }
+}
+
+async function postToSheets(payload) {
+  if(!sheetsUrl) return false;
+  // Hidden form is the most reliable from a local file:// HTML to Google Apps Script.
+  // It avoids browser CORS blocks and sends payload as e.parameter.payload.
+  const formOk = postViaHiddenForm(payload);
+  try {
+    await fetch(sheetsUrl, {
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify(payload)
+    });
+  } catch(e) {
+    console.warn('Fetch POST fallback failed', e);
+  }
+  return formOk;
+}
+
+async function pushTask(task) {
+  if(!sheetsUrl) return;
+  const ok = await postToSheets({action:'saveTask', task: taskSheetRow(task)});
+  if(ok) setSheetsStatus('connected');
+}
+
+async function pushContact(contact) {
+  if(!sheetsUrl) return;
+  const ok = await postToSheets({action:'saveContact', contact: contactSheetRow(contact)});
+  if(ok) setSheetsStatus('connected');
+}
+
+async function pushToSheets() {
+  if(!sheetsUrl){toast('Connect Sheets first','⚠');return;}
+  setText('connStatus','Pushing local tasks and contacts to Google Sheets...');
+  const ok = await postToSheets({action:'bulkSave', tasks: tasks.map(taskSheetRow), contacts: contacts.map(contactSheetRow)});
+  if(ok) {
+    setSheetsStatus('connected');
+    setText('connStatus','✓ Push sent. Open the Sheet to confirm Tasks and Related Persons rows were written.');
+    toast('Data pushed to Sheets ✓');
+    setTimeout(()=>loadFromSheets(false), 1200);
+  } else {
+    setSheetsStatus('error');
+    setText('connStatus','Push failed. Check Web App URL and deployment permissions.');
+  }
+}
+
+async function loadFromSheets(showToast=true) {
+  if(!sheetsUrl){ if(showToast) toast('Connect Sheets first','⚠'); return; }
+  try {
+    if(showToast) setText('connStatus','Loading tasks from Google Sheets...');
+    const r=await fetch(sheetsUrl+'?action=getAll&_=' + Date.now(), {method:'GET', cache:'no-store'});
+    const d=await r.json();
+    if(Array.isArray(d.tasks)){
+      const loaded=d.tasks.filter(x => Object.values(x).some(v => String(v||'').trim() !== '')).map(normalizeTask);
+      tasks=loaded;
+      if(Array.isArray(d.contacts)) contacts=d.contacts.filter(x => Object.values(x).some(v => String(v||'').trim() !== '')).map(normalizeContact);
+      save(LS.tasks, tasks);
+      save(LS.contacts, contacts);
+      const ids=[...tasks.map(t=>t.id), ...contacts.map(c=>c.id)].filter(Boolean);
+      nextId = ids.length ? Math.max(...ids)+1 : 1;
+      renderAll();
+      setSheetsStatus('connected');
+      if(showToast) toast(`Loaded ${tasks.length} tasks + ${contacts.length} persons ✓`,'⬇');
+      setText('connStatus',`✓ Synced. Loaded ${tasks.length} tasks and ${contacts.length} related persons from Google Sheets.`);
+    } else {
+      setText('connStatus','Connected, but no tasks array was returned. Check Apps Script code.');
+    }
+  } catch(e) {
+    setSheetsStatus('error');
+    if(showToast) toast('Could not load from Sheets','⚠');
+    setText('connStatus','Could not read from Sheets. Check Web App URL, deployment access, and redeploy after code changes.');
+  }
+}
+
+// ════════════════════════════════════════
+// APPS SCRIPT CODE
+// ════════════════════════════════════════
+function injectAppsScript() {
+  const code=`const TASKS_SHEET = "Tasks";
+const CONTACTS_SHEET = "Related Persons";
+const TASK_HEADERS = [
+  "Task ID","Task Name","Department","Category","Priority","Status","Due Date","Follow-up Date","Owner","Related Person","Related Person Role","WhatsApp Number","WhatsApp Link","Email","Next Action","Communication Needed","Message Template","Last Follow-up","Last Response","Waiting On","KPI Impact","Effort Level","Risk Level","Management Visibility","Recurring","Recurrence Rule","Expected Output","Blocker","Quick Notes","Links / Files","Created Date","Updated Date","Completed Date"
+];
+const CONTACT_HEADERS = [
+  "Person ID","Person Name","Role","Department","WhatsApp Number","WhatsApp Link","Email","Default Communication","Default Message Template","Notes","Color","Created Date","Updated Date"
+];
+
+function doGet(e) {
+  const action = (e && e.parameter && e.parameter.action) || "";
+  if (action === "ping") return jsonOutput({success:true, message:"OK"});
+  if (action === "getTasks") return getTasks();
+  if (action === "getContacts") return getContacts();
+  if (action === "getAll") return getAll();
+  if (action === "setup") { setupSheets(); return jsonOutput({success:true, message:"Sheets ready"}); }
+  return jsonOutput({success:true, message:"Pro Life OS API is running"});
+}
+
+function doPost(e) {
+  try {
+    let raw = "{}";
+    if (e && e.parameter && e.parameter.payload) raw = e.parameter.payload;
+    else if (e && e.postData && e.postData.contents) raw = e.postData.contents;
+    const body = JSON.parse(raw || "{}");
+    if (body.action === "bulkSave") {
+      bulkSave(body.tasks || [], body.contacts || []);
+    } else if (body.action === "saveTask") {
+      saveTask(body.task || body);
+    } else if (body.action === "saveContact") {
+      saveContact(body.contact || body);
+    } else {
+      saveTask(body.task || body);
+    }
+    return jsonOutput({success:true});
+  } catch(err) {
+    return jsonOutput({success:false, error:String(err && err.message ? err.message : err)});
+  }
+}
+
+function jsonOutput(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+function setupSheets() {
+  ensureHeaders(getSheet(TASKS_SHEET), TASK_HEADERS);
+  ensureHeaders(getSheet(CONTACTS_SHEET), CONTACT_HEADERS);
+}
+
+function getSheet(name) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName(name);
+  if (!sheet) sheet = ss.insertSheet(name);
+  return sheet;
+}
+
+function ensureHeaders(sheet, headers) {
+  sheet.getRange(1,1,1,headers.length).setValues([headers]);
+  sheet.setFrozenRows(1);
+}
+
+function cleanPhone(n) { return String(n || '').replace(/[^0-9]/g,'').replace(/^00/,''); }
+function formatCell(v) {
+  if (v instanceof Date) return Utilities.formatDate(v, Session.getScriptTimeZone(), 'yyyy-MM-dd');
+  return v;
+}
+function sheetToObjects(sheetName, headers) {
+  const sheet = getSheet(sheetName);
+  ensureHeaders(sheet, headers);
+  const data = sheet.getDataRange().getValues();
+  if (data.length <= 1) return [];
+  const hs = data[0];
+  return data.slice(1).filter(r => r.some(Boolean)).map(row => {
+    const obj = {};
+    hs.forEach((h, i) => obj[h] = formatCell(row[i]));
+    return obj;
+  });
+}
+
+function getAll(){ return jsonOutput({success:true, tasks:sheetToObjects(TASKS_SHEET,TASK_HEADERS), contacts:sheetToObjects(CONTACTS_SHEET,CONTACT_HEADERS)}); }
+function getTasks(){ return jsonOutput({success:true, tasks:sheetToObjects(TASKS_SHEET,TASK_HEADERS)}); }
+function getContacts(){ return jsonOutput({success:true, contacts:sheetToObjects(CONTACTS_SHEET,CONTACT_HEADERS)}); }
+
+function makeTaskId(raw) {
+  raw = String(raw || '').trim();
+  if (raw) return raw;
+  const sheet = getSheet(TASKS_SHEET);
+  const last = Math.max(sheet.getLastRow() - 1, 0) + 1;
+  return 'TASK-' + String(last).padStart(3,'0');
+}
+function makePersonId(raw) {
+  raw = String(raw || '').trim();
+  if (raw) return raw;
+  const sheet = getSheet(CONTACTS_SHEET);
+  const last = Math.max(sheet.getLastRow() - 1, 0) + 1;
+  return 'PERSON-' + String(last).padStart(3,'0');
+}
+
+function getVal(obj, col, aliases) {
+  const keys = aliases[col] || [col, col.toLowerCase()];
+  for (let i=0;i<keys.length;i++) if (obj[keys[i]] !== undefined && obj[keys[i]] !== null) return obj[keys[i]];
+  return '';
+}
+const TASK_ALIASES = {
+  "Task ID":["Task ID","id"], "Task Name":["Task Name","name","task"], "Due Date":["Due Date","due"], "Follow-up Date":["Follow-up Date","followUp"],
+  "Related Person":["Related Person","relatedPerson"], "Related Person Role":["Related Person Role","relatedPersonRole"], "WhatsApp Number":["WhatsApp Number","whatsapp"],
+  "WhatsApp Link":["WhatsApp Link","whatsappLink"], "Email":["Email","email"], "Next Action":["Next Action","nextAction"], "Communication Needed":["Communication Needed","communicationNeeded"],
+  "Message Template":["Message Template","messageTemplate"], "Last Follow-up":["Last Follow-up","lastFollowUp"], "Last Response":["Last Response","lastResponse"],
+  "Waiting On":["Waiting On","waitingOn"], "KPI Impact":["KPI Impact","kpiImpact"], "Effort Level":["Effort Level","effortLevel"],
+  "Risk Level":["Risk Level","riskLevel"], "Management Visibility":["Management Visibility","managementVisibility"], "Recurrence Rule":["Recurrence Rule","recurrenceRule"],
+  "Expected Output":["Expected Output","expectedOutput"], "Quick Notes":["Quick Notes","quickNotes"], "Links / Files":["Links / Files","linksFiles"],
+  "Created Date":["Created Date","createdAt"], "Updated Date":["Updated Date","updatedAt"], "Completed Date":["Completed Date","completedAt"]
+};
+const CONTACT_ALIASES = {
+  "Person ID":["Person ID","id"], "Person Name":["Person Name","name","Name"], "Role":["Role","role"], "Department":["Department","department"],
+  "WhatsApp Number":["WhatsApp Number","whatsapp","whatsappNumber"], "WhatsApp Link":["WhatsApp Link","whatsappLink"], "Email":["Email","email"],
+  "Default Communication":["Default Communication","defaultCommunication","Default Send Method"], "Default Message Template":["Default Message Template","defaultMessage"],
+  "Notes":["Notes","note","Quick Notes"], "Color":["Color","color"], "Created Date":["Created Date","createdAt"], "Updated Date":["Updated Date","updatedAt"]
+};
+
+function taskVal(task, col) {
+  if (col === "Task ID") return makeTaskId(getVal(task, col, TASK_ALIASES));
+  if (col === "WhatsApp Link") { const explicit=getVal(task,col,TASK_ALIASES); const wa=getVal(task,"WhatsApp Number",TASK_ALIASES); return explicit || (cleanPhone(wa)?'https://wa.me/'+cleanPhone(wa):''); }
+  if (col === "Created Date") return getVal(task,col,TASK_ALIASES) || new Date().toISOString();
+  if (col === "Updated Date") return new Date().toISOString();
+  if (col === "Completed Date") { const st=String(getVal(task,"Status",TASK_ALIASES)||'').toLowerCase(); return getVal(task,col,TASK_ALIASES) || ((st==='done'||st==='completed')?new Date().toISOString():''); }
+  return getVal(task,col,TASK_ALIASES);
+}
+function contactVal(c, col) {
+  if (col === "Person ID") return makePersonId(getVal(c, col, CONTACT_ALIASES));
+  if (col === "WhatsApp Link") { const explicit=getVal(c,col,CONTACT_ALIASES); const wa=getVal(c,"WhatsApp Number",CONTACT_ALIASES); return explicit || (cleanPhone(wa)?'https://wa.me/'+cleanPhone(wa):''); }
+  if (col === "Created Date") return getVal(c,col,CONTACT_ALIASES) || new Date().toISOString();
+  if (col === "Updated Date") return new Date().toISOString();
+  return getVal(c,col,CONTACT_ALIASES);
+}
+
+function deleteDuplicateRowsById(sheetName, headers, idCol) {
+  const sheet = getSheet(sheetName);
+  ensureHeaders(sheet, headers);
+  const lastRow = sheet.getLastRow();
+  if (lastRow <= 2) return;
+  const values = sheet.getRange(2, 1, lastRow - 1, headers.length).getValues();
+  const seen = {};
+  const rowsToDelete = [];
+  for (let i = values.length - 1; i >= 0; i--) {
+    const id = String(values[i][idCol] || '').trim();
+    if (!id) continue;
+    if (seen[id]) rowsToDelete.push(i + 2);
+    else seen[id] = true;
+  }
+  rowsToDelete.sort((a,b)=>b-a).forEach(r => sheet.deleteRow(r));
+}
+
+function upsertById(sheetName, headers, row, idCol) {
+  const sheet = getSheet(sheetName);
+  ensureHeaders(sheet, headers);
+  const id = String(row[idCol] || '').trim();
+  if (!id) return;
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) { sheet.appendRow(row); return; }
+  const ids = sheet.getRange(2, idCol + 1, lastRow - 1, 1).getValues().map(r => String(r[0] || '').trim());
+  const matchedRows = [];
+  ids.forEach((x, i) => { if (x === id) matchedRows.push(i + 2); });
+  if (matchedRows.length) {
+    sheet.getRange(matchedRows[0], 1, 1, row.length).setValues([row]);
+    matchedRows.slice(1).sort((a,b)=>b-a).forEach(r => sheet.deleteRow(r));
+  } else {
+    sheet.appendRow(row);
+  }
+}
+
+function saveTask(task) { if (!task) return; upsertById(TASKS_SHEET, TASK_HEADERS, TASK_HEADERS.map(h=>taskVal(task,h)), 0); }
+function saveContact(contact) { if (!contact) return; upsertById(CONTACTS_SHEET, CONTACT_HEADERS, CONTACT_HEADERS.map(h=>contactVal(contact,h)), 0); }
+function bulkSave(tasks, contacts) {
+  setupSheets();
+  deleteDuplicateRowsById(TASKS_SHEET, TASK_HEADERS, 0);
+  deleteDuplicateRowsById(CONTACTS_SHEET, CONTACT_HEADERS, 0);
+  (tasks || []).forEach(saveTask);
+  (contacts || []).forEach(saveContact);
+}`;
+
+  const el=document.getElementById('appsScriptCode');
+  if(el) el.textContent=code;
+}
+
+function copyScript() {
+  const code=document.getElementById('appsScriptCode').textContent;
+  navigator.clipboard.writeText(code).then(()=>toast('Code copied ✓','📋')).catch(()=>toast('Select and copy manually'));
+}
+
+// ════════════════════════════════════════
+// KEYBOARD SHORTCUTS
+// ════════════════════════════════════════
+document.addEventListener('keydown', function(e){
+  const active=document.activeElement;
+  const typing=active&&(active.tagName==='INPUT'||active.tagName==='TEXTAREA'||active.contentEditable==='true');
+  if(typing) return;
+  if(e.key==='Escape'){ closeTaskPanel(); document.querySelectorAll('.overlay.open').forEach(o=>o.classList.remove('open')); return; }
+  if(e.key==='n'||e.key==='N'){ e.preventDefault(); openAddModal(); return; }
+  if(e.key==='q'||e.key==='Q'){ e.preventDefault(); document.getElementById('qcapIn')?.focus(); return; }
+  if(e.key==='1'){ showView('dashboard'); }
+  if(e.key==='2'){ showView('tasks'); }
+  if(e.key==='3'){ showView('weekly'); }
+  if(e.key==='4'){ showView('campaigns'); }
+  if(e.key==='5'){ showView('growth'); }
+  if(e.key==='6'){ showView('network'); }
+});
+
+// ════════════════════════════════════════
+// START
+// ════════════════════════════════════════
+init();
+</script>
+</body>
+</html>
