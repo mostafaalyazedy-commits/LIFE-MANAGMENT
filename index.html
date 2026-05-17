@@ -599,6 +599,54 @@ display:flex;align-items:center;gap:14px;
 .icon-btn{width:27px;height:27px;border-radius:7px;border:1px solid var(–b2);background:var(–s2);color:var(–tm);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;}
 .icon-btn:hover{color:var(–gold);border-color:rgba(201,169,110,.3);}
 
+/* ══════════════════════════════
+MULTI-PERSON PICKER
+══════════════════════════════ */
+.mp-wrap{border:1px solid var(–b2);border-radius:var(–r2);background:var(–s2);overflow:hidden;}
+.mp-search-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(–b1);}
+.mp-search-ico{font-size:13px;opacity:.4;flex-shrink:0;}
+.mp-search-input{flex:1;background:none;border:none;outline:none;color:var(–tx);font-family:‘Outfit’,sans-serif;font-size:12px;}
+.mp-search-input::placeholder{color:var(–td);}
+.mp-list{max-height:160px;overflow-y:auto;}
+.mp-item{display:flex;align-items:center;gap:9px;padding:7px 10px;cursor:pointer;transition:background .1s;}
+.mp-item:hover{background:var(–s3);}
+.mp-item.selected{background:var(–goldd);}
+.mp-item-chk{width:16px;height:16px;border-radius:4px;border:1px solid var(–b3);display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;transition:all .1s;}
+.mp-item.selected .mp-item-chk{background:var(–gold);border-color:var(–gold);color:var(–bg);}
+.mp-item-av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;}
+.mp-item-info{flex:1;min-width:0;}
+.mp-item-name{font-size:12px;font-weight:500;color:var(–tx);}
+.mp-item-role{font-size:10px;color:var(–tm);}
+.mp-item-meta{font-size:10px;color:var(–td);display:flex;gap:6px;margin-top:1px;}
+.mp-chips{display:flex;flex-wrap:wrap;gap:5px;padding:8px 10px;min-height:36px;border-top:1px solid var(–b1);}
+.mp-chips-empty{font-size:10px;color:var(–td);align-self:center;}
+.mp-chip{display:inline-flex;align-items:center;gap:5px;background:var(–s1);border:1px solid var(–b2);border-radius:99px;padding:3px 8px 3px 6px;font-size:11px;color:var(–tx);}
+.mp-chip-av{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;}
+.mp-chip-x{cursor:pointer;color:var(–td);font-size:13px;line-height:1;transition:color .1s;}
+.mp-chip-x:hover{color:var(–rose);}
+.mp-add-new{padding:7px 10px;border-top:1px solid var(–b1);display:flex;align-items:center;gap:7px;cursor:pointer;color:var(–teal);font-size:11px;font-family:‘Outfit’,sans-serif;background:none;border-left:none;border-right:none;border-bottom:none;width:100%;text-align:left;transition:background .1s;}
+.mp-add-new:hover{background:var(–s3);}
+
+/* ── DRAWER PEOPLE SECTION ── */
+.people-card{background:var(–s1);border:1px solid var(–b1);border-radius:var(–r);padding:9px 11px;margin-bottom:7px;}
+.people-card-top{display:flex;align-items:center;gap:9px;margin-bottom:8px;}
+.people-card-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+.people-card-name{font-size:13px;font-weight:600;}
+.people-card-role{font-size:10px;color:var(–tm);}
+.people-card-actions{display:flex;gap:6px;flex-wrap:wrap;}
+.pa-btn{display:inline-flex;align-items:center;gap:4px;padding:5px 9px;border-radius:6px;font-size:11px;cursor:pointer;border:1px solid var(–b2);background:var(–s2);color:var(–tm);font-family:‘Outfit’,sans-serif;text-decoration:none;transition:all .12s;}
+.pa-btn:hover{color:var(–tx);border-color:var(–b3);}
+.pa-btn.wa{color:var(–green);border-color:rgba(109,184,130,.25);background:var(–greend);}
+.pa-btn.mail{color:var(–blue);border-color:rgba(123,157,224,.25);background:var(–blued);}
+.pa-btn.copy{color:var(–gold);border-color:rgba(201,169,110,.25);background:var(–goldd);}
+
+/* ── SEND-ALL BAR ── */
+.send-all-bar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px;}
+.send-all-btn{flex:1;min-width:120px;display:flex;align-items:center;justify-content:center;gap:5px;padding:9px 8px;border-radius:8px;border:1px solid var(–b2);background:var(–s1);color:var(–tx);font-size:11px;font-family:‘Outfit’,sans-serif;cursor:pointer;transition:all .15s;}
+.send-all-btn:hover{border-color:var(–b3);background:var(–s3);}
+.send-all-btn.gold{color:var(–gold);border-color:rgba(201,169,110,.3);background:var(–goldd);}
+.send-all-btn.green{color:var(–green);border-color:rgba(109,184,130,.3);background:var(–greend);}
+
 /* ══════════════════════════════════════════
 MOBILE BOTTOM NAV
 ══════════════════════════════════════════ */
@@ -614,7 +662,7 @@ border:none;background:none;color:var(–td);
 font-family:‘Outfit’,sans-serif;font-size:9px;
 transition:color .15s;padding:4px 0;
 }
-.mnav-btn span.ico{font-size:20px;line-height:1;}
+.mnav-btn .ico{font-size:20px;line-height:1;}
 .mnav-btn.active{color:var(–gold);}
 .mnav-btn:active{opacity:.7;}
 
@@ -634,132 +682,108 @@ transition:transform .15s;
 /* ══════════════════════════════════════════
 @MEDIA MOBILE ≤ 768px
 ══════════════════════════════════════════ */
-@media (max-width: 768px) {
+@media (max-width:768px){
+html,body{height:auto;overflow:auto;}
+body{flex-direction:column;}
 
-/* ── Reset scroll lock ── */
-html, body { height: auto; overflow: auto; }
-body { flex-direction: column; }
+.topbar{position:sticky;top:0;z-index:200;height:50px;padding:0 14px;}
+.topbar-nav{display:none;}
+.logo-sub{display:none;}
 
-/* ── Topbar: sticky, hide desktop nav ── */
-.topbar {
-position: sticky; top: 0; z-index: 200;
-height: 50px; padding: 0 14px;
+.shell{flex-direction:column;overflow:visible;}
+.sidebar{display:none!important;}
+.main{overflow:visible;width:100%;}
+.view{padding:14px 13px 76px;}
+
+.mobile-nav{display:flex;}
+.mobile-fab{display:flex;}
+
+.kpi-strip{grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.kpi{padding:11px 10px;}
+.kpi-v{font-size:20px;}
+.kpi-l{font-size:8px!important;}
+.kpi-s{font-size:9px!important;}
+
+.ph{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:14px;}
+.ph-title{font-size:20px;}
+.ph-right{width:100%;}
+.ph-right .btn{width:100%;justify-content:center;}
+
+.g2,.g3,.g21,.g12,.g13{display:flex!important;flex-direction:column;gap:10px;}
+.col{display:flex;flex-direction:column;gap:10px;}
+
+.panel-b,.panel-b0{max-height:none;overflow:visible;}
+.panel-scroll{max-height:none;overflow:visible;}
+
+.setup-banner{flex-direction:column;align-items:flex-start;gap:8px;padding:12px;}
+
+.qcap{padding:10px 12px;gap:8px;}
+.qcap-cat{display:none;}
+.kbd{display:none;}
+
+.focus{flex-direction:column;align-items:flex-start;gap:10px;padding:14px;}
+.focus .btn{width:100%;justify-content:center;}
+
+/* Task drawer → bottom sheet */
+.task-drawer{
+width:100%!important;max-width:100%!important;
+right:-100%!important;border-left:none!important;
+border-top:1px solid var(–b2);
+border-radius:18px 18px 0 0;
+top:auto!important;bottom:0;height:92vh;
 }
-.topbar-nav { display: none; }
-.logo-sub { display: none; }
+.task-drawer.open{right:0!important;}
+.drawer-h{padding:14px 16px;}
+.drawer-title{font-size:16px;}
+.drawer-b{padding:12px 14px;}
+.action-grid{grid-template-columns:1fr 1fr;gap:7px;}
+.action-btn{font-size:12px;padding:10px 8px;}
 
-/* ── Shell: stack ── */
-.shell { flex-direction: column; overflow: visible; }
-
-/* ── Sidebar: hidden ── */
-.sidebar { display: none !important; }
-
-/* ── Main: full width ── */
-.main { overflow: visible; width: 100%; }
-
-/* ── Views: padding for bottom nav ── */
-.view { padding: 14px 13px 76px; }
-
-/* ── Show mobile controls ── */
-.mobile-nav { display: flex; }
-.mobile-fab { display: flex; }
-
-/* ── KPI strip: 3 cols ── */
-.kpi-strip {
-grid-template-columns: repeat(3, 1fr);
-gap: 8px; margin-bottom: 12px;
+/* Modals → bottom sheet */
+.overlay{align-items:flex-end;padding:0;}
+.modal{
+width:100%!important;max-width:100%!important;
+max-height:94vh;border-radius:18px 18px 0 0;
+position:fixed;bottom:0;left:0;right:0;
 }
-.kpi { padding: 11px 10px; }
-.kpi-v { font-size: 20px; }
-.kpi-l { font-size: 8px; }
-.kpi-s { font-size: 9px; }
-
-/* ── Page header ── */
-.ph { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
-.ph-title { font-size: 20px; }
-.ph-right { width: 100%; }
-.ph-right .btn { width: 100%; justify-content: center; }
-
-/* ── All grids → single column ── */
-.g2, .g3, .g21, .g12, .g13 { display: flex !important; flex-direction: column; gap: 10px; }
-.col { display: flex; flex-direction: column; gap: 10px; }
-
-/* ── Panels ── */
-.panel-b, .panel-b0 { max-height: none; overflow: visible; }
-.panel-scroll { max-height: none; overflow: visible; }
-
-/* ── Setup banner ── */
-.setup-banner { flex-direction: column; align-items: flex-start; gap: 8px; padding: 12px; }
-
-/* ── Quick capture ── */
-.qcap { padding: 10px 12px; gap: 8px; }
-.qcap-cat { display: none; }
-.kbd { display: none; }
-
-/* ── Focus panel ── */
-.focus { flex-direction: column; align-items: flex-start; gap: 10px; padding: 14px; }
-.focus .btn { width: 100%; justify-content: center; }
-
-/* ── Task table: horizontal scroll ── */
-.panel-b0 { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-
-/* ── Task drawer: bottom sheet ── */
-.task-drawer {
-width: 100% !important; max-width: 100% !important;
-right: -100% !important; border-left: none !important;
-border-top: 1px solid var(–b2);
-border-radius: 18px 18px 0 0;
-top: auto !important; bottom: 0; height: 92vh;
+.modal-h{padding:16px 18px;}
+.modal-b{padding:14px 18px;gap:12px;}
+.modal-f{
+padding:12px 18px 20px;position:sticky;bottom:0;
+background:var(–s1);border-top:1px solid var(–b1);
+gap:8px;
 }
-.task-drawer.open { right: 0 !important; }
-.drawer-h { padding: 14px 16px; }
-.drawer-title { font-size: 16px; }
-.drawer-b { padding: 12px 14px; }
-.action-grid { grid-template-columns: 1fr 1fr; gap: 7px; }
-.action-btn { font-size: 12px; padding: 10px 8px; }
+.modal-f .btn{flex:1;justify-content:center;padding:12px;font-size:13px;}
+.frow{grid-template-columns:1fr!important;}
 
-/* ── Modals: bottom sheet ── */
-.overlay { align-items: flex-end; padding: 0; }
-.modal {
-width: 100% !important; max-width: 100% !important;
-max-height: 94vh; border-radius: 18px 18px 0 0;
-position: fixed; bottom: 0; left: 0; right: 0;
-}
-.modal-h { padding: 16px 18px; }
-.modal-b { padding: 14px 18px; gap: 12px; }
-.modal-f {
-padding: 12px 18px 20px; position: sticky; bottom: 0;
-background: var(–s1); border-top: 1px solid var(–b1);
-gap: 8px;
-}
-.modal-f .btn { flex: 1; justify-content: center; padding: 12px; font-size: 13px; }
-.frow { grid-template-columns: 1fr !important; }
-.finput, .fselect { padding: 12px; font-size: 15px; }
+/* Multi-person picker on mobile */
+.mp-list{max-height:200px;}
+.mp-item{padding:10px 12px;}
+.mp-item-chk{width:20px;height:20px;border-radius:5px;}
+.mp-item-av{width:32px;height:32px;font-size:11px;}
+.mp-item-name{font-size:13px;}
+.mp-item-role{font-size:11px;}
+.mp-chips{padding:10px 12px;gap:6px;}
+.mp-chip{padding:5px 10px 5px 8px;font-size:12px;}
+.mp-search-input{font-size:16px!important;}
 
-/* ── Weekly 5-day grid ── */
-.wk-grid { grid-template-columns: 1fr 1fr !important; gap: 8px; }
+/* iOS anti-zoom */
+input,select,textarea{font-size:16px!important;}
+.finput,.fselect{font-size:16px!important;}
+.tag{font-size:9px!important;}
+.status{font-size:9px!important;}
+.flabel{font-size:10px!important;}
 
-/* ── Net cards ── */
-.net-card { padding: 10px 12px; }
-
-/* ── Info grid ── */
-.info-grid { grid-template-columns: 1fr 1fr; }
-
-/* ── Prevent iOS input zoom ── */
-input, select, textarea { font-size: 16px !important; }
-.finput, .fselect { font-size: 16px !important; }
-/* restore small tags */
-.tag, .status, .kpi-l, .kpi-s, .flabel, .sec-t,
-.drawer-sec-title, .log-time, .log-text { font-size: inherit !important; }
-.tag { font-size: 9px !important; }
-.status { font-size: 9px !important; }
-.flabel { font-size: 10px !important; }
+.wk-grid{grid-template-columns:1fr 1fr!important;gap:8px;}
+.info-grid{grid-template-columns:1fr 1fr;}
+.send-all-bar{flex-direction:column;gap:6px;}
+.send-all-btn{min-width:unset;width:100%;}
+.people-card-actions{flex-wrap:wrap;}
 }
 
-@media (max-width: 420px) {
-.kpi-strip { grid-template-columns: repeat(2, 1fr); }
-.action-grid { grid-template-columns: 1fr; }
-.frow { grid-template-columns: 1fr !important; }
+@media (max-width:420px){
+.kpi-strip{grid-template-columns:repeat(2,1fr);}
+.action-grid{grid-template-columns:1fr;}
 }
 
 </style>
@@ -810,9 +834,6 @@ input, select, textarea { font-size: 16px !important; }
     <span class="ico">⚙</span><span>Setup</span>
   </button>
 </nav>
-
-<!-- ══ MOBILE FAB ══ -->
-
 <button class="mobile-fab" onclick="openAddModal()" title="New Task">+</button>
 
 <div class="shell">
@@ -1383,42 +1404,65 @@ input, select, textarea { font-size: 16px !important; }
         <div class="fg"><label class="flabel">Due Date</label><input class="finput" id="f-due" type="date"></div>
         <div class="fg"><label class="flabel">Owner</label><input class="finput" id="f-owner" placeholder="Self" value="Self"></div>
       </div>
-      <div class="frow">
-        <div class="fg"><label class="flabel">Related Person / To Inform</label><div style="display:flex;gap:6px;"><select class="fselect" id="f-person" onchange="applySelectedContactToTask()"><option value="">— Select saved person —</option></select><button type="button" class="btn btn-ghost btn-sm" onclick="openContactModal()" title="Add new person">+</button></div><div style="font-size:10px;color:var(--tm);margin-top:4px;">اختار الشخص مرة واحدة وسيتم ملء الرقم والإيميل والدور تلقائيًا من Contacts Database.</div></div>
-        <div class="fg"><label class="flabel">Related Person Role</label><input class="finput" id="f-role" placeholder="e.g. Manager / Designer / Supplier"></div>
+
+```
+  <!-- MULTI-PERSON PICKER -->
+  <div class="fg">
+    <label class="flabel">Related Persons / To Inform</label>
+    <div class="mp-wrap">
+      <div class="mp-search-row">
+        <span class="mp-search-ico">🔍</span>
+        <input class="mp-search-input" id="mp-search" placeholder="ابحث باسم أو دور أو قسم..." oninput="mpFilter(this.value)">
       </div>
-      <div class="frow">
-        <div class="fg"><label class="flabel">WhatsApp Number</label><input class="finput" id="f-wa" placeholder="9665XXXXXXXX"></div>
-        <div class="fg"><label class="flabel">Send By / Communication Channel</label><select class="fselect" id="f-comm"><option>No</option><option>WhatsApp</option><option>Email</option><option>WhatsApp + Email</option><option>Call</option></select><div style="font-size:10px;color:var(--tm);margin-top:4px;">اختار هتبعت واتساب ولا إيميل ولا الاتنين.</div></div>
-      </div>
-      <div class="frow">
-        <div class="fg"><label class="flabel">Email</label><input class="finput" id="f-email" placeholder="name@email.com"></div>
-        <div class="fg"><label class="flabel">Follow-up Date</label><input class="finput" id="f-follow" type="date"></div>
-      </div>
-      <div class="fg"><label class="flabel">Next Action</label><input class="finput" id="f-next" placeholder="e.g. Send approval reminder / Upload banner"></div>
-      <div class="frow">
-        <div class="fg"><label class="flabel">Waiting On</label><input class="finput" id="f-wait" placeholder="e.g. Designer / Supplier / Management"></div>
-        <div class="fg"><label class="flabel">KPI Impact</label><input class="finput" id="f-kpi" placeholder="e.g. Sales / Leads / Execution / Compliance"></div>
-      </div>
-      <div class="frow">
-        <div class="fg"><label class="flabel">Effort Level</label><select class="fselect" id="f-effort"><option></option><option>Low</option><option>Medium</option><option>High</option></select></div>
-        <div class="fg"><label class="flabel">Risk Level</label><select class="fselect" id="f-risk"><option></option><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></div>
-      </div>
-      <div class="frow">
-        <div class="fg"><label class="flabel">Management Visibility</label><select class="fselect" id="f-vis"><option></option><option>Low</option><option>Medium</option><option>High</option><option>Executive</option></select></div>
-        <div class="fg"><label class="flabel">Recurrence Rule</label><input class="finput" id="f-rule" placeholder="e.g. Weekly Sunday / Monthly day 2"></div>
-      </div>
-      <div class="fg"><label class="flabel">Expected Output</label><input class="finput" id="f-output" placeholder="What final output should be delivered?"></div>
-      <div class="fg"><label class="flabel">Blocker</label><input class="finput" id="f-blocker" placeholder="Any blocker preventing completion?"></div>
-      <div class="fg"><label class="flabel">Quick Notes</label><input class="finput" id="f-notes" placeholder="Internal notes"></div>
-      <div class="fg"><label class="flabel">Links / Files</label><input class="finput" id="f-links" placeholder="Paste related links or file names"></div>
-      <div class="fg"><label class="flabel">Prepared Message</label><textarea class="finput" id="f-msg" rows="3" placeholder="Write or auto-generate the message you will send..."></textarea></div>
+      <div class="mp-list" id="mp-list"></div>
+      <button type="button" class="mp-add-new" onclick="openContactModal();_mpReturnToTask=true;">+ Add New Person to Database</button>
+      <div class="mp-chips" id="mp-chips"><span class="mp-chips-empty">No persons selected</span></div>
     </div>
-    <div class="modal-f">
-      <button class="btn btn-danger btn-sm" id="delBtn" onclick="deleteTask()" style="display:none;margin-right:auto;">🗑 Delete</button>
-      <button class="btn btn-ghost" onclick="closeModal('taskModal')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveTask()">Save Task</button>
+    <div style="font-size:10px;color:var(--tm);margin-top:4px;">اختر أكثر من شخص · بياناتهم تُجلب تلقائياً من Contacts Database</div>
+  </div>
+
+  <!-- Legacy single fields (hidden, kept for backward compat) -->
+  <input type="hidden" id="f-person">
+  <input type="hidden" id="f-role">
+  <input type="hidden" id="f-wa">
+  <input type="hidden" id="f-email">
+  <input type="hidden" id="f-comm">
+
+  <div class="frow">
+    <div class="fg"><label class="flabel">Communication Channel (default)</label>
+      <select class="fselect" id="f-comm-sel">
+        <option value="No">No</option><option value="WhatsApp">WhatsApp</option><option value="Email">Email</option><option value="WhatsApp + Email">WhatsApp + Email</option><option value="Call">Call</option>
+      </select>
+      <div style="font-size:10px;color:var(--tm);margin-top:4px;">Channel تلقائي لو الشخص ليس عنده default محدد</div>
     </div>
+    <div class="fg"><label class="flabel">Follow-up Date</label><input class="finput" id="f-follow" type="date"></div>
+  </div>
+  <div class="fg"><label class="flabel">Next Action</label><input class="finput" id="f-next" placeholder="e.g. Send approval reminder / Upload banner"></div>
+  <div class="frow">
+    <div class="fg"><label class="flabel">Waiting On</label><input class="finput" id="f-wait" placeholder="e.g. Designer / Supplier / Management"></div>
+    <div class="fg"><label class="flabel">KPI Impact</label><input class="finput" id="f-kpi" placeholder="e.g. Sales / Leads / Execution / Compliance"></div>
+  </div>
+  <div class="frow">
+    <div class="fg"><label class="flabel">Effort Level</label><select class="fselect" id="f-effort"><option></option><option>Low</option><option>Medium</option><option>High</option></select></div>
+    <div class="fg"><label class="flabel">Risk Level</label><select class="fselect" id="f-risk"><option></option><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></div>
+  </div>
+  <div class="frow">
+    <div class="fg"><label class="flabel">Management Visibility</label><select class="fselect" id="f-vis"><option></option><option>Low</option><option>Medium</option><option>High</option><option>Executive</option></select></div>
+    <div class="fg"><label class="flabel">Recurrence Rule</label><input class="finput" id="f-rule" placeholder="e.g. Weekly Sunday / Monthly day 2"></div>
+  </div>
+  <div class="fg"><label class="flabel">Expected Output</label><input class="finput" id="f-output" placeholder="What final output should be delivered?"></div>
+  <div class="fg"><label class="flabel">Blocker</label><input class="finput" id="f-blocker" placeholder="Any blocker preventing completion?"></div>
+  <div class="fg"><label class="flabel">Quick Notes</label><input class="finput" id="f-notes" placeholder="Internal notes"></div>
+  <div class="fg"><label class="flabel">Links / Files</label><input class="finput" id="f-links" placeholder="Paste related links or file names"></div>
+  <div class="fg"><label class="flabel">Prepared Message</label><textarea class="finput" id="f-msg" rows="3" placeholder="Write or auto-generate the message you will send..."></textarea></div>
+</div>
+<div class="modal-f">
+  <button class="btn btn-danger btn-sm" id="delBtn" onclick="deleteTask()" style="display:none;margin-right:auto;">🗑 Delete</button>
+  <button class="btn btn-ghost" onclick="closeModal('taskModal')">Cancel</button>
+  <button class="btn btn-primary" onclick="saveTask()">Save Task</button>
+</div>
+```
+
   </div>
 </div>
 
@@ -1550,40 +1594,21 @@ let sheetsUrl='';
 let taskFilter='all', catFilter='all', searchQuery='';
 let nextId = Date.now();
 
+const SEP = '||'; // separator for multi-value fields
+
 const TASK_COLUMNS = [
-  "Task ID",
-  "Task Name",
-  "Department",
-  "Category",
-  "Priority",
-  "Status",
-  "Due Date",
-  "Follow-up Date",
-  "Owner",
-  "Related Person",
-  "Related Person Role",
-  "WhatsApp Number",
-  "WhatsApp Link",
-  "Email",
-  "Next Action",
-  "Communication Needed",
-  "Message Template",
-  "Last Follow-up",
-  "Last Response",
-  "Waiting On",
-  "KPI Impact",
-  "Effort Level",
-  "Risk Level",
-  "Management Visibility",
-  "Recurring",
-  "Recurrence Rule",
-  "Expected Output",
-  "Blocker",
-  "Quick Notes",
-  "Links / Files",
-  "Created Date",
-  "Updated Date",
-  "Completed Date"
+  "Task ID","Task Name","Department","Category","Priority","Status",
+  "Due Date","Follow-up Date","Owner",
+  // Legacy single-person columns (kept for backward compat)
+  "Related Person","Related Person Role","WhatsApp Number","WhatsApp Link","Email",
+  // NEW multi-person columns
+  "Related Persons IDs","Related Persons Names","Related Persons Roles",
+  "Related Persons WhatsApp Numbers","Related Persons Emails","Communication Channels",
+  // rest
+  "Next Action","Communication Needed","Message Template","Last Follow-up","Last Response",
+  "Waiting On","KPI Impact","Effort Level","Risk Level","Management Visibility",
+  "Recurring","Recurrence Rule","Expected Output","Blocker","Quick Notes","Links / Files",
+  "Created Date","Updated Date","Completed Date"
 ];
 
 function cleanPhoneForWa(n) {
@@ -1594,6 +1619,7 @@ function taskIdLabel(id) {
   return isNaN(n) ? String(id||'') : `TASK-${String(n).padStart(3,'0')}`;
 }
 function getTaskCol(t, col) {
+  const rp = t.relatedPersons || [];
   const map = {
     "Task ID": taskIdLabel(t.id),
     "Task Name": t.name || '',
@@ -1604,11 +1630,20 @@ function getTaskCol(t, col) {
     "Due Date": t.due || '',
     "Follow-up Date": t.followUp || '',
     "Owner": t.owner || '',
-    "Related Person": t.relatedPerson || '',
-    "Related Person Role": t.relatedPersonRole || '',
-    "WhatsApp Number": t.whatsapp || '',
-    "WhatsApp Link": t.whatsappLink || (cleanPhoneForWa(t.whatsapp) ? `https://wa.me/${cleanPhoneForWa(t.whatsapp)}` : ''),
-    "Email": t.email || '',
+    // Legacy (first person or single)
+    "Related Person": rp.length ? rp[0].name : (t.relatedPerson || ''),
+    "Related Person Role": rp.length ? rp[0].role : (t.relatedPersonRole || ''),
+    "WhatsApp Number": rp.length ? rp[0].whatsapp : (t.whatsapp || ''),
+    "WhatsApp Link": rp.length ? (cleanPhoneForWa(rp[0].whatsapp)?`https://wa.me/${cleanPhoneForWa(rp[0].whatsapp)}`:'') : (t.whatsappLink || (cleanPhoneForWa(t.whatsapp)?`https://wa.me/${cleanPhoneForWa(t.whatsapp)}`:'')),
+    "Email": rp.length ? rp[0].email : (t.email || ''),
+    // Multi-person columns
+    "Related Persons IDs": rp.map(p=>p.id||'').join(SEP),
+    "Related Persons Names": rp.map(p=>p.name||'').join(SEP),
+    "Related Persons Roles": rp.map(p=>p.role||'').join(SEP),
+    "Related Persons WhatsApp Numbers": rp.map(p=>p.whatsapp||'').join(SEP),
+    "Related Persons Emails": rp.map(p=>p.email||'').join(SEP),
+    "Communication Channels": rp.map(p=>p.channel||'').join(SEP),
+    // rest
     "Next Action": t.nextAction || '',
     "Communication Needed": t.communicationNeeded || '',
     "Message Template": t.messageTemplate || '',
@@ -1640,6 +1675,40 @@ function normalizeTask(raw) {
   const updated = raw.updatedAt || raw["Updated Date"] || created || '';
   const completed = raw.completedAt || raw["Completed Date"] || '';
   const wa = raw.whatsapp || raw["WhatsApp Number"] || raw.whatsappNumber || '';
+
+  // ── MULTI-PERSON: build relatedPersons array ──
+  let rp = raw.relatedPersons;
+  if (!Array.isArray(rp) || !rp.length) {
+    // Try to reconstruct from multi-column strings
+    const names = String(raw["Related Persons Names"] || raw.relatedPersonsNames || '').split(SEP).map(s=>s.trim()).filter(Boolean);
+    if (names.length) {
+      const roles  = String(raw["Related Persons Roles"] || raw.relatedPersonsRoles || '').split(SEP);
+      const was    = String(raw["Related Persons WhatsApp Numbers"] || raw.relatedPersonsWhatsapp || '').split(SEP);
+      const emails = String(raw["Related Persons Emails"] || raw.relatedPersonsEmails || '').split(SEP);
+      const chans  = String(raw["Communication Channels"] || raw.communicationChannels || '').split(SEP);
+      const ids    = String(raw["Related Persons IDs"] || raw.relatedPersonsIds || '').split(SEP);
+      rp = names.map((n,i)=>({
+        id: (ids[i]||'').trim(), name:n,
+        role:(roles[i]||'').trim(), whatsapp:(was[i]||'').trim(),
+        email:(emails[i]||'').trim(), channel:(chans[i]||'').trim()
+      }));
+    } else {
+      // Migration from legacy single person
+      const legacyName = raw.relatedPerson || raw["Related Person"] || '';
+      if (legacyName) {
+        rp = [{
+          id:'', name: legacyName,
+          role: raw.relatedPersonRole || raw["Related Person Role"] || '',
+          whatsapp: wa,
+          email: raw.email || raw["Email"] || '',
+          channel: raw.communicationNeeded || raw["Communication Needed"] || ''
+        }];
+      } else {
+        rp = [];
+      }
+    }
+  }
+
   return {
     id: isNaN(nId) ? nextId++ : nId,
     name: raw.name || raw["Task Name"] || raw.task || '',
@@ -1650,13 +1719,16 @@ function normalizeTask(raw) {
     due: raw.due || raw["Due Date"] || '',
     followUp: raw.followUp || raw["Follow-up Date"] || '',
     owner: raw.owner || raw["Owner"] || 'Self',
-    relatedPerson: raw.relatedPerson || raw["Related Person"] || '',
-    relatedPersonRole: raw.relatedPersonRole || raw["Related Person Role"] || '',
-    whatsapp: wa,
-    whatsappLink: raw.whatsappLink || raw["WhatsApp Link"] || (cleanPhoneForWa(wa) ? `https://wa.me/${cleanPhoneForWa(wa)}` : ''),
-    email: raw.email || raw["Email"] || '',
+    // Legacy fields (first person for backward compat)
+    relatedPerson: rp[0]?.name || '',
+    relatedPersonRole: rp[0]?.role || '',
+    whatsapp: rp[0]?.whatsapp || wa,
+    whatsappLink: raw.whatsappLink || raw["WhatsApp Link"] || (cleanPhoneForWa(rp[0]?.whatsapp||wa)?`https://wa.me/${cleanPhoneForWa(rp[0]?.whatsapp||wa)}`:''),
+    email: rp[0]?.email || raw.email || raw["Email"] || '',
+    // Multi-person
+    relatedPersons: rp,
+    communicationNeeded: raw.communicationNeeded || raw["Communication Needed"] || (rp[0]?.channel||''),
     nextAction: raw.nextAction || raw["Next Action"] || '',
-    communicationNeeded: raw.communicationNeeded || raw["Communication Needed"] || '',
     messageTemplate: raw.messageTemplate || raw["Message Template"] || '',
     lastFollowUp: raw.lastFollowUp || raw["Last Follow-up"] || '',
     lastResponse: raw.lastResponse || raw["Last Response"] || '',
@@ -2024,8 +2096,8 @@ function normalizeSearchText(v) {
     .trim();
 }
 function taskSearchBlob(t) {
-  // Searches every database column, not only the visible task name.
-  return normalizeSearchText(TASK_COLUMNS.map(col=>getTaskCol(t,col)).join(' '));
+  const multiPeople = (t.relatedPersons||[]).map(p=>`${p.name} ${p.role} ${p.whatsapp} ${p.email}`).join(' ');
+  return normalizeSearchText(TASK_COLUMNS.map(col=>getTaskCol(t,col)).join(' ') + ' ' + multiPeople);
 }
 function matchesSearch(t, q) {
   const tokens = normalizeSearchText(q).split(' ').filter(Boolean);
@@ -2386,47 +2458,164 @@ function defaultTaskMessage(t){
 function getTaskMessage(t){return t.messageTemplate||defaultTaskMessage(t);}
 function waUrl(t){const phone=normalizePhone(t.whatsapp); if(!phone) return ''; return `https://wa.me/${phone}?text=${encodeURIComponent(getTaskMessage(t))}`;}
 function mailUrl(t){if(!t.email) return ''; return `mailto:${t.email}?subject=${encodeURIComponent('Follow-up: '+(t.name||''))}&body=${encodeURIComponent(getTaskMessage(t))}`;}
-function openWhatsApp(id){const t=tasks.find(x=>x.id===id); if(!t) return; const u=waUrl(t); if(!u){toast('Add WhatsApp number first','⚠');return;} logComm(id,'WhatsApp opened / message prepared'); window.open(u,'_blank');}
-function openEmailDraft(id){const t=tasks.find(x=>x.id===id); if(!t) return; const u=mailUrl(t); if(!u){toast('Add email first','⚠');return;} logComm(id,'Email draft opened'); window.location.href=u;}
-function openBothChannels(id){const t=tasks.find(x=>x.id===id); if(!t) return; const hasWa=!!waUrl(t); const hasMail=!!mailUrl(t); if(!hasWa && !hasMail){toast('Add WhatsApp number or email first','⚠');return;} if(hasWa) window.open(waUrl(t),'_blank'); if(hasMail) setTimeout(()=>{window.location.href=mailUrl(t);},350); logComm(id,'WhatsApp + Email opened / message prepared');}
-function openSelectedChannel(id){const t=tasks.find(x=>x.id===id); if(!t) return; const ch=String(t.communicationNeeded||'WhatsApp').toLowerCase(); if(ch.includes('whatsapp') && ch.includes('email')) return openBothChannels(id); if(ch.includes('email')) return openEmailDraft(id); if(ch.includes('whatsapp') || ch==='yes') return openWhatsApp(id); toast('Select WhatsApp or Email in Communication Channel','⚠');}
-function copyTaskMessage(id){const t=tasks.find(x=>x.id===id); if(!t) return; navigator.clipboard.writeText(getTaskMessage(t)).then(()=>toast('Message copied 📋','📋'));}
-function setTaskStatusQuick(id,status){const t=tasks.find(x=>x.id===id); if(!t) return; t.status=status; t.done=status==='Done'; t.updatedAt=new Date().toISOString(); t.completedAt=t.done?(t.completedAt||new Date().toISOString()):''; t.updatedAt=new Date().toISOString(); logComm(id,`Status changed to ${status}`,false); save(LS.tasks,tasks); renderAll(); openTaskPanel(id); pushTask(t);}
-function snoozeTask(id,days=1){const t=tasks.find(x=>x.id===id); if(!t) return; const d=new Date(); d.setDate(d.getDate()+days); t.followUp=d.toISOString().split('T')[0]; t.status='Waiting'; logComm(id,`Snoozed for ${days} day(s)`,false); save(LS.tasks,tasks); renderAll(); openTaskPanel(id);}
-function logComm(id, text, rerender=true){const t=tasks.find(x=>x.id===id); if(!t) return; if(!Array.isArray(t.commLog)) t.commLog=[]; t.lastCommunication=new Date().toISOString(); t.commLog.unshift({time:t.lastCommunication,text}); if(t.commLog.length>25) t.commLog=t.commLog.slice(0,25); if(rerender){save(LS.tasks,tasks); renderAll(); if(activeDrawerTaskId===id) openTaskPanel(id);}}
-function addQuickNote(id){const note=prompt('Quick note for this task:'); if(!note) return; logComm(id,'Note: '+note); toast('Note added ✓');}
+// ════════════════════════════════════════
+// MESSAGE TEMPLATE WITH PLACEHOLDERS
+// ════════════════════════════════════════
+function renderMessage(template, t, person) {
+  const p = person || t.relatedPersons?.[0] || {};
+  return (template || defaultTaskMessage(t))
+    .replace(/\{name\}/g, p.name || t.relatedPerson || '')
+    .replace(/\{task\}/g, t.name || '')
+    .replace(/\{due\}/g, t.due ? fmtDate(t.due) : '—')
+    .replace(/\{status\}/g, t.status || '')
+    .replace(/\{next_action\}/g, t.nextAction || '');
+}
+function defaultTaskMessage(t) {
+  const person = t.relatedPersons?.[0]?.name || t.relatedPerson || '';
+  return `السلام عليكم ${person?person+'،':'،'}\nمتابعة بخصوص: ${t.name||''}\n\nالحالة الحالية: ${t.status||'To Do'}\nالمطلوب حاليًا: ${t.nextAction||'يرجى المراجعة والتحديث'}\nالموعد المستهدف: ${t.due?fmtDate(t.due):'—'}\n\nشكرًا لك.`;
+}
+function getTaskMessage(t, person) { return renderMessage(t.messageTemplate || defaultTaskMessage(t), t, person); }
+function waUrl(t, person){
+  const p = person || t.relatedPersons?.[0] || t;
+  const phone = normalizePhone(p.whatsapp||t.whatsapp||'');
+  if(!phone) return '';
+  return `https://wa.me/${phone}?text=${encodeURIComponent(getTaskMessage(t, p))}`;
+}
+function mailUrl(t, person){
+  const p = person || t.relatedPersons?.[0] || t;
+  const email = p.email||t.email||'';
+  if(!email) return '';
+  return `mailto:${email}?subject=${encodeURIComponent('Follow-up: '+(t.name||''))}&body=${encodeURIComponent(getTaskMessage(t,p))}`;
+}
+
+function openWaForPerson(taskId, personName){
+  const t=tasks.find(x=>x.id===taskId); if(!t) return;
+  const p=t.relatedPersons?.find(x=>x.name===personName)||{};
+  const url=waUrl(t,p); if(!url){toast('Add WhatsApp number','⚠');return;}
+  logComm(taskId,`WhatsApp opened for ${p.name}`,false);
+  window.open(url,'_blank');
+}
+function openMailForPerson(taskId, personName){
+  const t=tasks.find(x=>x.id===taskId); if(!t) return;
+  const p=t.relatedPersons?.find(x=>x.name===personName)||{};
+  const url=mailUrl(t,p); if(!url){toast('Add email','⚠');return;}
+  logComm(taskId,`Email opened for ${p.name}`,false);
+  window.location.href=url;
+}
+function copyMsgForPerson(taskId, personName){
+  const t=tasks.find(x=>x.id===taskId); if(!t) return;
+  const p=t.relatedPersons?.find(x=>x.name===personName)||{};
+  navigator.clipboard.writeText(getTaskMessage(t,p)).then(()=>toast(`Copied for ${p.name} 📋`,'📋'));
+}
+
+function sendToAll(id) {
+  const t=tasks.find(x=>x.id===id); if(!t) return;
+  const persons=(t.relatedPersons||[]).filter(p=>p.whatsapp||p.email);
+  if(!persons.length){toast('No contacts with WhatsApp or Email','⚠');return;}
+  persons.forEach((p,i) => {
+    const ch = (p.channel||t.communicationNeeded||'WhatsApp').toLowerCase();
+    setTimeout(()=>{
+      if(ch.includes('whatsapp')||ch==='yes'){
+        const u=waUrl(t,p); if(u) window.open(u,'_blank');
+      }
+      if(ch.includes('email')){ const u=mailUrl(t,p); if(u) window.open(u,'_blank'); }
+    }, i * 700);
+  });
+  logComm(id,`Send to All triggered — ${persons.length} persons`,false);
+  toast(`Opening ${persons.length} contacts...`,'🚀');
+}
+
+function openAllWhatsApp(id) {
+  const t=tasks.find(x=>x.id===id); if(!t) return;
+  const persons=(t.relatedPersons||[]).filter(p=>normalizePhone(p.whatsapp));
+  if(!persons.length){toast('No WhatsApp numbers','⚠');return;}
+  persons.forEach((p,i)=>setTimeout(()=>window.open(waUrl(t,p),'_blank'),i*700));
+  toast(`Opening ${persons.length} WhatsApp links...`,'☘');
+}
+
+function copyAllMessages(id){
+  const t=tasks.find(x=>x.id===id); if(!t) return;
+  const persons=t.relatedPersons?.length?t.relatedPersons:[{name:t.relatedPerson||'',whatsapp:t.whatsapp,email:t.email}];
+  const text=persons.filter(p=>p.name).map(p=>`── ${p.name} ──\n${getTaskMessage(t,p)}`).join('\n\n');
+  navigator.clipboard.writeText(text).then(()=>toast('All messages copied 📋','📋'));
+}
+
+function openAllEmail(id){
+  const t=tasks.find(x=>x.id===id); if(!t) return;
+  const emails=(t.relatedPersons||[]).map(p=>p.email).filter(Boolean);
+  if(!emails.length){toast('No emails in contacts','⚠');return;}
+  const bcc=emails.join(',');
+  window.location.href=`mailto:?bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent('Follow-up: '+(t.name||''))}&body=${encodeURIComponent(getTaskMessage(t))}`;
+}
+
 function openTaskPanel(id){
   const t=tasks.find(x=>x.id===id); if(!t) return; activeDrawerTaskId=id;
   document.getElementById('drawerTaskTitle').textContent=t.name||'Task Details';
   document.getElementById('drawerTaskMeta').textContent=`${t.category||'—'} · ${t.priority||'—'} · Due ${t.due?fmtDate(t.due):'—'}`;
   const body=document.getElementById('drawerBody');
-  const msg=esc(getTaskMessage(t));
+  const persons = (t.relatedPersons||[]).length ? t.relatedPersons :
+    (t.relatedPerson ? [{name:t.relatedPerson,role:t.relatedPersonRole,whatsapp:t.whatsapp,email:t.email,channel:t.communicationNeeded}] : []);
+  const msg=getTaskMessage(t, persons[0]);
   const log=(t.commLog||[]).slice(0,8).map(l=>`<div class="log-item"><div class="log-time">${new Date(l.time).toLocaleString()}</div><div class="log-text">${esc(l.text)}</div></div>`).join('')||'<div style="color:var(--td);font-size:11px;">No communication logged yet.</div>';
+
+  // Related People section
+  const peopleSec = persons.length ? `
+    <div class="drawer-sec">
+      <div class="drawer-sec-title">Related People (${persons.length})</div>
+      ${persons.map(p=>{
+        const c=findContactByName(p.name);
+        const col=c?(colMap[c.color]||'var(--gold)'):'var(--gold)';
+        const ini=(p.name||'?').split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+        const wa=normalizePhone(p.whatsapp||'');
+        return `<div class="people-card">
+          <div class="people-card-top">
+            <div class="people-card-av" style="background:rgba(0,0,0,.3);border:1.5px solid ${col};color:${col};">${ini}</div>
+            <div style="flex:1;min-width:0;">
+              <div class="people-card-name">${esc(p.name)}</div>
+              <div class="people-card-role">${esc(p.role||'—')}${p.channel?' · '+esc(p.channel):''}</div>
+              <div style="font-size:10px;color:var(--td);margin-top:2px;">${wa?'☘ +'+wa:''}${p.email?' · ✉ '+esc(p.email):''}</div>
+            </div>
+          </div>
+          <div class="people-card-actions">
+            ${wa?`<button class="pa-btn wa" onclick="openWaForPerson(${id},'${esc(p.name)}')">☘ WhatsApp</button>`:''}
+            ${p.email?`<button class="pa-btn mail" onclick="openMailForPerson(${id},'${esc(p.name)}')">✉ Email</button>`:''}
+            <button class="pa-btn copy" onclick="copyMsgForPerson(${id},'${esc(p.name)}')">📋 Copy Msg</button>
+          </div>
+        </div>`;
+      }).join('')}
+      ${persons.length>1?`<div class="send-all-bar">
+        <button class="send-all-btn gold" onclick="sendToAll(${id})">🚀 Send to All</button>
+        <button class="send-all-btn green" onclick="openAllWhatsApp(${id})">☘ Open All WhatsApp</button>
+        <button class="send-all-btn" onclick="copyAllMessages(${id})">📋 Copy All Messages</button>
+        <button class="send-all-btn" onclick="openAllEmail(${id})">✉ Email All (BCC)</button>
+      </div>`:''}
+    </div>` : '';
+
   body.innerHTML=`
     <div class="drawer-sec"><div class="drawer-sec-title">Execution Snapshot</div>
       <div class="info-grid">
         <div class="info-box"><div class="info-l">Status</div><div class="info-v"><span class="status ${statClass[t.status]||'s-todo'}">${esc(t.status)}</span></div></div>
         <div class="info-box"><div class="info-l">Priority</div><div class="info-v"><span class="pdot ${priClass[t.priority]||'p-low'}" style="display:inline-block;margin-right:6px;"></span>${esc(t.priority)}</div></div>
-        <div class="info-box"><div class="info-l">Related Person</div><div class="info-v">${esc(t.relatedPerson||'—')}</div></div>
+        <div class="info-box"><div class="info-l">People</div><div class="info-v">${persons.map(p=>esc(p.name)).join(', ')||'—'}</div></div>
         <div class="info-box"><div class="info-l">Waiting On</div><div class="info-v">${esc(t.waitingOn||t.relatedPerson||'—')}</div></div>
         <div class="info-box"><div class="info-l">Follow-up</div><div class="info-v">${t.followUp?fmtDate(t.followUp):'—'}</div></div>
         <div class="info-box"><div class="info-l">Owner</div><div class="info-v">${esc(t.owner||'Self')}</div></div>
       </div>
     </div>
+    ${peopleSec}
     <div class="drawer-sec"><div class="drawer-sec-title">Next Action</div>
       <div style="font-size:14px;color:var(--tx);line-height:1.6;">${esc(t.nextAction||'No next action set')}</div>
       <div style="margin-top:8px;">
-        <span class="next-pill">☎ Communication: ${t.whatsapp||t.email?'Ready':'Missing contact'}</span>
+        <span class="next-pill">👥 ${persons.length} person${persons.length!==1?'s':''}</span>
         <span class="next-pill">↻ ${esc(t.recurring||'None')}</span>
       </div>
     </div>
-    <div class="drawer-sec"><div class="drawer-sec-title">Action Buttons</div>
+    <div class="drawer-sec"><div class="drawer-sec-title">Quick Actions</div>
       <div class="action-grid">
-        <button class="action-btn gold" onclick="openSelectedChannel(${id})">🚀 Send Selected</button>
-        <button class="action-btn green" onclick="openWhatsApp(${id})">☘ WhatsApp</button>
-        <button class="action-btn" onclick="openEmailDraft(${id})">✉ Email</button>
-        <button class="action-btn" onclick="openBothChannels(${id})">☘+✉ Both</button>
-        <button class="action-btn" onclick="copyTaskMessage(${id})">📋 Copy Message</button>
+        <button class="action-btn gold" onclick="sendToAll(${id})">🚀 Send to All</button>
+        <button class="action-btn green" onclick="openAllWhatsApp(${id})">☘ All WhatsApp</button>
+        <button class="action-btn" onclick="openAllEmail(${id})">✉ Email All (BCC)</button>
+        <button class="action-btn" onclick="copyAllMessages(${id})">📋 Copy All</button>
         <button class="action-btn gold" onclick="setTaskStatusQuick(${id},'Waiting')">⏳ Waiting Reply</button>
         <button class="action-btn green" onclick="setTaskStatusQuick(${id},'Done')">✓ Mark Done</button>
         <button class="action-btn amber" onclick="setTaskStatusQuick(${id},'In Review')">👁 In Review</button>
@@ -2434,20 +2623,106 @@ function openTaskPanel(id){
         <button class="action-btn" onclick="addQuickNote(${id})">＋ Quick Note</button>
         <button class="action-btn" onclick="openEditModal(${id})">✎ Edit Full Task</button>
         <button class="action-btn rose" onclick="setTaskStatusQuick(${id},'Blocked')">⚠ Blocked</button>
+        <button class="action-btn" onclick="copyTaskMessage(${id})">📋 Copy Main Msg</button>
       </div>
     </div>
-    <div class="drawer-sec"><div class="drawer-sec-title">Prepared Message</div><textarea class="msg-box" id="drawerMsg">${msg}</textarea><div style="display:flex;gap:8px;margin-top:8px;"><button class="action-btn" onclick="saveDrawerMessage(${id})">💾 Save Message</button><button class="action-btn gold" onclick="saveDrawerMessage(${id});openSelectedChannel(${id})">🚀 Save & Send Selected</button><button class="action-btn green" onclick="saveDrawerMessage(${id});openWhatsApp(${id})">☘ WhatsApp</button><button class="action-btn" onclick="saveDrawerMessage(${id});openEmailDraft(${id})">✉ Email</button></div></div>
+    <div class="drawer-sec"><div class="drawer-sec-title">Prepared Message <span style="font-size:9px;color:var(--td);">— {name} {task} {due} {status} {next_action}</span></div>
+      <textarea class="msg-box" id="drawerMsg">${esc(msg)}</textarea>
 
 ```
-<div class="drawer-sec"><div class="drawer-sec-title">Communication Log</div>${log}<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px;"><button class="action-btn" onclick="logComm(${id},'Sent WhatsApp')">Sent WhatsApp</button><button class="action-btn" onclick="logComm(${id},'Called')">Called</button><button class="action-btn" onclick="logComm(${id},'Reminder Sent')">Reminder</button><button class="action-btn green" onclick="logComm(${id},'Approved')">Approved</button><button class="action-btn amber" onclick="logComm(${id},'Delayed')">Delayed</button><button class="action-btn rose" onclick="logComm(${id},'Need Changes')">Need Changes</button></div></div>
+  <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+    <button class="action-btn" onclick="saveDrawerMessage(${id})">💾 Save</button>
+    <button class="action-btn gold" onclick="saveDrawerMessage(${id});sendToAll(${id})">🚀 Save & Send All</button>
+  </div>
+</div>
+<div class="drawer-sec"><div class="drawer-sec-title">Communication Log</div>${log}
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px;">
+    <button class="action-btn" onclick="logComm(${id},'Sent WhatsApp')">Sent WhatsApp</button>
+    <button class="action-btn" onclick="logComm(${id},'Called')">Called</button>
+    <button class="action-btn" onclick="logComm(${id},'Reminder Sent')">Reminder</button>
+    <button class="action-btn green" onclick="logComm(${id},'Approved')">Approved</button>
+    <button class="action-btn amber" onclick="logComm(${id},'Delayed')">Delayed</button>
+    <button class="action-btn rose" onclick="logComm(${id},'Need Changes')">Need Changes</button>
+  </div>
+</div>
 ```
 
-`;
-document.getElementById(‘drawerOverlay’).classList.add(‘open’);
-document.getElementById(‘taskDrawer’).classList.add(‘open’);
-}
+`; document.getElementById('drawerOverlay').classList.add('open'); document.getElementById('taskDrawer').classList.add('open'); } function openWhatsApp(id){openAllWhatsApp(id);} function openEmailDraft(id){openAllEmail(id);} function openBothChannels(id){openAllWhatsApp(id);setTimeout(()=>openAllEmail(id),400);} function openSelectedChannel(id){sendToAll(id);} function copyTaskMessage(id){const t=tasks.find(x=>x.id===id); if(!t) return; navigator.clipboard.writeText(getTaskMessage(t)).then(()=>toast('Message copied 📋','📋'));} function setTaskStatusQuick(id,status){const t=tasks.find(x=>x.id===id); if(!t) return; t.status=status; t.done=status==='Done'; t.updatedAt=new Date().toISOString(); t.completedAt=t.done?(t.completedAt||new Date().toISOString()):''; logComm(id,`Status changed to ${status}`,false); save(LS.tasks,tasks); renderAll(); openTaskPanel(id); pushTask(t);} function snoozeTask(id,days=1){const t=tasks.find(x=>x.id===id); if(!t) return; const d=new Date(); d.setDate(d.getDate()+days); t.followUp=d.toISOString().split('T')[0]; t.status='Waiting'; logComm(id,`Snoozed for ${days} day(s)`,false); save(LS.tasks,tasks); renderAll(); openTaskPanel(id);}
+function logComm(id, text, rerender=true){const t=tasks.find(x=>x.id===id); if(!t) return; if(!Array.isArray(t.commLog)) t.commLog=[]; t.lastCommunication=new Date().toISOString(); t.commLog.unshift({time:t.lastCommunication,text}); if(t.commLog.length>25) t.commLog=t.commLog.slice(0,25); if(rerender){save(LS.tasks,tasks); renderAll(); if(activeDrawerTaskId===id) openTaskPanel(id);}}
+function addQuickNote(id){const note=prompt(‘Quick note for this task:’); if(!note) return; logComm(id,‘Note: ‘+note); toast(‘Note added ✓’);}
 function saveDrawerMessage(id){const t=tasks.find(x=>x.id===id); if(!t) return; const v=document.getElementById(‘drawerMsg’)?.value||’’; t.messageTemplate=v; save(LS.tasks,tasks); pushTask(t); toast(‘Message saved ✓’);}
 function closeTaskPanel(){document.getElementById(‘drawerOverlay’).classList.remove(‘open’);document.getElementById(‘taskDrawer’).classList.remove(‘open’);activeDrawerTaskId=null;}
+
+// ════════════════════════════════════════
+// MULTI-PERSON PICKER STATE
+// ════════════════════════════════════════
+let mpSelected = []; // Array of {id,name,role,whatsapp,email,channel}
+let _mpReturnToTask = false;
+
+function mpPersonObj(c) {
+return {
+id: String(c.id||’’),
+name: c.name||’’,
+role: c.role||’’,
+whatsapp: c.whatsapp||’’,
+email: c.email||’’,
+channel: c.defaultCommunication||’’
+};
+}
+
+function mpFilter(q) {
+const list = document.getElementById(‘mp-list’); if(!list) return;
+const sq = (q||’’).toLowerCase().trim();
+const filtered = contacts.filter(c => {
+if(!sq) return true;
+return `${c.name} ${c.role} ${c.department}`.toLowerCase().includes(sq);
+});
+list.innerHTML = filtered.map(c => {
+const sel = mpSelected.some(p => p.name === c.name);
+const col = colMap[c.color]||‘var(–gold)’;
+const ini = (c.name||’?’).split(’ ‘).map(w=>w[0]).join(’’).substring(0,2).toUpperCase();
+return `<div class="mp-item ${sel?'selected':''}" onclick="mpToggle('${esc(c.name)}')"> <div class="mp-item-chk">${sel?'✓':''}</div> <div class="mp-item-av" style="background:rgba(0,0,0,.3);border:1px solid ${col};color:${col};font-size:9px;">${ini}</div> <div class="mp-item-info"> <div class="mp-item-name">${esc(c.name)}</div> <div class="mp-item-role">${esc(c.role||'—')} · ${esc(c.department||'—')}</div> <div class="mp-item-meta"> ${c.whatsapp?`<span>☘ +${cleanPhoneForWa(c.whatsapp)}</span>`:''} ${c.email?`<span>✉ ${esc(c.email)}</span>`:''} </div> </div> </div>`;
+}).join(’’) || ‘<div style="padding:12px;text-align:center;color:var(--td);font-size:11px;">No contacts found</div>’;
+}
+
+function mpToggle(name) {
+const c = findContactByName(name);
+const existing = mpSelected.findIndex(p => p.name === name);
+if(existing >= 0) {
+mpSelected.splice(existing, 1);
+} else {
+mpSelected.push(c ? mpPersonObj(c) : {id:’’,name,role:’’,whatsapp:’’,email:’’,channel:’’});
+}
+mpRenderChips();
+mpFilter(document.getElementById(‘mp-search’)?.value||’’);
+}
+
+function mpRemove(name) {
+mpSelected = mpSelected.filter(p => p.name !== name);
+mpRenderChips();
+mpFilter(document.getElementById(‘mp-search’)?.value||’’);
+}
+
+function mpRenderChips() {
+const el = document.getElementById(‘mp-chips’); if(!el) return;
+if(!mpSelected.length) {
+el.innerHTML=’<span class="mp-chips-empty">No persons selected</span>’;
+return;
+}
+el.innerHTML = mpSelected.map(p => {
+const c = findContactByName(p.name);
+const col = c ? (colMap[c.color]||‘var(–gold)’) : ‘var(–gold)’;
+const ini = (p.name||’?’).split(’ ‘).map(w=>w[0]).join(’’).substring(0,2).toUpperCase();
+return `<div class="mp-chip"> <div class="mp-chip-av" style="background:rgba(0,0,0,.3);border:1px solid ${col};color:${col};">${ini}</div> <span>${esc(p.name)}</span> <span class="mp-chip-x" onclick="mpRemove('${esc(p.name)}')">×</span> </div>`;
+}).join(’’);
+}
+
+function mpInit(selectedPersons=[]) {
+mpSelected = […selectedPersons];
+document.getElementById(‘mp-search’).value=’’;
+mpFilter(’’);
+mpRenderChips();
+}
 
 // ════════════════════════════════════════
 // TASK MODAL
@@ -2463,14 +2738,9 @@ document.getElementById(‘f-status’).value=‘To Do’;
 document.getElementById(‘f-rec’).value=‘None’;
 document.getElementById(‘f-due’).value=today();
 document.getElementById(‘f-owner’).value=‘Self’;
-refreshContactDropdown(’’);
-document.getElementById(‘f-person’).value=’’;
-document.getElementById(‘f-wa’).value=’’;
-document.getElementById(‘f-email’).value=’’;
 document.getElementById(‘f-follow’).value=today();
 document.getElementById(‘f-next’).value=’’;
-document.getElementById(‘f-role’).value=’’;
-document.getElementById(‘f-comm’).value=‘No’;
+document.getElementById(‘f-comm-sel’).value=‘No’;
 document.getElementById(‘f-wait’).value=’’;
 document.getElementById(‘f-kpi’).value=’’;
 document.getElementById(‘f-effort’).value=’’;
@@ -2483,6 +2753,7 @@ document.getElementById(‘f-notes’).value=’’;
 document.getElementById(‘f-links’).value=’’;
 document.getElementById(‘f-msg’).value=’’;
 document.getElementById(‘delBtn’).style.display=‘none’;
+mpInit([]);
 openModal(‘taskModal’);
 setTimeout(()=>document.getElementById(‘f-name’).focus(),100);
 }
@@ -2499,14 +2770,9 @@ document.getElementById(‘f-status’).value=t.status;
 document.getElementById(‘f-rec’).value=t.recurring;
 document.getElementById(‘f-due’).value=t.due||’’;
 document.getElementById(‘f-owner’).value=t.owner||‘Self’;
-refreshContactDropdown(t.relatedPerson||’’);
-document.getElementById(‘f-person’).value=t.relatedPerson||’’;
-document.getElementById(‘f-wa’).value=t.whatsapp||’’;
-document.getElementById(‘f-email’).value=t.email||’’;
 document.getElementById(‘f-follow’).value=t.followUp||’’;
 document.getElementById(‘f-next’).value=t.nextAction||’’;
-document.getElementById(‘f-role’).value=t.relatedPersonRole||’’;
-document.getElementById(‘f-comm’).value=t.communicationNeeded||‘No’;
+document.getElementById(‘f-comm-sel’).value=t.communicationNeeded||‘No’;
 document.getElementById(‘f-wait’).value=t.waitingOn||’’;
 document.getElementById(‘f-kpi’).value=t.kpiImpact||’’;
 document.getElementById(‘f-effort’).value=t.effortLevel||’’;
@@ -2519,6 +2785,7 @@ document.getElementById(‘f-notes’).value=t.quickNotes||’’;
 document.getElementById(‘f-links’).value=t.linksFiles||’’;
 document.getElementById(‘f-msg’).value=t.messageTemplate||defaultTaskMessage(t);
 document.getElementById(‘delBtn’).style.display=‘block’;
+mpInit(t.relatedPersons||[]);
 openModal(‘taskModal’);
 }
 
@@ -2528,7 +2795,49 @@ if(!name){document.getElementById(‘f-name’).style.borderColor=‘var(–rose
 document.getElementById(‘f-name’).style.borderColor=’’;
 const editId=document.getElementById(‘editId’).value;
 const nowIso=new Date().toISOString();
-const data={name,department:document.getElementById(‘f-dept’).value.trim(),category:document.getElementById(‘f-cat’).value,priority:document.getElementById(‘f-pri’).value,status:document.getElementById(‘f-status’).value,recurring:document.getElementById(‘f-rec’).value,due:document.getElementById(‘f-due’).value,owner:document.getElementById(‘f-owner’).value||‘Self’,relatedPerson:document.getElementById(‘f-person’).value.trim(),relatedPersonRole:document.getElementById(‘f-role’).value.trim(),whatsapp:document.getElementById(‘f-wa’).value.trim(),email:document.getElementById(‘f-email’).value.trim(),followUp:document.getElementById(‘f-follow’).value,nextAction:document.getElementById(‘f-next’).value.trim(),communicationNeeded:document.getElementById(‘f-comm’).value,messageTemplate:document.getElementById(‘f-msg’).value.trim(),waitingOn:document.getElementById(‘f-wait’).value.trim(),kpiImpact:document.getElementById(‘f-kpi’).value.trim(),effortLevel:document.getElementById(‘f-effort’).value,riskLevel:document.getElementById(‘f-risk’).value,managementVisibility:document.getElementById(‘f-vis’).value,recurrenceRule:document.getElementById(‘f-rule’).value.trim(),expectedOutput:document.getElementById(‘f-output’).value.trim(),blocker:document.getElementById(‘f-blocker’).value.trim(),quickNotes:document.getElementById(‘f-notes’).value.trim(),linksFiles:document.getElementById(‘f-links’).value.trim(),updatedAt:nowIso};
+
+// Sync mpSelected with latest contact data
+const syncedPersons = mpSelected.map(p => {
+const c = findContactByName(p.name);
+return c ? mpPersonObj(c) : p;
+});
+
+const commSel = document.getElementById(‘f-comm-sel’).value;
+const firstP = syncedPersons[0] || {};
+
+const data={
+name,
+department:document.getElementById(‘f-dept’).value.trim(),
+category:document.getElementById(‘f-cat’).value,
+priority:document.getElementById(‘f-pri’).value,
+status:document.getElementById(‘f-status’).value,
+recurring:document.getElementById(‘f-rec’).value,
+due:document.getElementById(‘f-due’).value,
+owner:document.getElementById(‘f-owner’).value||‘Self’,
+// Multi
+relatedPersons: syncedPersons,
+// Legacy (first person)
+relatedPerson: firstP.name||’’,
+relatedPersonRole: firstP.role||’’,
+whatsapp: firstP.whatsapp||’’,
+email: firstP.email||’’,
+communicationNeeded: firstP.channel||commSel,
+// rest
+followUp:document.getElementById(‘f-follow’).value,
+nextAction:document.getElementById(‘f-next’).value.trim(),
+messageTemplate:document.getElementById(‘f-msg’).value.trim(),
+waitingOn:document.getElementById(‘f-wait’).value.trim(),
+kpiImpact:document.getElementById(‘f-kpi’).value.trim(),
+effortLevel:document.getElementById(‘f-effort’).value,
+riskLevel:document.getElementById(‘f-risk’).value,
+managementVisibility:document.getElementById(‘f-vis’).value,
+recurrenceRule:document.getElementById(‘f-rule’).value.trim(),
+expectedOutput:document.getElementById(‘f-output’).value.trim(),
+blocker:document.getElementById(‘f-blocker’).value.trim(),
+quickNotes:document.getElementById(‘f-notes’).value.trim(),
+linksFiles:document.getElementById(‘f-links’).value.trim(),
+updatedAt:nowIso
+};
 if(editId) {
 const idx=tasks.findIndex(x=>x.id===parseInt(editId));
 if(idx!==-1){tasks[idx]=normalizeTask({…tasks[idx],…data,done:data.status===‘Done’,completedAt:data.status===‘Done’?(tasks[idx].completedAt||nowIso):’’});}
@@ -2553,6 +2862,18 @@ save(LS.tasks, tasks);
 closeModal(‘taskModal’);
 renderAll();
 toast(‘Task deleted’,‘🗑’);
+}
+
+// Called after adding a new contact while task modal is open
+function mpRefreshAfterNewContact(name) {
+if(!_mpReturnToTask) return;
+_mpReturnToTask=false;
+const c=findContactByName(name);
+if(c && !mpSelected.some(p=>p.name===c.name)) {
+mpSelected.push(mpPersonObj(c));
+mpRenderChips();
+}
+mpFilter(document.getElementById(‘mp-search’)?.value||’’);
 }
 
 // ════════════════════════════════════════
@@ -2639,6 +2960,8 @@ renderContacts();
 refreshContactDropdown(name);
 pushContact(contact);
 toast(existingIdx>=0?‘Contact updated ✓’:‘Contact added ✓’);
+// If opened from task modal, add to mp picker
+mpRefreshAfterNewContact(name);
 }
 
 // ════════════════════════════════════════
@@ -2658,7 +2981,7 @@ if(el) el.classList.add(‘active’);
 document.querySelectorAll(’.tnav’).forEach(x=>x.classList.remove(‘active’));
 document.querySelectorAll(’.tnav’).forEach(x=>{if(x.textContent.toLowerCase().includes(v.substring(0,4)))x.classList.add(‘active’);});
 document.querySelectorAll(’.sb-item’).forEach(x=>x.classList.remove(‘active’));
-// Mobile nav sync
+// Sync mobile bottom nav
 document.querySelectorAll(’.mnav-btn’).forEach(x=>x.classList.remove(‘active’));
 const mb=document.getElementById(‘mnav-’+v); if(mb) mb.classList.add(‘active’);
 // Scroll top on mobile
@@ -2830,7 +3153,10 @@ function injectAppsScript() {
 const code=`const TASKS_SHEET = “Tasks”;
 const CONTACTS_SHEET = “Related Persons”;
 const TASK_HEADERS = [
-“Task ID”,“Task Name”,“Department”,“Category”,“Priority”,“Status”,“Due Date”,“Follow-up Date”,“Owner”,“Related Person”,“Related Person Role”,“WhatsApp Number”,“WhatsApp Link”,“Email”,“Next Action”,“Communication Needed”,“Message Template”,“Last Follow-up”,“Last Response”,“Waiting On”,“KPI Impact”,“Effort Level”,“Risk Level”,“Management Visibility”,“Recurring”,“Recurrence Rule”,“Expected Output”,“Blocker”,“Quick Notes”,“Links / Files”,“Created Date”,“Updated Date”,“Completed Date”
+“Task ID”,“Task Name”,“Department”,“Category”,“Priority”,“Status”,“Due Date”,“Follow-up Date”,“Owner”,
+“Related Person”,“Related Person Role”,“WhatsApp Number”,“WhatsApp Link”,“Email”,
+“Related Persons IDs”,“Related Persons Names”,“Related Persons Roles”,“Related Persons WhatsApp Numbers”,“Related Persons Emails”,“Communication Channels”,
+“Next Action”,“Communication Needed”,“Message Template”,“Last Follow-up”,“Last Response”,“Waiting On”,“KPI Impact”,“Effort Level”,“Risk Level”,“Management Visibility”,“Recurring”,“Recurrence Rule”,“Expected Output”,“Blocker”,“Quick Notes”,“Links / Files”,“Created Date”,“Updated Date”,“Completed Date”
 ];
 const CONTACT_HEADERS = [
 “Person ID”,“Person Name”,“Role”,“Department”,“WhatsApp Number”,“WhatsApp Link”,“Email”,“Default Communication”,“Default Message Template”,“Notes”,“Color”,“Created Date”,“Updated Date”
