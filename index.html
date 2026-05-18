@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -54,55 +53,55 @@ body{
 
 /* ── TOPBAR ── */
 .topbar{
-height:50px;
-background:var(–s1);
-border-bottom:1px solid var(–b1);
-display:flex;
-align-items:center;
-padding:0 20px;
-gap:16px;
-flex-shrink:0;
-z-index:100;
+  height:50px;
+  background:var(--s1);
+  border-bottom:1px solid var(--b1);
+  display:flex;
+  align-items:center;
+  padding:0 20px;
+  gap:16px;
+  flex-shrink:0;
+  z-index:100;
 }
 .logo{
-display:flex;align-items:center;gap:10px;
-text-decoration:none;
+  display:flex;align-items:center;gap:10px;
+  text-decoration:none;
 }
 .logo-icon{
-width:30px;height:30px;
-background:linear-gradient(135deg,var(–gold),var(–teal));
-border-radius:8px;
-display:flex;align-items:center;justify-content:center;
-font-family:‘Playfair Display’,serif;
-font-size:14px;font-weight:700;
-color:#08090a;
-flex-shrink:0;
+  width:30px;height:30px;
+  background:linear-gradient(135deg,var(--gold),var(--teal));
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;
+  font-size:14px;font-weight:700;
+  color:#08090a;
+  flex-shrink:0;
 }
 .logo-text{
-font-family:‘Playfair Display’,serif;
-font-size:15px;font-weight:700;
-color:var(–tx);
-letter-spacing:0.01em;
+  font-family:'Playfair Display',serif;
+  font-size:15px;font-weight:700;
+  color:var(--tx);
+  letter-spacing:0.01em;
 }
-.logo-sub{font-size:10px;color:var(–tm);letter-spacing:0.08em;font-family:‘JetBrains Mono’,monospace;}
+.logo-sub{font-size:10px;color:var(--tm);letter-spacing:0.08em;font-family:'JetBrains Mono',monospace;}
 .topbar-nav{display:flex;gap:2px;margin-left:20px;}
 .tnav{
-padding:5px 13px;
-border-radius:6px;
-font-size:11.5px;font-weight:500;
-color:var(–tm);cursor:pointer;
-border:none;background:none;
-font-family:‘Outfit’,sans-serif;
-transition:all .15s;letter-spacing:0.01em;
+  padding:5px 13px;
+  border-radius:6px;
+  font-size:11.5px;font-weight:500;
+  color:var(--tm);cursor:pointer;
+  border:none;background:none;
+  font-family:'Outfit',sans-serif;
+  transition:all .15s;letter-spacing:0.01em;
 }
-.tnav:hover{color:var(–tx);background:var(–s2);}
-.tnav.active{color:var(–gold);background:var(–goldd);}
+.tnav:hover{color:var(--tx);background:var(--s2);}
+.tnav.active{color:var(--gold);background:var(--goldd);}
 .topbar-right{
-margin-left:auto;
-display:flex;align-items:center;gap:14px;
+  margin-left:auto;
+  display:flex;align-items:center;gap:14px;
 }
-.top-date{font-family:‘JetBrains Mono’,monospace;font-size:11px;color:var(–tm);}
-.pulse{width:7px;height:7px;border-radius:50%;background:var(–green);box-shadow:0 0 8px var(–green);animation:blink 2s infinite;}
+.top-date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tm);}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 2s infinite;}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}
 
 /* ── SHELL ── */
@@ -110,98 +109,98 @@ display:flex;align-items:center;gap:14px;
 
 /* ── SIDEBAR ── */
 .sidebar{
-width:var(–sidebar);
-background:var(–s1);
-border-right:1px solid var(–b1);
-display:flex;flex-direction:column;
-overflow-y:auto;
-flex-shrink:0;
+  width:var(--sidebar);
+  background:var(--s1);
+  border-right:1px solid var(--b1);
+  display:flex;flex-direction:column;
+  overflow-y:auto;
+  flex-shrink:0;
 }
 .sb-section{padding:16px 10px 8px;}
 .sb-label{
-font-size:9px;letter-spacing:0.14em;
-text-transform:uppercase;color:var(–td);
-padding:0 8px;margin-bottom:6px;
-font-family:‘JetBrains Mono’,monospace;
+  font-size:9px;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--td);
+  padding:0 8px;margin-bottom:6px;
+  font-family:'JetBrains Mono',monospace;
 }
 .sb-item{
-display:flex;align-items:center;gap:9px;
-padding:7px 10px;border-radius:var(–r);
-cursor:pointer;color:var(–tm);
-font-size:12.5px;font-weight:500;
-transition:all .15s;position:relative;
-user-select:none;
+  display:flex;align-items:center;gap:9px;
+  padding:7px 10px;border-radius:var(--r);
+  cursor:pointer;color:var(--tm);
+  font-size:12.5px;font-weight:500;
+  transition:all .15s;position:relative;
+  user-select:none;
 }
-.sb-item:hover{background:var(–s2);color:var(–tx);}
-.sb-item.active{background:var(–goldd);color:var(–gold);}
+.sb-item:hover{background:var(--s2);color:var(--tx);}
+.sb-item.active{background:var(--goldd);color:var(--gold);}
 .sb-item.active::before{
-content:’’;position:absolute;left:0;top:22%;bottom:22%;
-width:2px;background:var(–gold);border-radius:1px;
+  content:'';position:absolute;left:0;top:22%;bottom:22%;
+  width:2px;background:var(--gold);border-radius:1px;
 }
 .sb-dot{
-width:7px;height:7px;border-radius:50%;flex-shrink:0;
-margin-left:auto;
+  width:7px;height:7px;border-radius:50%;flex-shrink:0;
+  margin-left:auto;
 }
 .sb-count{
-margin-left:auto;
-font-family:‘JetBrains Mono’,monospace;
-font-size:9px;padding:1px 5px;
-border-radius:3px;
-background:var(–s3);color:var(–tm);
-min-width:18px;text-align:center;
+  margin-left:auto;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;padding:1px 5px;
+  border-radius:3px;
+  background:var(--s3);color:var(--tm);
+  min-width:18px;text-align:center;
 }
-.sb-count.hot{background:var(–rosed);color:var(–rose);}
-.sb-div{height:1px;background:var(–b1);margin:6px 10px 10px;}
+.sb-count.hot{background:var(--rosed);color:var(--rose);}
+.sb-div{height:1px;background:var(--b1);margin:6px 10px 10px;}
 
 /* ── MAIN ── */
-.main{flex:1;overflow-y:auto;background:var(–bg);}
+.main{flex:1;overflow-y:auto;background:var(--bg);}
 .view{display:none;padding:22px 24px;}
 .view.active{display:block;}
 
 /* ── PAGE HEADER ── */
 .ph{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:22px;}
 .ph-title{
-font-family:‘Playfair Display’,serif;
-font-size:26px;font-weight:400;line-height:1;
+  font-family:'Playfair Display',serif;
+  font-size:26px;font-weight:400;line-height:1;
 }
-.ph-title em{color:var(–gold);font-style:italic;}
-.ph-sub{font-size:11px;color:var(–tm);margin-top:5px;font-family:‘JetBrains Mono’,monospace;}
+.ph-title em{color:var(--gold);font-style:italic;}
+.ph-sub{font-size:11px;color:var(--tm);margin-top:5px;font-family:'JetBrains Mono',monospace;}
 .ph-right{display:flex;gap:8px;align-items:center;}
 
 /* ── BUTTONS ── */
 .btn{
-display:inline-flex;align-items:center;gap:6px;
-padding:7px 14px;border-radius:var(–r);
-font-size:12px;font-weight:500;cursor:pointer;
-border:none;font-family:‘Outfit’,sans-serif;
-transition:all .15s;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:var(--r);
+  font-size:12px;font-weight:500;cursor:pointer;
+  border:none;font-family:'Outfit',sans-serif;
+  transition:all .15s;
 }
-.btn-ghost{background:var(–s2);border:1px solid var(–b2);color:var(–tm);}
-.btn-ghost:hover{color:var(–tx);border-color:var(–b3);}
-.btn-primary{background:var(–goldd);border:1px solid rgba(201,169,110,.25);color:var(–gold);}
+.btn-ghost{background:var(--s2);border:1px solid var(--b2);color:var(--tm);}
+.btn-ghost:hover{color:var(--tx);border-color:var(--b3);}
+.btn-primary{background:var(--goldd);border:1px solid rgba(201,169,110,.25);color:var(--gold);}
 .btn-primary:hover{background:rgba(201,169,110,.2);}
-.btn-danger{background:var(–rosed);border:1px solid rgba(212,117,106,.25);color:var(–rose);}
+.btn-danger{background:var(--rosed);border:1px solid rgba(212,117,106,.25);color:var(--rose);}
 .btn-danger:hover{background:rgba(212,117,106,.2);}
 .btn-sm{padding:5px 10px;font-size:11px;}
 
 /* ── KPI STRIP ── */
 .kpi-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:18px;}
 .kpi{
-background:var(–s1);border:1px solid var(–b1);
-border-radius:var(–r2);padding:14px 15px;
-position:relative;overflow:hidden;
-transition:border-color .2s;cursor:default;
+  background:var(--s1);border:1px solid var(--b1);
+  border-radius:var(--r2);padding:14px 15px;
+  position:relative;overflow:hidden;
+  transition:border-color .2s;cursor:default;
 }
-.kpi:hover{border-color:var(–b2);}
+.kpi:hover{border-color:var(--b2);}
 .kpi::after{
-content:’’;position:absolute;top:0;left:0;right:0;height:2px;
-background:var(–kc,var(–gold));opacity:.5;
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--kc,var(--gold));opacity:.5;
 }
-.kpi-l{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(–tm);margin-bottom:8px;font-family:‘JetBrains Mono’,monospace;}
-.kpi-v{font-family:‘Playfair Display’,serif;font-size:24px;font-weight:700;line-height:1;margin-bottom:4px;}
-.kpi-s{font-size:10px;color:var(–tm);}
-.up{color:var(–green);}
-.dn{color:var(–rose);}
+.kpi-l{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--tm);margin-bottom:8px;font-family:'JetBrains Mono',monospace;}
+.kpi-v{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;line-height:1;margin-bottom:4px;}
+.kpi-s{font-size:10px;color:var(--tm);}
+.up{color:var(--green);}
+.dn{color:var(--rose);}
 
 /* ── GRID HELPERS ── */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
@@ -213,108 +212,108 @@ background:var(–kc,var(–gold));opacity:.5;
 
 /* ── PANEL ── */
 .panel{
-background:var(–s1);border:1px solid var(–b1);
-border-radius:var(–r2);overflow:hidden;
+  background:var(--s1);border:1px solid var(--b1);
+  border-radius:var(--r2);overflow:hidden;
 }
 .panel-h{
-display:flex;align-items:center;justify-content:space-between;
-padding:11px 15px;border-bottom:1px solid var(–b1);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 15px;border-bottom:1px solid var(--b1);
 }
 .panel-t{
-font-size:11px;font-weight:600;letter-spacing:.07em;
-text-transform:uppercase;color:var(–tx);font-family:‘JetBrains Mono’,monospace;
+  font-size:11px;font-weight:600;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--tx);font-family:'JetBrains Mono',monospace;
 }
 .panel-b{padding:14px 15px;}
 .panel-b0{padding:0;}
 
 /* ── TAGS / BADGES ── */
 .tag{
-display:inline-flex;align-items:center;
-font-size:9px;padding:2px 7px;border-radius:3px;
-font-weight:600;letter-spacing:.04em;
-font-family:‘JetBrains Mono’,monospace;
+  display:inline-flex;align-items:center;
+  font-size:9px;padding:2px 7px;border-radius:3px;
+  font-weight:600;letter-spacing:.04em;
+  font-family:'JetBrains Mono',monospace;
 }
-.t-mkt{background:var(–goldd);color:var(–gold);}
-.t-cam{background:var(–rosed);color:var(–rose);}
-.t-eco{background:var(–teald);color:var(–teal);}
-.t-des{background:var(–blued);color:var(–blue);}
-.t-map{background:var(–violetd);color:var(–violet);}
-.t-team{background:var(–greend);color:var(–green);}
-.t-rep{background:var(–amberd);color:var(–amber);}
-.t-ops{background:var(–s3);color:var(–tm);}
-.t-learn{background:rgba(107,184,160,.15);color:var(–teal);}
-.t-goal{background:rgba(169,143,212,.15);color:var(–violet);}
-.t-habit{background:rgba(109,184,130,.15);color:var(–green);}
-.t-fin{background:rgba(212,169,106,.15);color:var(–amber);}
-.t-net{background:rgba(123,157,224,.15);color:var(–blue);}
+.t-mkt{background:var(--goldd);color:var(--gold);}
+.t-cam{background:var(--rosed);color:var(--rose);}
+.t-eco{background:var(--teald);color:var(--teal);}
+.t-des{background:var(--blued);color:var(--blue);}
+.t-map{background:var(--violetd);color:var(--violet);}
+.t-team{background:var(--greend);color:var(--green);}
+.t-rep{background:var(--amberd);color:var(--amber);}
+.t-ops{background:var(--s3);color:var(--tm);}
+.t-learn{background:rgba(107,184,160,.15);color:var(--teal);}
+.t-goal{background:rgba(169,143,212,.15);color:var(--violet);}
+.t-habit{background:rgba(109,184,130,.15);color:var(--green);}
+.t-fin{background:rgba(212,169,106,.15);color:var(--amber);}
+.t-net{background:rgba(123,157,224,.15);color:var(--blue);}
 
 .status{
-display:inline-flex;align-items:center;
-font-size:9px;padding:2px 8px;border-radius:20px;
-font-weight:600;letter-spacing:.04em;
+  display:inline-flex;align-items:center;
+  font-size:9px;padding:2px 8px;border-radius:20px;
+  font-weight:600;letter-spacing:.04em;
 }
-.s-todo{background:var(–s3);color:var(–tm);}
-.s-prog{background:var(–teald);color:var(–teal);}
-.s-wait{background:var(–amberd);color:var(–amber);}
-.s-rev{background:var(–blued);color:var(–blue);}
-.s-done{background:var(–greend);color:var(–green);}
-.s-block{background:var(–rosed);color:var(–rose);}
+.s-todo{background:var(--s3);color:var(--tm);}
+.s-prog{background:var(--teald);color:var(--teal);}
+.s-wait{background:var(--amberd);color:var(--amber);}
+.s-rev{background:var(--blued);color:var(--blue);}
+.s-done{background:var(--greend);color:var(--green);}
+.s-block{background:var(--rosed);color:var(--rose);}
 
 .pdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.p-crit{background:var(–rose);box-shadow:0 0 5px var(–rose);}
-.p-high{background:var(–amber);}
-.p-med{background:var(–teal);}
-.p-low{background:var(–td);}
+.p-crit{background:var(--rose);box-shadow:0 0 5px var(--rose);}
+.p-high{background:var(--amber);}
+.p-med{background:var(--teal);}
+.p-low{background:var(--td);}
 
 /* ── TASK ROW ── */
 .task-row{
-display:flex;align-items:flex-start;gap:10px;
-padding:9px 15px;border-bottom:1px solid var(–b1);
-cursor:pointer;transition:background .1s;
+  display:flex;align-items:flex-start;gap:10px;
+  padding:9px 15px;border-bottom:1px solid var(--b1);
+  cursor:pointer;transition:background .1s;
 }
 .task-row:last-child{border-bottom:none;}
-.task-row:hover{background:var(–s2);}
+.task-row:hover{background:var(--s2);}
 .chk{
-width:15px;height:15px;border:1.5px solid var(–b3);
-border-radius:3px;flex-shrink:0;margin-top:1px;
-cursor:pointer;transition:all .15s;
-display:flex;align-items:center;justify-content:center;
-font-size:9px;
+  width:15px;height:15px;border:1.5px solid var(--b3);
+  border-radius:3px;flex-shrink:0;margin-top:1px;
+  cursor:pointer;transition:all .15s;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;
 }
-.chk:hover{border-color:var(–gold);}
-.chk.done{background:var(–gold);border-color:var(–gold);color:var(–bg);}
+.chk:hover{border-color:var(--gold);}
+.chk.done{background:var(--gold);border-color:var(--gold);color:var(--bg);}
 .task-body{flex:1;min-width:0;}
-.task-name{font-size:12.5px;color:var(–tx);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;}
-.task-name.done{text-decoration:line-through;color:var(–tm);}
+.task-name{font-size:12.5px;color:var(--tx);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;}
+.task-name.done{text-decoration:line-through;color:var(--tm);}
 .task-meta{display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
-.task-due{font-size:10px;color:var(–tm);margin-left:auto;flex-shrink:0;font-family:‘JetBrains Mono’,monospace;}
-.task-due.ov{color:var(–rose);}
-.task-due.td{color:var(–amber);}
-.task-due.ok{color:var(–green);}
-.rec{font-size:9px;color:var(–td);font-family:‘JetBrains Mono’,monospace;}
+.task-due{font-size:10px;color:var(--tm);margin-left:auto;flex-shrink:0;font-family:'JetBrains Mono',monospace;}
+.task-due.ov{color:var(--rose);}
+.task-due.td{color:var(--amber);}
+.task-due.ok{color:var(--green);}
+.rec{font-size:9px;color:var(--td);font-family:'JetBrains Mono',monospace;}
 
 /* ── PROGRESS ── */
-.pbar{height:3px;background:var(–s3);border-radius:2px;overflow:hidden;margin-top:6px;}
-.pfill{height:100%;border-radius:2px;background:var(–pc,var(–gold));transition:width .5s ease;}
+.pbar{height:3px;background:var(--s3);border-radius:2px;overflow:hidden;margin-top:6px;}
+.pfill{height:100%;border-radius:2px;background:var(--pc,var(--gold));transition:width .5s ease;}
 
 /* ── FOCUS BANNER ── */
 .focus{
-background:linear-gradient(135deg,rgba(201,169,110,.08),rgba(107,184,160,.05));
-border:1px solid rgba(201,169,110,.15);
-border-radius:var(–r2);padding:15px 18px;
-display:flex;align-items:center;gap:15px;
-margin-bottom:16px;
+  background:linear-gradient(135deg,rgba(201,169,110,.08),rgba(107,184,160,.05));
+  border:1px solid rgba(201,169,110,.15);
+  border-radius:var(--r2);padding:15px 18px;
+  display:flex;align-items:center;gap:15px;
+  margin-bottom:16px;
 }
 .focus-ico{font-size:26px;opacity:.6;flex-shrink:0;}
-.focus-l{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(–gold);margin-bottom:4px;font-family:‘JetBrains Mono’,monospace;}
-.focus-t{font-family:‘Playfair Display’,serif;font-size:16px;color:var(–tx);}
-.focus-s{font-size:10px;color:var(–tm);margin-top:3px;}
+.focus-l{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;font-family:'JetBrains Mono',monospace;}
+.focus-t{font-family:'Playfair Display',serif;font-size:16px;color:var(--tx);}
+.focus-s{font-size:10px;color:var(--tm);margin-top:3px;}
 
 /* ── ALERT ── */
 .alert{
-display:flex;align-items:center;gap:10px;
-padding:9px 13px;border-radius:var(–r);
-margin-bottom:6px;font-size:12px;
+  display:flex;align-items:center;gap:10px;
+  padding:9px 13px;border-radius:var(--r);
+  margin-bottom:6px;font-size:12px;
 }
 .alert-red{background:rgba(212,117,106,.07);border:1px solid rgba(212,117,106,.18);}
 .alert-amber{background:rgba(212,169,106,.07);border:1px solid rgba(212,169,106,.18);}
@@ -322,229 +321,229 @@ margin-bottom:6px;font-size:12px;
 
 /* ── FOLLOW-UP ── */
 .fu-row{
-display:flex;align-items:center;gap:10px;
-padding:8px 0;border-bottom:1px solid var(–b1);
+  display:flex;align-items:center;gap:10px;
+  padding:8px 0;border-bottom:1px solid var(--b1);
 }
 .fu-row:last-child{border-bottom:none;}
 .fu-av{
-width:30px;height:30px;border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-font-size:11px;font-weight:700;flex-shrink:0;
+  width:30px;height:30px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;flex-shrink:0;
 }
 .fu-name{font-size:12.5px;font-weight:500;}
-.fu-task{font-size:10px;color:var(–tm);}
-.fu-age{margin-left:auto;font-size:10px;flex-shrink:0;font-family:‘JetBrains Mono’,monospace;}
+.fu-task{font-size:10px;color:var(--tm);}
+.fu-age{margin-left:auto;font-size:10px;flex-shrink:0;font-family:'JetBrains Mono',monospace;}
 
 /* ── TABLE ── */
 .tbl{width:100%;border-collapse:collapse;}
 .tbl th{
-text-align:left;font-size:9px;letter-spacing:.1em;
-text-transform:uppercase;color:var(–tm);
-padding:9px 12px;border-bottom:1px solid var(–b1);
-font-weight:600;font-family:‘JetBrains Mono’,monospace;
-position:sticky;top:0;background:var(–s1);
+  text-align:left;font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--tm);
+  padding:9px 12px;border-bottom:1px solid var(--b1);
+  font-weight:600;font-family:'JetBrains Mono',monospace;
+  position:sticky;top:0;background:var(--s1);
 }
-.tbl td{padding:8px 12px;border-bottom:1px solid var(–b1);font-size:12px;vertical-align:middle;}
+.tbl td{padding:8px 12px;border-bottom:1px solid var(--b1);font-size:12px;vertical-align:middle;}
 .tbl tr:last-child td{border-bottom:none;}
-.tbl tr:hover td{background:var(–s2);cursor:pointer;}
+.tbl tr:hover td{background:var(--s2);cursor:pointer;}
 
 /* ── WEEK GRID ── */
 .wk-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;}
-.wk-col{background:var(–s1);border:1px solid var(–b1);border-radius:var(–r2);overflow:hidden;}
+.wk-col{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r2);overflow:hidden;}
 .wk-col.today{border-color:rgba(201,169,110,.3);}
 .wk-h{
-display:flex;align-items:center;justify-content:space-between;
-padding:9px 12px;border-bottom:1px solid var(–b1);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 12px;border-bottom:1px solid var(--b1);
 }
 .wk-col.today .wk-h{background:rgba(201,169,110,.06);}
-.wk-dn{font-size:11px;font-weight:700;font-family:‘JetBrains Mono’,monospace;}
-.wk-dd{font-size:10px;color:var(–tm);}
+.wk-dn{font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+.wk-dd{font-size:10px;color:var(--tm);}
 .wk-body{padding:8px;}
 .mini-t{
-padding:5px 8px;border-radius:5px;margin-bottom:4px;
-font-size:10.5px;color:var(–tx);
-border-left:2px solid var(–mc,var(–gold));
-background:var(–s2);
-white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-cursor:pointer;transition:opacity .15s;
+  padding:5px 8px;border-radius:5px;margin-bottom:4px;
+  font-size:10.5px;color:var(--tx);
+  border-left:2px solid var(--mc,var(--gold));
+  background:var(--s2);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  cursor:pointer;transition:opacity .15s;
 }
 .mini-t:hover{opacity:.75;}
 
 /* ── HABIT / GOAL CARDS ── */
 .habit-card{
-background:var(–s2);border:1px solid var(–b1);
-border-radius:var(–r);padding:12px;margin-bottom:8px;
+  background:var(--s2);border:1px solid var(--b1);
+  border-radius:var(--r);padding:12px;margin-bottom:8px;
 }
 .habit-name{font-size:13px;font-weight:600;margin-bottom:6px;}
-.habit-streak{font-size:10px;color:var(–tm);margin-bottom:8px;font-family:‘JetBrains Mono’,monospace;}
+.habit-streak{font-size:10px;color:var(--tm);margin-bottom:8px;font-family:'JetBrains Mono',monospace;}
 .habit-dots{display:flex;gap:4px;}
 .hdot{
-width:20px;height:20px;border-radius:4px;
-display:flex;align-items:center;justify-content:center;
-font-size:9px;cursor:pointer;transition:all .15s;
+  width:20px;height:20px;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;cursor:pointer;transition:all .15s;
 }
-.hdot.hit{background:var(–green);color:var(–bg);}
-.hdot.miss{background:var(–s3);color:var(–td);}
-.hdot.future{background:var(–s3);opacity:.4;}
+.hdot.hit{background:var(--green);color:var(--bg);}
+.hdot.miss{background:var(--s3);color:var(--td);}
+.hdot.future{background:var(--s3);opacity:.4;}
 
 .goal-card{
-background:var(–s2);border:1px solid var(–b1);
-border-radius:var(–r);padding:12px;margin-bottom:8px;
+  background:var(--s2);border:1px solid var(--b1);
+  border-radius:var(--r);padding:12px;margin-bottom:8px;
 }
 .goal-title{font-size:13px;font-weight:600;margin-bottom:4px;}
-.goal-dead{font-size:10px;color:var(–tm);margin-bottom:8px;font-family:‘JetBrains Mono’,monospace;}
-.goal-prog-row{display:flex;justify-content:space-between;font-size:10px;color:var(–tm);margin-bottom:4px;}
+.goal-dead{font-size:10px;color:var(--tm);margin-bottom:8px;font-family:'JetBrains Mono',monospace;}
+.goal-prog-row{display:flex;justify-content:space-between;font-size:10px;color:var(--tm);margin-bottom:4px;}
 
 /* ── LEARNING ── */
 .learn-card{
-background:var(–s2);border:1px solid var(–b1);
-border-radius:var(–r);padding:12px;margin-bottom:8px;
-display:flex;align-items:center;gap:12px;
+  background:var(--s2);border:1px solid var(--b1);
+  border-radius:var(--r);padding:12px;margin-bottom:8px;
+  display:flex;align-items:center;gap:12px;
 }
 .learn-icon{font-size:22px;flex-shrink:0;}
 .learn-title{font-size:13px;font-weight:600;margin-bottom:3px;}
-.learn-meta{font-size:10px;color:var(–tm);font-family:‘JetBrains Mono’,monospace;}
+.learn-meta{font-size:10px;color:var(--tm);font-family:'JetBrains Mono',monospace;}
 
 /* ── FINANCE ── */
 .fin-row{
-display:flex;align-items:center;justify-content:space-between;
-padding:8px 0;border-bottom:1px solid var(–b1);font-size:12px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 0;border-bottom:1px solid var(--b1);font-size:12px;
 }
 .fin-row:last-child{border-bottom:none;}
-.fin-label{color:var(–tm);}
-.fin-val{font-family:‘JetBrains Mono’,monospace;font-weight:600;}
+.fin-label{color:var(--tm);}
+.fin-val{font-family:'JetBrains Mono',monospace;font-weight:600;}
 
 /* ── QUICK CAPTURE ── */
 .qcap{
-background:var(–s2);border:1px solid var(–b2);
-border-radius:var(–r2);padding:12px 16px;
-display:flex;align-items:center;gap:10px;
-margin-bottom:16px;transition:border-color .2s;
+  background:var(--s2);border:1px solid var(--b2);
+  border-radius:var(--r2);padding:12px 16px;
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:16px;transition:border-color .2s;
 }
 .qcap:focus-within{border-color:rgba(201,169,110,.35);}
 .qcap-ico{font-size:16px;opacity:.4;flex-shrink:0;}
 .qcap-in{
-flex:1;background:none;border:none;outline:none;
-color:var(–tx);font-family:‘Outfit’,sans-serif;
-font-size:13px;
+  flex:1;background:none;border:none;outline:none;
+  color:var(--tx);font-family:'Outfit',sans-serif;
+  font-size:13px;
 }
-.qcap-in::placeholder{color:var(–td);}
+.qcap-in::placeholder{color:var(--td);}
 .qcap-cat{
-background:var(–s3);border:1px solid var(–b2);
-border-radius:5px;padding:4px 8px;
-color:var(–tm);font-family:‘Outfit’,sans-serif;
-font-size:11px;outline:none;cursor:pointer;
+  background:var(--s3);border:1px solid var(--b2);
+  border-radius:5px;padding:4px 8px;
+  color:var(--tm);font-family:'Outfit',sans-serif;
+  font-size:11px;outline:none;cursor:pointer;
 }
-.qcap-cat option{background:var(–s2);}
+.qcap-cat option{background:var(--s2);}
 .kbd{
-background:var(–s3);border:1px solid var(–b2);
-border-radius:3px;padding:2px 6px;
-font-size:9px;color:var(–tm);
-font-family:‘JetBrains Mono’,monospace;
+  background:var(--s3);border:1px solid var(--b2);
+  border-radius:3px;padding:2px 6px;
+  font-size:9px;color:var(--tm);
+  font-family:'JetBrains Mono',monospace;
 }
 
 /* ── SMART TASK SEARCH ── */
 .search-strip{
-background:var(–s1);border:1px solid var(–b1);
-border-radius:var(–r2);padding:10px 12px;
-display:flex;align-items:center;gap:10px;margin-bottom:14px;
+  background:var(--s1);border:1px solid var(--b1);
+  border-radius:var(--r2);padding:10px 12px;
+  display:flex;align-items:center;gap:10px;margin-bottom:14px;
 }
 .search-ico{font-size:14px;opacity:.45;flex-shrink:0;}
 .search-input{
-flex:1;background:transparent;border:none;outline:none;color:var(–tx);
-font-family:‘Outfit’,sans-serif;font-size:13px;
+  flex:1;background:transparent;border:none;outline:none;color:var(--tx);
+  font-family:'Outfit',sans-serif;font-size:13px;
 }
-.search-input::placeholder{color:var(–td);}
-.search-hint{font-size:10px;color:var(–tm);font-family:‘JetBrains Mono’,monospace;white-space:nowrap;}
+.search-input::placeholder{color:var(--td);}
+.search-hint{font-size:10px;color:var(--tm);font-family:'JetBrains Mono',monospace;white-space:nowrap;}
 
 /* ── SECTION TITLE ── */
 .sec-t{
-font-size:10px;font-weight:700;letter-spacing:.12em;
-text-transform:uppercase;color:var(–tm);
-margin-bottom:12px;display:flex;align-items:center;gap:8px;
-font-family:‘JetBrains Mono’,monospace;
+  font-size:10px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--tm);
+  margin-bottom:12px;display:flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;
 }
-.sec-t::after{content:’’;flex:1;height:1px;background:var(–b1);}
+.sec-t::after{content:'';flex:1;height:1px;background:var(--b1);}
 
 /* ── MODAL ── */
 .overlay{
-display:none;position:fixed;inset:0;
-background:rgba(0,0,0,.75);backdrop-filter:blur(5px);
-z-index:500;align-items:center;justify-content:center;
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(5px);
+  z-index:500;align-items:center;justify-content:center;
 }
 .overlay.open{display:flex;}
 .modal{
-background:var(–s1);border:1px solid var(–b2);
-border-radius:var(–r3);width:530px;max-width:95vw;
-max-height:90vh;overflow-y:auto;
-animation:fadeUp .2s ease;
+  background:var(--s1);border:1px solid var(--b2);
+  border-radius:var(--r3);width:530px;max-width:95vw;
+  max-height:90vh;overflow-y:auto;
+  animation:fadeUp .2s ease;
 }
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 .modal-h{
-display:flex;align-items:center;justify-content:space-between;
-padding:18px 20px;border-bottom:1px solid var(–b1);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 20px;border-bottom:1px solid var(--b1);
 }
-.modal-title{font-family:‘Playfair Display’,serif;font-size:16px;}
+.modal-title{font-family:'Playfair Display',serif;font-size:16px;}
 .modal-x{
-width:28px;height:28px;border-radius:6px;
-background:var(–s2);border:1px solid var(–b2);
-color:var(–tm);cursor:pointer;
-display:flex;align-items:center;justify-content:center;font-size:17px;
-transition:all .15s;
+  width:28px;height:28px;border-radius:6px;
+  background:var(--s2);border:1px solid var(--b2);
+  color:var(--tm);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:17px;
+  transition:all .15s;
 }
-.modal-x:hover{color:var(–tx);}
+.modal-x:hover{color:var(--tx);}
 .modal-b{padding:20px;display:flex;flex-direction:column;gap:14px;}
 .modal-f{
-display:flex;justify-content:flex-end;gap:8px;
-padding:14px 20px;border-top:1px solid var(–b1);
+  display:flex;justify-content:flex-end;gap:8px;
+  padding:14px 20px;border-top:1px solid var(--b1);
 }
 .fg{display:flex;flex-direction:column;gap:6px;}
-.flabel{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(–tm);font-family:‘JetBrains Mono’,monospace;}
+.flabel{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--tm);font-family:'JetBrains Mono',monospace;}
 .finput,.fselect{
-background:var(–s2);border:1px solid var(–b2);
-border-radius:8px;padding:9px 12px;
-color:var(–tx);font-family:‘Outfit’,sans-serif;
-font-size:13px;outline:none;transition:border-color .15s;width:100%;
+  background:var(--s2);border:1px solid var(--b2);
+  border-radius:8px;padding:9px 12px;
+  color:var(--tx);font-family:'Outfit',sans-serif;
+  font-size:13px;outline:none;transition:border-color .15s;width:100%;
 }
 .finput:focus,.fselect:focus{border-color:rgba(201,169,110,.4);}
-.fselect option{background:var(–s2);}
+.fselect option{background:var(--s2);}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 
 /* ── TOAST ── */
 .toast{
-position:fixed;bottom:22px;right:22px;
-background:var(–s1);border:1px solid var(–b2);
-border-radius:10px;padding:11px 16px;
-font-size:12px;color:var(–tx);z-index:999;
-display:flex;align-items:center;gap:8px;
-box-shadow:0 8px 30px rgba(0,0,0,.5);
-animation:fadeUp .2s ease;pointer-events:none;
+  position:fixed;bottom:22px;right:22px;
+  background:var(--s1);border:1px solid var(--b2);
+  border-radius:10px;padding:11px 16px;
+  font-size:12px;color:var(--tx);z-index:999;
+  display:flex;align-items:center;gap:8px;
+  box-shadow:0 8px 30px rgba(0,0,0,.5);
+  animation:fadeUp .2s ease;pointer-events:none;
 }
 .toast.hidden{display:none;}
 
 /* ── NETWORK ── */
 .net-card{
-background:var(–s2);border:1px solid var(–b1);
-border-radius:var(–r);padding:11px 13px;
-margin-bottom:7px;display:flex;align-items:center;gap:11px;
+  background:var(--s2);border:1px solid var(--b1);
+  border-radius:var(--r);padding:11px 13px;
+  margin-bottom:7px;display:flex;align-items:center;gap:11px;
 }
 .net-av{
-width:34px;height:34px;border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-font-size:13px;font-weight:700;flex-shrink:0;
+  width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;flex-shrink:0;
 }
 .net-name{font-size:13px;font-weight:600;}
-.net-role{font-size:10px;color:var(–tm);}
-.net-last{margin-left:auto;font-size:10px;color:var(–tm);font-family:‘JetBrains Mono’,monospace;flex-shrink:0;}
+.net-role{font-size:10px;color:var(--tm);}
+.net-last{margin-left:auto;font-size:10px;color:var(--tm);font-family:'JetBrains Mono',monospace;flex-shrink:0;}
 
 /* ── SCROLLABLE PANEL BODY ── */
 .panel-scroll{max-height:340px;overflow-y:auto;}
 
 /* ── REPORT METRIC ── */
-.rm{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(–b1);}
+.rm{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--b1);}
 .rm:last-child{border-bottom:none;}
-.rm-l{font-size:11px;color:var(–tm);}
-.rm-v{font-family:‘JetBrains Mono’,monospace;font-size:13px;font-weight:600;}
+.rm-l{font-size:11px;color:var(--tm);}
+.rm-v{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;}
 
 /* ── ANIM ── */
 .au{animation:fadeUp .35s ease both;}
@@ -555,235 +554,236 @@ font-size:13px;font-weight:700;flex-shrink:0;
 
 /* ── SHEETS SETUP BANNER ── */
 .setup-banner{
-background:linear-gradient(135deg,rgba(123,157,224,.08),rgba(169,143,212,.06));
-border:1px solid rgba(123,157,224,.2);
-border-radius:var(–r2);padding:16px 20px;
-margin-bottom:18px;
-display:flex;align-items:center;gap:14px;
+  background:linear-gradient(135deg,rgba(123,157,224,.08),rgba(169,143,212,.06));
+  border:1px solid rgba(123,157,224,.2);
+  border-radius:var(--r2);padding:16px 20px;
+  margin-bottom:18px;
+  display:flex;align-items:center;gap:14px;
 }
 .setup-banner.hidden{display:none;}
 .setup-text{flex:1;}
-.setup-title{font-size:13px;font-weight:600;color:var(–blue);margin-bottom:3px;}
-.setup-sub{font-size:11px;color:var(–tm);}
+.setup-title{font-size:13px;font-weight:600;color:var(--blue);margin-bottom:3px;}
+.setup-sub{font-size:11px;color:var(--tm);}
+
 
 /* ── PRODUCTION TASK DETAIL DRAWER ── */
 .drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:450;backdrop-filter:blur(3px);}
 .drawer-overlay.open{display:block;}
-.task-drawer{position:fixed;top:0;right:-520px;width:500px;max-width:96vw;height:100vh;background:var(–s1);border-left:1px solid var(–b2);z-index:600;box-shadow:-18px 0 50px rgba(0,0,0,.45);transition:right .22s ease;display:flex;flex-direction:column;}
+.task-drawer{position:fixed;top:0;right:-520px;width:500px;max-width:96vw;height:100vh;background:var(--s1);border-left:1px solid var(--b2);z-index:600;box-shadow:-18px 0 50px rgba(0,0,0,.45);transition:right .22s ease;display:flex;flex-direction:column;}
 .task-drawer.open{right:0;}
-.drawer-h{padding:16px 18px;border-bottom:1px solid var(–b1);display:flex;align-items:flex-start;gap:12px;}
-.drawer-title{font-family:‘Playfair Display’,serif;font-size:19px;line-height:1.25;color:var(–tx);}
-.drawer-sub{font-size:10px;color:var(–tm);font-family:‘JetBrains Mono’,monospace;margin-top:6px;}
-.drawer-close{margin-left:auto;width:30px;height:30px;border-radius:8px;border:1px solid var(–b2);background:var(–s2);color:var(–tm);cursor:pointer;font-size:18px;}
+.drawer-h{padding:16px 18px;border-bottom:1px solid var(--b1);display:flex;align-items:flex-start;gap:12px;}
+.drawer-title{font-family:'Playfair Display',serif;font-size:19px;line-height:1.25;color:var(--tx);}
+.drawer-sub{font-size:10px;color:var(--tm);font-family:'JetBrains Mono',monospace;margin-top:6px;}
+.drawer-close{margin-left:auto;width:30px;height:30px;border-radius:8px;border:1px solid var(--b2);background:var(--s2);color:var(--tm);cursor:pointer;font-size:18px;}
 .drawer-b{padding:14px 18px;overflow-y:auto;flex:1;}
-.drawer-sec{border:1px solid var(–b1);background:var(–s2);border-radius:var(–r2);padding:12px;margin-bottom:12px;}
-.drawer-sec-title{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(–tm);font-family:‘JetBrains Mono’,monospace;margin-bottom:10px;}
+.drawer-sec{border:1px solid var(--b1);background:var(--s2);border-radius:var(--r2);padding:12px;margin-bottom:12px;}
+.drawer-sec-title{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--tm);font-family:'JetBrains Mono',monospace;margin-bottom:10px;}
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.info-box{background:var(–s1);border:1px solid var(–b1);border-radius:8px;padding:8px;}
-.info-l{font-size:9px;color:var(–td);text-transform:uppercase;letter-spacing:.08em;font-family:‘JetBrains Mono’,monospace;margin-bottom:4px;}
-.info-v{font-size:12px;color:var(–tx);min-height:16px;}
+.info-box{background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:8px;}
+.info-l{font-size:9px;color:var(--td);text-transform:uppercase;letter-spacing:.08em;font-family:'JetBrains Mono',monospace;margin-bottom:4px;}
+.info-v{font-size:12px;color:var(--tx);min-height:16px;}
 .action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.action-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 9px;border-radius:8px;border:1px solid var(–b2);background:var(–s1);color:var(–tx);font-size:11px;font-family:‘Outfit’,sans-serif;cursor:pointer;transition:all .15s;text-decoration:none;}
-.action-btn:hover{border-color:var(–b3);background:var(–s3);}
-.action-btn.gold{color:var(–gold);border-color:rgba(201,169,110,.24);background:var(–goldd);}
-.action-btn.green{color:var(–green);border-color:rgba(109,184,130,.24);background:var(–greend);}
-.action-btn.amber{color:var(–amber);border-color:rgba(212,169,106,.24);background:var(–amberd);}
-.action-btn.rose{color:var(–rose);border-color:rgba(212,117,106,.24);background:var(–rosed);}
-.msg-box{width:100%;min-height:86px;resize:vertical;background:var(–s1);border:1px solid var(–b2);border-radius:8px;color:var(–tx);font-family:‘Outfit’,sans-serif;font-size:12px;padding:9px;outline:none;line-height:1.6;}
-.log-item{padding:8px 0;border-bottom:1px solid var(–b1);display:flex;gap:8px;align-items:flex-start;}
+.action-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 9px;border-radius:8px;border:1px solid var(--b2);background:var(--s1);color:var(--tx);font-size:11px;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .15s;text-decoration:none;}
+.action-btn:hover{border-color:var(--b3);background:var(--s3);}
+.action-btn.gold{color:var(--gold);border-color:rgba(201,169,110,.24);background:var(--goldd);}
+.action-btn.green{color:var(--green);border-color:rgba(109,184,130,.24);background:var(--greend);}
+.action-btn.amber{color:var(--amber);border-color:rgba(212,169,106,.24);background:var(--amberd);}
+.action-btn.rose{color:var(--rose);border-color:rgba(212,117,106,.24);background:var(--rosed);}
+.msg-box{width:100%;min-height:86px;resize:vertical;background:var(--s1);border:1px solid var(--b2);border-radius:8px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:12px;padding:9px;outline:none;line-height:1.6;}
+.log-item{padding:8px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:flex-start;}
 .log-item:last-child{border-bottom:none;}
-.log-time{font-size:9px;color:var(–td);font-family:‘JetBrains Mono’,monospace;min-width:86px;}
-.log-text{font-size:11.5px;color:var(–tm);line-height:1.45;}
-.next-pill{display:inline-flex;align-items:center;gap:5px;background:var(–s1);border:1px solid var(–b2);border-radius:99px;padding:4px 8px;font-size:10px;color:var(–tm);margin:2px;}
+.log-time{font-size:9px;color:var(--td);font-family:'JetBrains Mono',monospace;min-width:86px;}
+.log-text{font-size:11.5px;color:var(--tm);line-height:1.45;}
+.next-pill{display:inline-flex;align-items:center;gap:5px;background:var(--s1);border:1px solid var(--b2);border-radius:99px;padding:4px 8px;font-size:10px;color:var(--tm);margin:2px;}
 .row-actions{display:flex;gap:5px;align-items:center;}
-.icon-btn{width:27px;height:27px;border-radius:7px;border:1px solid var(–b2);background:var(–s2);color:var(–tm);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;}
-.icon-btn:hover{color:var(–gold);border-color:rgba(201,169,110,.3);}
+.icon-btn{width:27px;height:27px;border-radius:7px;border:1px solid var(--b2);background:var(--s2);color:var(--tm);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;}
+.icon-btn:hover{color:var(--gold);border-color:rgba(201,169,110,.3);}
 
 /* ══════════════════════════════
-MULTI-PERSON PICKER
-══════════════════════════════ */
-.mp-wrap{border:1px solid var(–b2);border-radius:var(–r2);background:var(–s2);overflow:hidden;}
-.mp-search-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(–b1);}
+   MULTI-PERSON PICKER
+   ══════════════════════════════ */
+.mp-wrap{border:1px solid var(--b2);border-radius:var(--r2);background:var(--s2);overflow:hidden;}
+.mp-search-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--b1);}
 .mp-search-ico{font-size:13px;opacity:.4;flex-shrink:0;}
-.mp-search-input{flex:1;background:none;border:none;outline:none;color:var(–tx);font-family:‘Outfit’,sans-serif;font-size:12px;}
-.mp-search-input::placeholder{color:var(–td);}
+.mp-search-input{flex:1;background:none;border:none;outline:none;color:var(--tx);font-family:'Outfit',sans-serif;font-size:12px;}
+.mp-search-input::placeholder{color:var(--td);}
 .mp-list{max-height:160px;overflow-y:auto;}
 .mp-item{display:flex;align-items:center;gap:9px;padding:7px 10px;cursor:pointer;transition:background .1s;}
-.mp-item:hover{background:var(–s3);}
-.mp-item.selected{background:var(–goldd);}
-.mp-item-chk{width:16px;height:16px;border-radius:4px;border:1px solid var(–b3);display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;transition:all .1s;}
-.mp-item.selected .mp-item-chk{background:var(–gold);border-color:var(–gold);color:var(–bg);}
+.mp-item:hover{background:var(--s3);}
+.mp-item.selected{background:var(--goldd);}
+.mp-item-chk{width:16px;height:16px;border-radius:4px;border:1px solid var(--b3);display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;transition:all .1s;}
+.mp-item.selected .mp-item-chk{background:var(--gold);border-color:var(--gold);color:var(--bg);}
 .mp-item-av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;}
 .mp-item-info{flex:1;min-width:0;}
-.mp-item-name{font-size:12px;font-weight:500;color:var(–tx);}
-.mp-item-role{font-size:10px;color:var(–tm);}
-.mp-item-meta{font-size:10px;color:var(–td);display:flex;gap:6px;margin-top:1px;}
-.mp-chips{display:flex;flex-wrap:wrap;gap:5px;padding:8px 10px;min-height:36px;border-top:1px solid var(–b1);}
-.mp-chips-empty{font-size:10px;color:var(–td);align-self:center;}
-.mp-chip{display:inline-flex;align-items:center;gap:5px;background:var(–s1);border:1px solid var(–b2);border-radius:99px;padding:3px 8px 3px 6px;font-size:11px;color:var(–tx);}
+.mp-item-name{font-size:12px;font-weight:500;color:var(--tx);}
+.mp-item-role{font-size:10px;color:var(--tm);}
+.mp-item-meta{font-size:10px;color:var(--td);display:flex;gap:6px;margin-top:1px;}
+.mp-chips{display:flex;flex-wrap:wrap;gap:5px;padding:8px 10px;min-height:36px;border-top:1px solid var(--b1);}
+.mp-chips-empty{font-size:10px;color:var(--td);align-self:center;}
+.mp-chip{display:inline-flex;align-items:center;gap:5px;background:var(--s1);border:1px solid var(--b2);border-radius:99px;padding:3px 8px 3px 6px;font-size:11px;color:var(--tx);}
 .mp-chip-av{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;}
-.mp-chip-x{cursor:pointer;color:var(–td);font-size:13px;line-height:1;transition:color .1s;}
-.mp-chip-x:hover{color:var(–rose);}
-.mp-add-new{padding:7px 10px;border-top:1px solid var(–b1);display:flex;align-items:center;gap:7px;cursor:pointer;color:var(–teal);font-size:11px;font-family:‘Outfit’,sans-serif;background:none;border-left:none;border-right:none;border-bottom:none;width:100%;text-align:left;transition:background .1s;}
-.mp-add-new:hover{background:var(–s3);}
+.mp-chip-x{cursor:pointer;color:var(--td);font-size:13px;line-height:1;transition:color .1s;}
+.mp-chip-x:hover{color:var(--rose);}
+.mp-add-new{padding:7px 10px;border-top:1px solid var(--b1);display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--teal);font-size:11px;font-family:'Outfit',sans-serif;background:none;border-left:none;border-right:none;border-bottom:none;width:100%;text-align:left;transition:background .1s;}
+.mp-add-new:hover{background:var(--s3);}
 
 /* ── DRAWER PEOPLE SECTION ── */
-.people-card{background:var(–s1);border:1px solid var(–b1);border-radius:var(–r);padding:9px 11px;margin-bottom:7px;}
+.people-card{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);padding:9px 11px;margin-bottom:7px;}
 .people-card-top{display:flex;align-items:center;gap:9px;margin-bottom:8px;}
 .people-card-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
 .people-card-name{font-size:13px;font-weight:600;}
-.people-card-role{font-size:10px;color:var(–tm);}
+.people-card-role{font-size:10px;color:var(--tm);}
 .people-card-actions{display:flex;gap:6px;flex-wrap:wrap;}
-.pa-btn{display:inline-flex;align-items:center;gap:4px;padding:5px 9px;border-radius:6px;font-size:11px;cursor:pointer;border:1px solid var(–b2);background:var(–s2);color:var(–tm);font-family:‘Outfit’,sans-serif;text-decoration:none;transition:all .12s;}
-.pa-btn:hover{color:var(–tx);border-color:var(–b3);}
-.pa-btn.wa{color:var(–green);border-color:rgba(109,184,130,.25);background:var(–greend);}
-.pa-btn.mail{color:var(–blue);border-color:rgba(123,157,224,.25);background:var(–blued);}
-.pa-btn.copy{color:var(–gold);border-color:rgba(201,169,110,.25);background:var(–goldd);}
+.pa-btn{display:inline-flex;align-items:center;gap:4px;padding:5px 9px;border-radius:6px;font-size:11px;cursor:pointer;border:1px solid var(--b2);background:var(--s2);color:var(--tm);font-family:'Outfit',sans-serif;text-decoration:none;transition:all .12s;}
+.pa-btn:hover{color:var(--tx);border-color:var(--b3);}
+.pa-btn.wa{color:var(--green);border-color:rgba(109,184,130,.25);background:var(--greend);}
+.pa-btn.mail{color:var(--blue);border-color:rgba(123,157,224,.25);background:var(--blued);}
+.pa-btn.copy{color:var(--gold);border-color:rgba(201,169,110,.25);background:var(--goldd);}
 
 /* ── SEND-ALL BAR ── */
 .send-all-bar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px;}
-.send-all-btn{flex:1;min-width:120px;display:flex;align-items:center;justify-content:center;gap:5px;padding:9px 8px;border-radius:8px;border:1px solid var(–b2);background:var(–s1);color:var(–tx);font-size:11px;font-family:‘Outfit’,sans-serif;cursor:pointer;transition:all .15s;}
-.send-all-btn:hover{border-color:var(–b3);background:var(–s3);}
-.send-all-btn.gold{color:var(–gold);border-color:rgba(201,169,110,.3);background:var(–goldd);}
-.send-all-btn.green{color:var(–green);border-color:rgba(109,184,130,.3);background:var(–greend);}
+.send-all-btn{flex:1;min-width:120px;display:flex;align-items:center;justify-content:center;gap:5px;padding:9px 8px;border-radius:8px;border:1px solid var(--b2);background:var(--s1);color:var(--tx);font-size:11px;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .15s;}
+.send-all-btn:hover{border-color:var(--b3);background:var(--s3);}
+.send-all-btn.gold{color:var(--gold);border-color:rgba(201,169,110,.3);background:var(--goldd);}
+.send-all-btn.green{color:var(--green);border-color:rgba(109,184,130,.3);background:var(--greend);}
 
 /* ══════════════════════════════════════════
-MOBILE BOTTOM NAV
-══════════════════════════════════════════ */
+   MOBILE BOTTOM NAV
+   ══════════════════════════════════════════ */
 .mobile-nav{
-display:none;position:fixed;bottom:0;left:0;right:0;
-height:58px;background:var(–s1);border-top:1px solid var(–b2);
-z-index:400;align-items:stretch;
+  display:none;position:fixed;bottom:0;left:0;right:0;
+  height:58px;background:var(--s1);border-top:1px solid var(--b2);
+  z-index:400;align-items:stretch;
 }
 .mnav-btn{
-flex:1;display:flex;flex-direction:column;align-items:center;
-justify-content:center;gap:2px;cursor:pointer;
-border:none;background:none;color:var(–td);
-font-family:‘Outfit’,sans-serif;font-size:9px;
-transition:color .15s;padding:4px 0;
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:2px;cursor:pointer;
+  border:none;background:none;color:var(--td);
+  font-family:'Outfit',sans-serif;font-size:9px;
+  transition:color .15s;padding:4px 0;
 }
 .mnav-btn .ico{font-size:20px;line-height:1;}
-.mnav-btn.active{color:var(–gold);}
+.mnav-btn.active{color:var(--gold);}
 .mnav-btn:active{opacity:.7;}
 
 /* ── MOBILE FAB ── */
 .mobile-fab{
-display:none;position:fixed;bottom:68px;right:16px;
-width:52px;height:52px;border-radius:50%;
-background:linear-gradient(135deg,var(–gold),var(–teal));
-color:#08090a;font-size:26px;font-weight:700;
-border:none;cursor:pointer;z-index:410;
-box-shadow:0 4px 22px rgba(201,169,110,.4);
-align-items:center;justify-content:center;
-transition:transform .15s;
+  display:none;position:fixed;bottom:68px;right:16px;
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--teal));
+  color:#08090a;font-size:26px;font-weight:700;
+  border:none;cursor:pointer;z-index:410;
+  box-shadow:0 4px 22px rgba(201,169,110,.4);
+  align-items:center;justify-content:center;
+  transition:transform .15s;
 }
 .mobile-fab:active{transform:scale(.9);}
 
 /* ══════════════════════════════════════════
-@MEDIA MOBILE ≤ 768px
-══════════════════════════════════════════ */
+   @MEDIA MOBILE ≤ 768px
+   ══════════════════════════════════════════ */
 @media (max-width:768px){
-html,body{height:auto;overflow:auto;}
-body{flex-direction:column;}
+  html,body{height:auto;overflow:auto;}
+  body{flex-direction:column;}
 
-.topbar{position:sticky;top:0;z-index:200;height:50px;padding:0 14px;}
-.topbar-nav{display:none;}
-.logo-sub{display:none;}
+  .topbar{position:sticky;top:0;z-index:200;height:50px;padding:0 14px;}
+  .topbar-nav{display:none;}
+  .logo-sub{display:none;}
 
-.shell{flex-direction:column;overflow:visible;}
-.sidebar{display:none!important;}
-.main{overflow:visible;width:100%;}
-.view{padding:14px 13px 76px;}
+  .shell{flex-direction:column;overflow:visible;}
+  .sidebar{display:none!important;}
+  .main{overflow:visible;width:100%;}
+  .view{padding:14px 13px 76px;}
 
-.mobile-nav{display:flex;}
-.mobile-fab{display:flex;}
+  .mobile-nav{display:flex;}
+  .mobile-fab{display:flex;}
 
-.kpi-strip{grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
-.kpi{padding:11px 10px;}
-.kpi-v{font-size:20px;}
-.kpi-l{font-size:8px!important;}
-.kpi-s{font-size:9px!important;}
+  .kpi-strip{grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+  .kpi{padding:11px 10px;}
+  .kpi-v{font-size:20px;}
+  .kpi-l{font-size:8px!important;}
+  .kpi-s{font-size:9px!important;}
 
-.ph{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:14px;}
-.ph-title{font-size:20px;}
-.ph-right{width:100%;}
-.ph-right .btn{width:100%;justify-content:center;}
+  .ph{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:14px;}
+  .ph-title{font-size:20px;}
+  .ph-right{width:100%;}
+  .ph-right .btn{width:100%;justify-content:center;}
 
-.g2,.g3,.g21,.g12,.g13{display:flex!important;flex-direction:column;gap:10px;}
-.col{display:flex;flex-direction:column;gap:10px;}
+  .g2,.g3,.g21,.g12,.g13{display:flex!important;flex-direction:column;gap:10px;}
+  .col{display:flex;flex-direction:column;gap:10px;}
 
-.panel-b,.panel-b0{max-height:none;overflow:visible;}
-.panel-scroll{max-height:none;overflow:visible;}
+  .panel-b,.panel-b0{max-height:none;overflow:visible;}
+  .panel-scroll{max-height:none;overflow:visible;}
 
-.setup-banner{flex-direction:column;align-items:flex-start;gap:8px;padding:12px;}
+  .setup-banner{flex-direction:column;align-items:flex-start;gap:8px;padding:12px;}
 
-.qcap{padding:10px 12px;gap:8px;}
-.qcap-cat{display:none;}
-.kbd{display:none;}
+  .qcap{padding:10px 12px;gap:8px;}
+  .qcap-cat{display:none;}
+  .kbd{display:none;}
 
-.focus{flex-direction:column;align-items:flex-start;gap:10px;padding:14px;}
-.focus .btn{width:100%;justify-content:center;}
+  .focus{flex-direction:column;align-items:flex-start;gap:10px;padding:14px;}
+  .focus .btn{width:100%;justify-content:center;}
 
-/* Task drawer → bottom sheet */
-.task-drawer{
-width:100%!important;max-width:100%!important;
-right:-100%!important;border-left:none!important;
-border-top:1px solid var(–b2);
-border-radius:18px 18px 0 0;
-top:auto!important;bottom:0;height:92vh;
-}
-.task-drawer.open{right:0!important;}
-.drawer-h{padding:14px 16px;}
-.drawer-title{font-size:16px;}
-.drawer-b{padding:12px 14px;}
-.action-grid{grid-template-columns:1fr 1fr;gap:7px;}
-.action-btn{font-size:12px;padding:10px 8px;}
+  /* Task drawer → bottom sheet */
+  .task-drawer{
+    width:100%!important;max-width:100%!important;
+    right:-100%!important;border-left:none!important;
+    border-top:1px solid var(--b2);
+    border-radius:18px 18px 0 0;
+    top:auto!important;bottom:0;height:92vh;
+  }
+  .task-drawer.open{right:0!important;}
+  .drawer-h{padding:14px 16px;}
+  .drawer-title{font-size:16px;}
+  .drawer-b{padding:12px 14px;}
+  .action-grid{grid-template-columns:1fr 1fr;gap:7px;}
+  .action-btn{font-size:12px;padding:10px 8px;}
 
-/* Modals → bottom sheet */
-.overlay{align-items:flex-end;padding:0;}
-.modal{
-width:100%!important;max-width:100%!important;
-max-height:94vh;border-radius:18px 18px 0 0;
-position:fixed;bottom:0;left:0;right:0;
-}
-.modal-h{padding:16px 18px;}
-.modal-b{padding:14px 18px;gap:12px;}
-.modal-f{
-padding:12px 18px 20px;position:sticky;bottom:0;
-background:var(–s1);border-top:1px solid var(–b1);
-gap:8px;
-}
-.modal-f .btn{flex:1;justify-content:center;padding:12px;font-size:13px;}
-.frow{grid-template-columns:1fr!important;}
+  /* Modals → bottom sheet */
+  .overlay{align-items:flex-end;padding:0;}
+  .modal{
+    width:100%!important;max-width:100%!important;
+    max-height:94vh;border-radius:18px 18px 0 0;
+    position:fixed;bottom:0;left:0;right:0;
+  }
+  .modal-h{padding:16px 18px;}
+  .modal-b{padding:14px 18px;gap:12px;}
+  .modal-f{
+    padding:12px 18px 20px;position:sticky;bottom:0;
+    background:var(--s1);border-top:1px solid var(--b1);
+    gap:8px;
+  }
+  .modal-f .btn{flex:1;justify-content:center;padding:12px;font-size:13px;}
+  .frow{grid-template-columns:1fr!important;}
 
-/* Multi-person picker on mobile */
-.mp-list{max-height:200px;}
-.mp-item{padding:10px 12px;}
-.mp-item-chk{width:20px;height:20px;border-radius:5px;}
-.mp-item-av{width:32px;height:32px;font-size:11px;}
-.mp-item-name{font-size:13px;}
-.mp-item-role{font-size:11px;}
-.mp-chips{padding:10px 12px;gap:6px;}
-.mp-chip{padding:5px 10px 5px 8px;font-size:12px;}
-.mp-search-input{font-size:16px!important;}
+  /* Multi-person picker on mobile */
+  .mp-list{max-height:200px;}
+  .mp-item{padding:10px 12px;}
+  .mp-item-chk{width:20px;height:20px;border-radius:5px;}
+  .mp-item-av{width:32px;height:32px;font-size:11px;}
+  .mp-item-name{font-size:13px;}
+  .mp-item-role{font-size:11px;}
+  .mp-chips{padding:10px 12px;gap:6px;}
+  .mp-chip{padding:5px 10px 5px 8px;font-size:12px;}
+  .mp-search-input{font-size:16px!important;}
 
-/* iOS anti-zoom */
-input,select,textarea{font-size:16px!important;}
-.finput,.fselect{font-size:16px!important;}
-.tag{font-size:9px!important;}
-.status{font-size:9px!important;}
-.flabel{font-size:10px!important;}
+  /* iOS anti-zoom */
+  input,select,textarea{font-size:16px!important;}
+  .finput,.fselect{font-size:16px!important;}
+  .tag{font-size:9px!important;}
+  .status{font-size:9px!important;}
+  .flabel{font-size:10px!important;}
 
-.wk-grid{grid-template-columns:1fr 1fr!important;gap:8px;}
-.info-grid{grid-template-columns:1fr 1fr;}
-.send-all-bar{flex-direction:column;gap:6px;}
-.send-all-btn{min-width:unset;width:100%;}
-.people-card-actions{flex-wrap:wrap;}
+  .wk-grid{grid-template-columns:1fr 1fr!important;gap:8px;}
+  .info-grid{grid-template-columns:1fr 1fr;}
+  .send-all-bar{flex-direction:column;gap:6px;}
+  .send-all-btn{min-width:unset;width:100%;}
+  .people-card-actions{flex-wrap:wrap;}
 }
 
 @media (max-width:420px){
-.kpi-strip{grid-template-columns:repeat(2,1fr);}
-.action-grid{grid-template-columns:1fr;}
+  .kpi-strip{grid-template-columns:repeat(2,1fr);}
+  .action-grid{grid-template-columns:1fr;}
 }
 
 </style>
@@ -791,7 +791,6 @@ input,select,textarea{font-size:16px!important;}
 <body>
 
 <!-- TOPBAR -->
-
 <div class="topbar">
   <div class="logo">
     <div class="logo-icon">P</div>
@@ -816,7 +815,6 @@ input,select,textarea{font-size:16px!important;}
 </div>
 
 <!-- ══ MOBILE BOTTOM NAV ══ -->
-
 <nav class="mobile-nav" id="mobileNav">
   <button class="mnav-btn active" id="mnav-dashboard" onclick="showView('dashboard')">
     <span class="ico">◈</span><span>Today</span>
@@ -839,7 +837,6 @@ input,select,textarea{font-size:16px!important;}
 <div class="shell">
 
 <!-- SIDEBAR -->
-
 <div class="sidebar">
   <div class="sb-section">
     <div class="sb-label">Workspace</div>
@@ -879,15 +876,12 @@ input,select,textarea{font-size:16px!important;}
 </div>
 
 <!-- MAIN -->
-
 <div class="main">
 
 <!-- ══════════════ DASHBOARD ══════════════ -->
-
 <div class="view active au" id="view-dashboard">
 
   <!-- Setup Banner -->
-
   <div class="setup-banner" id="setupBanner">
     <span style="font-size:28px;">📊</span>
     <div class="setup-text">
@@ -899,7 +893,6 @@ input,select,textarea{font-size:16px!important;}
   </div>
 
   <!-- Quick Capture -->
-
   <div class="qcap">
     <span class="qcap-ico">⚡</span>
     <input class="qcap-in" id="qcapIn" placeholder="Quick capture — type task and press Enter..." onkeydown="quickCapture(event)">
@@ -913,7 +906,6 @@ input,select,textarea{font-size:16px!important;}
   </div>
 
   <!-- Page Header -->
-
   <div class="ph au d1">
     <div>
       <div class="ph-title">Good morning — <em>let's execute.</em></div>
@@ -925,11 +917,9 @@ input,select,textarea{font-size:16px!important;}
   </div>
 
   <!-- Alerts -->
-
   <div id="alertArea" class="au d1"></div>
 
   <!-- KPI Strip -->
-
   <div class="kpi-strip au d2">
     <div class="kpi" style="--kc:var(--gold)">
       <div class="kpi-l">Tasks Today</div>
@@ -964,7 +954,6 @@ input,select,textarea{font-size:16px!important;}
   </div>
 
   <!-- Focus -->
-
   <div class="focus au d2" id="focusPanel">
     <span class="focus-ico">🎯</span>
     <div style="flex:1;">
@@ -976,99 +965,91 @@ input,select,textarea{font-size:16px!important;}
   </div>
 
   <!-- Tasks + Team -->
-
   <div class="g21 au d3">
 
-```
-<!-- Today Tasks -->
-<div class="panel">
-  <div class="panel-h">
-    <div class="panel-t">Today's Tasks</div>
-    <div style="display:flex;gap:6px;">
-      <button class="btn btn-ghost btn-sm" onclick="openAddModal()">+ Add</button>
-      <button class="btn btn-ghost btn-sm" onclick="showView('tasks')">All →</button>
+    <!-- Today Tasks -->
+    <div class="panel">
+      <div class="panel-h">
+        <div class="panel-t">Today's Tasks</div>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-ghost btn-sm" onclick="openAddModal()">+ Add</button>
+          <button class="btn btn-ghost btn-sm" onclick="showView('tasks')">All →</button>
+        </div>
+      </div>
+      <div class="panel-b0 panel-scroll" id="todayList">
+        <div style="padding:20px;text-align:center;color:var(--td);">Loading tasks...</div>
+      </div>
     </div>
-  </div>
-  <div class="panel-b0 panel-scroll" id="todayList">
-    <div style="padding:20px;text-align:center;color:var(--td);">Loading tasks...</div>
-  </div>
-</div>
 
-<!-- Right column -->
-<div class="col">
+    <!-- Right column -->
+    <div class="col">
 
-  <!-- Team Follow-up -->
-  <div class="panel">
-    <div class="panel-h">
-      <div class="panel-t">Team Follow-up</div>
-      <button class="btn btn-ghost btn-sm" onclick="showView('network')">All</button>
+      <!-- Team Follow-up -->
+      <div class="panel">
+        <div class="panel-h">
+          <div class="panel-t">Team Follow-up</div>
+          <button class="btn btn-ghost btn-sm" onclick="showView('network')">All</button>
+        </div>
+        <div class="panel-b" id="teamFollowup">
+          <div style="color:var(--td);font-size:11px;">Add team contacts in Network tab</div>
+        </div>
+      </div>
+
+      <!-- Week Progress -->
+      <div class="panel">
+        <div class="panel-h"><div class="panel-t">Week Progress</div></div>
+        <div class="panel-b" id="weekProgress">
+          <div style="color:var(--td);font-size:11px;">Loading...</div>
+        </div>
+      </div>
+
     </div>
-    <div class="panel-b" id="teamFollowup">
-      <div style="color:var(--td);font-size:11px;">Add team contacts in Network tab</div>
-    </div>
-  </div>
-
-  <!-- Week Progress -->
-  <div class="panel">
-    <div class="panel-h"><div class="panel-t">Week Progress</div></div>
-    <div class="panel-b" id="weekProgress">
-      <div style="color:var(--td);font-size:11px;">Loading...</div>
-    </div>
-  </div>
-
-</div>
-```
-
   </div>
 
   <!-- Bottom Row -->
-
   <div class="g3 au d4">
 
-```
-<!-- Habits -->
-<div class="panel">
-  <div class="panel-h">
-    <div class="panel-t">Daily Habits</div>
-    <button class="btn btn-ghost btn-sm" onclick="openHabitModal()">+ Habit</button>
-  </div>
-  <div class="panel-b" id="habitPanel">
-    <div style="color:var(--td);font-size:11px;">Add habits to track daily progress</div>
-  </div>
-</div>
+    <!-- Habits -->
+    <div class="panel">
+      <div class="panel-h">
+        <div class="panel-t">Daily Habits</div>
+        <button class="btn btn-ghost btn-sm" onclick="openHabitModal()">+ Habit</button>
+      </div>
+      <div class="panel-b" id="habitPanel">
+        <div style="color:var(--td);font-size:11px;">Add habits to track daily progress</div>
+      </div>
+    </div>
 
-<!-- Goals -->
-<div class="panel">
-  <div class="panel-h">
-    <div class="panel-t">Active Goals</div>
-    <button class="btn btn-ghost btn-sm" onclick="openGoalModal()">+ Goal</button>
-  </div>
-  <div class="panel-b" id="goalPanel">
-    <div style="color:var(--td);font-size:11px;">Add professional goals to track</div>
-  </div>
-</div>
+    <!-- Goals -->
+    <div class="panel">
+      <div class="panel-h">
+        <div class="panel-t">Active Goals</div>
+        <button class="btn btn-ghost btn-sm" onclick="openGoalModal()">+ Goal</button>
+      </div>
+      <div class="panel-b" id="goalPanel">
+        <div style="color:var(--td);font-size:11px;">Add professional goals to track</div>
+      </div>
+    </div>
 
-<!-- Reporting -->
-<div class="panel">
-  <div class="panel-h">
-    <div class="panel-t">Reporting</div>
-    <span style="font-size:10px;color:var(--green);background:var(--greend);padding:2px 8px;border-radius:3px;">Dr. Kamal</span>
-  </div>
-  <div class="panel-b" id="reportPanel">
-    <div class="rm"><span class="rm-l">April Monthly Report</span><span class="rm-v" style="color:var(--rose);">Overdue</span></div>
-    <div class="rm"><span class="rm-l">Week 19 Summary</span><span class="rm-v" style="color:var(--green);">✓ Sent</span></div>
-    <div class="rm"><span class="rm-l">Campaign ROI Sheet</span><span class="rm-v" style="color:var(--amber);">Draft</span></div>
-    <div class="rm"><span class="rm-l">Ecom Performance</span><span class="rm-v" style="color:var(--tm);">May 22</span></div>
-    <div class="rm"><span class="rm-l">Google Maps Audit</span><span class="rm-v" style="color:var(--tm);">May 25</span></div>
-  </div>
-</div>
-```
+    <!-- Reporting -->
+    <div class="panel">
+      <div class="panel-h">
+        <div class="panel-t">Reporting</div>
+        <span style="font-size:10px;color:var(--green);background:var(--greend);padding:2px 8px;border-radius:3px;">Dr. Kamal</span>
+      </div>
+      <div class="panel-b" id="reportPanel">
+        <div class="rm"><span class="rm-l">April Monthly Report</span><span class="rm-v" style="color:var(--rose);">Overdue</span></div>
+        <div class="rm"><span class="rm-l">Week 19 Summary</span><span class="rm-v" style="color:var(--green);">✓ Sent</span></div>
+        <div class="rm"><span class="rm-l">Campaign ROI Sheet</span><span class="rm-v" style="color:var(--amber);">Draft</span></div>
+        <div class="rm"><span class="rm-l">Ecom Performance</span><span class="rm-v" style="color:var(--tm);">May 22</span></div>
+        <div class="rm"><span class="rm-l">Google Maps Audit</span><span class="rm-v" style="color:var(--tm);">May 25</span></div>
+      </div>
+    </div>
 
   </div>
 </div>
 
 <!-- ══════════════ ALL TASKS ══════════════ -->
-
 <div class="view" id="view-tasks">
   <div class="ph">
     <div>
@@ -1087,7 +1068,6 @@ input,select,textarea{font-size:16px!important;}
   </div>
 
   <!-- Smart Search -->
-
   <div class="search-strip">
     <span class="search-ico">⌕</span>
     <input class="search-input" id="taskSearch" placeholder="Search anything: task name, related person, department, category, e-commerce, marketing, status, WhatsApp, email..." oninput="setSearch(this.value)">
@@ -1096,7 +1076,6 @@ input,select,textarea{font-size:16px!important;}
   </div>
 
   <!-- Filter Pills -->
-
   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;" id="catPills">
     <span class="tag t-mkt" style="padding:4px 10px;cursor:pointer;font-size:10px;" onclick="filterCat('Marketing')">📣 Marketing</span>
     <span class="tag t-cam" style="padding:4px 10px;cursor:pointer;font-size:10px;" onclick="filterCat('Campaigns')">🎯 Campaigns</span>
@@ -1157,7 +1136,6 @@ input,select,textarea{font-size:16px!important;}
 </div>
 
 <!-- ══════════════ WEEKLY ══════════════ -->
-
 <div class="view" id="view-weekly">
   <div class="ph">
     <div>
@@ -1197,7 +1175,6 @@ input,select,textarea{font-size:16px!important;}
 </div>
 
 <!-- ══════════════ CAMPAIGNS ══════════════ -->
-
 <div class="view" id="view-campaigns">
   <div class="ph">
     <div><div class="ph-title">Campaign <em>Control</em></div><div class="ph-sub">Paid · Organic · Content</div></div>
@@ -1243,7 +1220,6 @@ input,select,textarea{font-size:16px!important;}
 </div>
 
 <!-- ══════════════ GROWTH ══════════════ -->
-
 <div class="view" id="view-growth">
   <div class="ph">
     <div><div class="ph-title">Personal <em>Growth</em></div><div class="ph-sub">Habits · Goals · Learning</div></div>
@@ -1272,7 +1248,6 @@ input,select,textarea{font-size:16px!important;}
 </div>
 
 <!-- ══════════════ NETWORK ══════════════ -->
-
 <div class="view" id="view-network">
   <div class="ph">
     <div><div class="ph-title">Professional <em>Network</em></div><div class="ph-sub">Team · Partners · Stakeholders</div></div>
@@ -1291,7 +1266,6 @@ input,select,textarea{font-size:16px!important;}
 </div>
 
 <!-- ══════════════ SETUP ══════════════ -->
-
 <div class="view" id="view-setup">
   <div class="ph">
     <div><div class="ph-title">Google Sheets <em>Setup</em></div><div class="ph-sub">Connect your database in 5 minutes</div></div>
@@ -1346,8 +1320,9 @@ input,select,textarea{font-size:16px!important;}
 </div><!-- /main -->
 </div><!-- /shell -->
 
-<!-- Production Task Detail Drawer -->
 
+
+<!-- Production Task Detail Drawer -->
 <div class="drawer-overlay" id="drawerOverlay" onclick="closeTaskPanel()"></div>
 <aside class="task-drawer" id="taskDrawer">
   <div class="drawer-h">
@@ -1363,7 +1338,6 @@ input,select,textarea{font-size:16px!important;}
 <!-- ══════════════ MODALS ══════════════ -->
 
 <!-- Task Modal -->
-
 <div class="overlay" id="taskModal">
   <div class="modal">
     <div class="modal-h">
@@ -1405,69 +1379,65 @@ input,select,textarea{font-size:16px!important;}
         <div class="fg"><label class="flabel">Owner</label><input class="finput" id="f-owner" placeholder="Self" value="Self"></div>
       </div>
 
-```
-  <!-- MULTI-PERSON PICKER -->
-  <div class="fg">
-    <label class="flabel">Related Persons / To Inform</label>
-    <div class="mp-wrap">
-      <div class="mp-search-row">
-        <span class="mp-search-ico">🔍</span>
-        <input class="mp-search-input" id="mp-search" placeholder="ابحث باسم أو دور أو قسم..." oninput="mpFilter(this.value)">
+      <!-- MULTI-PERSON PICKER -->
+      <div class="fg">
+        <label class="flabel">Related Persons / To Inform</label>
+        <div class="mp-wrap">
+          <div class="mp-search-row">
+            <span class="mp-search-ico">🔍</span>
+            <input class="mp-search-input" id="mp-search" placeholder="ابحث باسم أو دور أو قسم..." oninput="mpFilter(this.value)">
+          </div>
+          <div class="mp-list" id="mp-list"></div>
+          <button type="button" class="mp-add-new" onclick="openContactModal();_mpReturnToTask=true;">+ Add New Person to Database</button>
+          <div class="mp-chips" id="mp-chips"><span class="mp-chips-empty">No persons selected</span></div>
+        </div>
+        <div style="font-size:10px;color:var(--tm);margin-top:4px;">اختر أكثر من شخص · بياناتهم تُجلب تلقائياً من Contacts Database</div>
       </div>
-      <div class="mp-list" id="mp-list"></div>
-      <button type="button" class="mp-add-new" onclick="openContactModal();_mpReturnToTask=true;">+ Add New Person to Database</button>
-      <div class="mp-chips" id="mp-chips"><span class="mp-chips-empty">No persons selected</span></div>
+
+      <!-- Legacy single fields (hidden, kept for backward compat) -->
+      <input type="hidden" id="f-person">
+      <input type="hidden" id="f-role">
+      <input type="hidden" id="f-wa">
+      <input type="hidden" id="f-email">
+      <input type="hidden" id="f-comm">
+
+      <div class="frow">
+        <div class="fg"><label class="flabel">Communication Channel (default)</label>
+          <select class="fselect" id="f-comm-sel">
+            <option value="No">No</option><option value="WhatsApp">WhatsApp</option><option value="Email">Email</option><option value="WhatsApp + Email">WhatsApp + Email</option><option value="Call">Call</option>
+          </select>
+          <div style="font-size:10px;color:var(--tm);margin-top:4px;">Channel تلقائي لو الشخص ليس عنده default محدد</div>
+        </div>
+        <div class="fg"><label class="flabel">Follow-up Date</label><input class="finput" id="f-follow" type="date"></div>
+      </div>
+      <div class="fg"><label class="flabel">Next Action</label><input class="finput" id="f-next" placeholder="e.g. Send approval reminder / Upload banner"></div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">Waiting On</label><input class="finput" id="f-wait" placeholder="e.g. Designer / Supplier / Management"></div>
+        <div class="fg"><label class="flabel">KPI Impact</label><input class="finput" id="f-kpi" placeholder="e.g. Sales / Leads / Execution / Compliance"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">Effort Level</label><select class="fselect" id="f-effort"><option></option><option>Low</option><option>Medium</option><option>High</option></select></div>
+        <div class="fg"><label class="flabel">Risk Level</label><select class="fselect" id="f-risk"><option></option><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">Management Visibility</label><select class="fselect" id="f-vis"><option></option><option>Low</option><option>Medium</option><option>High</option><option>Executive</option></select></div>
+        <div class="fg"><label class="flabel">Recurrence Rule</label><input class="finput" id="f-rule" placeholder="e.g. Weekly Sunday / Monthly day 2"></div>
+      </div>
+      <div class="fg"><label class="flabel">Expected Output</label><input class="finput" id="f-output" placeholder="What final output should be delivered?"></div>
+      <div class="fg"><label class="flabel">Blocker</label><input class="finput" id="f-blocker" placeholder="Any blocker preventing completion?"></div>
+      <div class="fg"><label class="flabel">Quick Notes</label><input class="finput" id="f-notes" placeholder="Internal notes"></div>
+      <div class="fg"><label class="flabel">Links / Files</label><input class="finput" id="f-links" placeholder="Paste related links or file names"></div>
+      <div class="fg"><label class="flabel">Prepared Message</label><textarea class="finput" id="f-msg" rows="3" placeholder="Write or auto-generate the message you will send..."></textarea></div>
     </div>
-    <div style="font-size:10px;color:var(--tm);margin-top:4px;">اختر أكثر من شخص · بياناتهم تُجلب تلقائياً من Contacts Database</div>
-  </div>
-
-  <!-- Legacy single fields (hidden, kept for backward compat) -->
-  <input type="hidden" id="f-person">
-  <input type="hidden" id="f-role">
-  <input type="hidden" id="f-wa">
-  <input type="hidden" id="f-email">
-  <input type="hidden" id="f-comm">
-
-  <div class="frow">
-    <div class="fg"><label class="flabel">Communication Channel (default)</label>
-      <select class="fselect" id="f-comm-sel">
-        <option value="No">No</option><option value="WhatsApp">WhatsApp</option><option value="Email">Email</option><option value="WhatsApp + Email">WhatsApp + Email</option><option value="Call">Call</option>
-      </select>
-      <div style="font-size:10px;color:var(--tm);margin-top:4px;">Channel تلقائي لو الشخص ليس عنده default محدد</div>
+    <div class="modal-f">
+      <button class="btn btn-danger btn-sm" id="delBtn" onclick="deleteTask()" style="display:none;margin-right:auto;">🗑 Delete</button>
+      <button class="btn btn-ghost" onclick="closeModal('taskModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTask()">Save Task</button>
     </div>
-    <div class="fg"><label class="flabel">Follow-up Date</label><input class="finput" id="f-follow" type="date"></div>
-  </div>
-  <div class="fg"><label class="flabel">Next Action</label><input class="finput" id="f-next" placeholder="e.g. Send approval reminder / Upload banner"></div>
-  <div class="frow">
-    <div class="fg"><label class="flabel">Waiting On</label><input class="finput" id="f-wait" placeholder="e.g. Designer / Supplier / Management"></div>
-    <div class="fg"><label class="flabel">KPI Impact</label><input class="finput" id="f-kpi" placeholder="e.g. Sales / Leads / Execution / Compliance"></div>
-  </div>
-  <div class="frow">
-    <div class="fg"><label class="flabel">Effort Level</label><select class="fselect" id="f-effort"><option></option><option>Low</option><option>Medium</option><option>High</option></select></div>
-    <div class="fg"><label class="flabel">Risk Level</label><select class="fselect" id="f-risk"><option></option><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></div>
-  </div>
-  <div class="frow">
-    <div class="fg"><label class="flabel">Management Visibility</label><select class="fselect" id="f-vis"><option></option><option>Low</option><option>Medium</option><option>High</option><option>Executive</option></select></div>
-    <div class="fg"><label class="flabel">Recurrence Rule</label><input class="finput" id="f-rule" placeholder="e.g. Weekly Sunday / Monthly day 2"></div>
-  </div>
-  <div class="fg"><label class="flabel">Expected Output</label><input class="finput" id="f-output" placeholder="What final output should be delivered?"></div>
-  <div class="fg"><label class="flabel">Blocker</label><input class="finput" id="f-blocker" placeholder="Any blocker preventing completion?"></div>
-  <div class="fg"><label class="flabel">Quick Notes</label><input class="finput" id="f-notes" placeholder="Internal notes"></div>
-  <div class="fg"><label class="flabel">Links / Files</label><input class="finput" id="f-links" placeholder="Paste related links or file names"></div>
-  <div class="fg"><label class="flabel">Prepared Message</label><textarea class="finput" id="f-msg" rows="3" placeholder="Write or auto-generate the message you will send..."></textarea></div>
-</div>
-<div class="modal-f">
-  <button class="btn btn-danger btn-sm" id="delBtn" onclick="deleteTask()" style="display:none;margin-right:auto;">🗑 Delete</button>
-  <button class="btn btn-ghost" onclick="closeModal('taskModal')">Cancel</button>
-  <button class="btn btn-primary" onclick="saveTask()">Save Task</button>
-</div>
-```
-
   </div>
 </div>
 
 <!-- Habit Modal -->
-
 <div class="overlay" id="habitModal">
   <div class="modal" style="width:400px;">
     <div class="modal-h"><div class="modal-title">New Habit</div><div class="modal-x" onclick="closeModal('habitModal')">×</div></div>
@@ -1489,7 +1459,6 @@ input,select,textarea{font-size:16px!important;}
 </div>
 
 <!-- Goal Modal -->
-
 <div class="overlay" id="goalModal">
   <div class="modal" style="width:420px;">
     <div class="modal-h"><div class="modal-title">New Goal</div><div class="modal-x" onclick="closeModal('goalModal')">×</div></div>
@@ -1509,7 +1478,6 @@ input,select,textarea{font-size:16px!important;}
 </div>
 
 <!-- Learn Modal -->
-
 <div class="overlay" id="learnModal">
   <div class="modal" style="width:420px;">
     <div class="modal-h"><div class="modal-title">New Course / Book</div><div class="modal-x" onclick="closeModal('learnModal')">×</div></div>
@@ -1532,7 +1500,6 @@ input,select,textarea{font-size:16px!important;}
 </div>
 
 <!-- Contact Modal -->
-
 <div class="overlay" id="contactModal">
   <div class="modal" style="width:520px;">
     <div class="modal-h"><div class="modal-title">Contact Database — WhatsApp + Email</div><div class="modal-x" onclick="closeModal('contactModal')">×</div></div>
@@ -1567,7 +1534,6 @@ input,select,textarea{font-size:16px!important;}
 </div>
 
 <!-- Toast -->
-
 <div class="toast hidden" id="toast">
   <span id="toastIcon">✓</span>
   <span id="toastMsg">Saved</span>
@@ -2628,30 +2594,36 @@ function openTaskPanel(id){
     </div>
     <div class="drawer-sec"><div class="drawer-sec-title">Prepared Message <span style="font-size:9px;color:var(--td);">— {name} {task} {due} {status} {next_action}</span></div>
       <textarea class="msg-box" id="drawerMsg">${esc(msg)}</textarea>
-
-```
-  <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
-    <button class="action-btn" onclick="saveDrawerMessage(${id})">💾 Save</button>
-    <button class="action-btn gold" onclick="saveDrawerMessage(${id});sendToAll(${id})">🚀 Save & Send All</button>
-  </div>
-</div>
-<div class="drawer-sec"><div class="drawer-sec-title">Communication Log</div>${log}
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px;">
-    <button class="action-btn" onclick="logComm(${id},'Sent WhatsApp')">Sent WhatsApp</button>
-    <button class="action-btn" onclick="logComm(${id},'Called')">Called</button>
-    <button class="action-btn" onclick="logComm(${id},'Reminder Sent')">Reminder</button>
-    <button class="action-btn green" onclick="logComm(${id},'Approved')">Approved</button>
-    <button class="action-btn amber" onclick="logComm(${id},'Delayed')">Delayed</button>
-    <button class="action-btn rose" onclick="logComm(${id},'Need Changes')">Need Changes</button>
-  </div>
-</div>
-```
-
-`; document.getElementById('drawerOverlay').classList.add('open'); document.getElementById('taskDrawer').classList.add('open'); } function openWhatsApp(id){openAllWhatsApp(id);} function openEmailDraft(id){openAllEmail(id);} function openBothChannels(id){openAllWhatsApp(id);setTimeout(()=>openAllEmail(id),400);} function openSelectedChannel(id){sendToAll(id);} function copyTaskMessage(id){const t=tasks.find(x=>x.id===id); if(!t) return; navigator.clipboard.writeText(getTaskMessage(t)).then(()=>toast('Message copied 📋','📋'));} function setTaskStatusQuick(id,status){const t=tasks.find(x=>x.id===id); if(!t) return; t.status=status; t.done=status==='Done'; t.updatedAt=new Date().toISOString(); t.completedAt=t.done?(t.completedAt||new Date().toISOString()):''; logComm(id,`Status changed to ${status}`,false); save(LS.tasks,tasks); renderAll(); openTaskPanel(id); pushTask(t);} function snoozeTask(id,days=1){const t=tasks.find(x=>x.id===id); if(!t) return; const d=new Date(); d.setDate(d.getDate()+days); t.followUp=d.toISOString().split('T')[0]; t.status='Waiting'; logComm(id,`Snoozed for ${days} day(s)`,false); save(LS.tasks,tasks); renderAll(); openTaskPanel(id);}
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+        <button class="action-btn" onclick="saveDrawerMessage(${id})">💾 Save</button>
+        <button class="action-btn gold" onclick="saveDrawerMessage(${id});sendToAll(${id})">🚀 Save & Send All</button>
+      </div>
+    </div>
+    <div class="drawer-sec"><div class="drawer-sec-title">Communication Log</div>${log}
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px;">
+        <button class="action-btn" onclick="logComm(${id},'Sent WhatsApp')">Sent WhatsApp</button>
+        <button class="action-btn" onclick="logComm(${id},'Called')">Called</button>
+        <button class="action-btn" onclick="logComm(${id},'Reminder Sent')">Reminder</button>
+        <button class="action-btn green" onclick="logComm(${id},'Approved')">Approved</button>
+        <button class="action-btn amber" onclick="logComm(${id},'Delayed')">Delayed</button>
+        <button class="action-btn rose" onclick="logComm(${id},'Need Changes')">Need Changes</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('drawerOverlay').classList.add('open');
+  document.getElementById('taskDrawer').classList.add('open');
+}
+function openWhatsApp(id){openAllWhatsApp(id);}
+function openEmailDraft(id){openAllEmail(id);}
+function openBothChannels(id){openAllWhatsApp(id);setTimeout(()=>openAllEmail(id),400);}
+function openSelectedChannel(id){sendToAll(id);}
+function copyTaskMessage(id){const t=tasks.find(x=>x.id===id); if(!t) return; navigator.clipboard.writeText(getTaskMessage(t)).then(()=>toast('Message copied 📋','📋'));}
+function setTaskStatusQuick(id,status){const t=tasks.find(x=>x.id===id); if(!t) return; t.status=status; t.done=status==='Done'; t.updatedAt=new Date().toISOString(); t.completedAt=t.done?(t.completedAt||new Date().toISOString()):''; logComm(id,`Status changed to ${status}`,false); save(LS.tasks,tasks); renderAll(); openTaskPanel(id); pushTask(t);}
+function snoozeTask(id,days=1){const t=tasks.find(x=>x.id===id); if(!t) return; const d=new Date(); d.setDate(d.getDate()+days); t.followUp=d.toISOString().split('T')[0]; t.status='Waiting'; logComm(id,`Snoozed for ${days} day(s)`,false); save(LS.tasks,tasks); renderAll(); openTaskPanel(id);}
 function logComm(id, text, rerender=true){const t=tasks.find(x=>x.id===id); if(!t) return; if(!Array.isArray(t.commLog)) t.commLog=[]; t.lastCommunication=new Date().toISOString(); t.commLog.unshift({time:t.lastCommunication,text}); if(t.commLog.length>25) t.commLog=t.commLog.slice(0,25); if(rerender){save(LS.tasks,tasks); renderAll(); if(activeDrawerTaskId===id) openTaskPanel(id);}}
-function addQuickNote(id){const note=prompt(‘Quick note for this task:’); if(!note) return; logComm(id,‘Note: ‘+note); toast(‘Note added ✓’);}
-function saveDrawerMessage(id){const t=tasks.find(x=>x.id===id); if(!t) return; const v=document.getElementById(‘drawerMsg’)?.value||’’; t.messageTemplate=v; save(LS.tasks,tasks); pushTask(t); toast(‘Message saved ✓’);}
-function closeTaskPanel(){document.getElementById(‘drawerOverlay’).classList.remove(‘open’);document.getElementById(‘taskDrawer’).classList.remove(‘open’);activeDrawerTaskId=null;}
+function addQuickNote(id){const note=prompt('Quick note for this task:'); if(!note) return; logComm(id,'Note: '+note); toast('Note added ✓');}
+function saveDrawerMessage(id){const t=tasks.find(x=>x.id===id); if(!t) return; const v=document.getElementById('drawerMsg')?.value||''; t.messageTemplate=v; save(LS.tasks,tasks); pushTask(t); toast('Message saved ✓');}
+function closeTaskPanel(){document.getElementById('drawerOverlay').classList.remove('open');document.getElementById('taskDrawer').classList.remove('open');activeDrawerTaskId=null;}
 
 // ════════════════════════════════════════
 // MULTI-PERSON PICKER STATE
@@ -2660,336 +2632,351 @@ let mpSelected = []; // Array of {id,name,role,whatsapp,email,channel}
 let _mpReturnToTask = false;
 
 function mpPersonObj(c) {
-return {
-id: String(c.id||’’),
-name: c.name||’’,
-role: c.role||’’,
-whatsapp: c.whatsapp||’’,
-email: c.email||’’,
-channel: c.defaultCommunication||’’
-};
+  return {
+    id: String(c.id||''),
+    name: c.name||'',
+    role: c.role||'',
+    whatsapp: c.whatsapp||'',
+    email: c.email||'',
+    channel: c.defaultCommunication||''
+  };
 }
 
 function mpFilter(q) {
-const list = document.getElementById(‘mp-list’); if(!list) return;
-const sq = (q||’’).toLowerCase().trim();
-const filtered = contacts.filter(c => {
-if(!sq) return true;
-return `${c.name} ${c.role} ${c.department}`.toLowerCase().includes(sq);
-});
-list.innerHTML = filtered.map(c => {
-const sel = mpSelected.some(p => p.name === c.name);
-const col = colMap[c.color]||‘var(–gold)’;
-const ini = (c.name||’?’).split(’ ‘).map(w=>w[0]).join(’’).substring(0,2).toUpperCase();
-return `<div class="mp-item ${sel?'selected':''}" onclick="mpToggle('${esc(c.name)}')"> <div class="mp-item-chk">${sel?'✓':''}</div> <div class="mp-item-av" style="background:rgba(0,0,0,.3);border:1px solid ${col};color:${col};font-size:9px;">${ini}</div> <div class="mp-item-info"> <div class="mp-item-name">${esc(c.name)}</div> <div class="mp-item-role">${esc(c.role||'—')} · ${esc(c.department||'—')}</div> <div class="mp-item-meta"> ${c.whatsapp?`<span>☘ +${cleanPhoneForWa(c.whatsapp)}</span>`:''} ${c.email?`<span>✉ ${esc(c.email)}</span>`:''} </div> </div> </div>`;
-}).join(’’) || ‘<div style="padding:12px;text-align:center;color:var(--td);font-size:11px;">No contacts found</div>’;
+  const list = document.getElementById('mp-list'); if(!list) return;
+  const sq = (q||'').toLowerCase().trim();
+  const filtered = contacts.filter(c => {
+    if(!sq) return true;
+    return `${c.name} ${c.role} ${c.department}`.toLowerCase().includes(sq);
+  });
+  list.innerHTML = filtered.map(c => {
+    const sel = mpSelected.some(p => p.name === c.name);
+    const col = colMap[c.color]||'var(--gold)';
+    const ini = (c.name||'?').split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+    return `<div class="mp-item ${sel?'selected':''}" onclick="mpToggle('${esc(c.name)}')">
+      <div class="mp-item-chk">${sel?'✓':''}</div>
+      <div class="mp-item-av" style="background:rgba(0,0,0,.3);border:1px solid ${col};color:${col};font-size:9px;">${ini}</div>
+      <div class="mp-item-info">
+        <div class="mp-item-name">${esc(c.name)}</div>
+        <div class="mp-item-role">${esc(c.role||'—')} · ${esc(c.department||'—')}</div>
+        <div class="mp-item-meta">
+          ${c.whatsapp?`<span>☘ +${cleanPhoneForWa(c.whatsapp)}</span>`:''}
+          ${c.email?`<span>✉ ${esc(c.email)}</span>`:''}
+        </div>
+      </div>
+    </div>`;
+  }).join('') || '<div style="padding:12px;text-align:center;color:var(--td);font-size:11px;">No contacts found</div>';
 }
 
 function mpToggle(name) {
-const c = findContactByName(name);
-const existing = mpSelected.findIndex(p => p.name === name);
-if(existing >= 0) {
-mpSelected.splice(existing, 1);
-} else {
-mpSelected.push(c ? mpPersonObj(c) : {id:’’,name,role:’’,whatsapp:’’,email:’’,channel:’’});
-}
-mpRenderChips();
-mpFilter(document.getElementById(‘mp-search’)?.value||’’);
+  const c = findContactByName(name);
+  const existing = mpSelected.findIndex(p => p.name === name);
+  if(existing >= 0) {
+    mpSelected.splice(existing, 1);
+  } else {
+    mpSelected.push(c ? mpPersonObj(c) : {id:'',name,role:'',whatsapp:'',email:'',channel:''});
+  }
+  mpRenderChips();
+  mpFilter(document.getElementById('mp-search')?.value||'');
 }
 
 function mpRemove(name) {
-mpSelected = mpSelected.filter(p => p.name !== name);
-mpRenderChips();
-mpFilter(document.getElementById(‘mp-search’)?.value||’’);
+  mpSelected = mpSelected.filter(p => p.name !== name);
+  mpRenderChips();
+  mpFilter(document.getElementById('mp-search')?.value||'');
 }
 
 function mpRenderChips() {
-const el = document.getElementById(‘mp-chips’); if(!el) return;
-if(!mpSelected.length) {
-el.innerHTML=’<span class="mp-chips-empty">No persons selected</span>’;
-return;
-}
-el.innerHTML = mpSelected.map(p => {
-const c = findContactByName(p.name);
-const col = c ? (colMap[c.color]||‘var(–gold)’) : ‘var(–gold)’;
-const ini = (p.name||’?’).split(’ ‘).map(w=>w[0]).join(’’).substring(0,2).toUpperCase();
-return `<div class="mp-chip"> <div class="mp-chip-av" style="background:rgba(0,0,0,.3);border:1px solid ${col};color:${col};">${ini}</div> <span>${esc(p.name)}</span> <span class="mp-chip-x" onclick="mpRemove('${esc(p.name)}')">×</span> </div>`;
-}).join(’’);
+  const el = document.getElementById('mp-chips'); if(!el) return;
+  if(!mpSelected.length) {
+    el.innerHTML='<span class="mp-chips-empty">No persons selected</span>';
+    return;
+  }
+  el.innerHTML = mpSelected.map(p => {
+    const c = findContactByName(p.name);
+    const col = c ? (colMap[c.color]||'var(--gold)') : 'var(--gold)';
+    const ini = (p.name||'?').split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+    return `<div class="mp-chip">
+      <div class="mp-chip-av" style="background:rgba(0,0,0,.3);border:1px solid ${col};color:${col};">${ini}</div>
+      <span>${esc(p.name)}</span>
+      <span class="mp-chip-x" onclick="mpRemove('${esc(p.name)}')">×</span>
+    </div>`;
+  }).join('');
 }
 
 function mpInit(selectedPersons=[]) {
-mpSelected = […selectedPersons];
-document.getElementById(‘mp-search’).value=’’;
-mpFilter(’’);
-mpRenderChips();
+  mpSelected = [...selectedPersons];
+  document.getElementById('mp-search').value='';
+  mpFilter('');
+  mpRenderChips();
 }
 
 // ════════════════════════════════════════
 // TASK MODAL
 // ════════════════════════════════════════
-function openAddModal(defaultCat=‘Marketing’) {
-document.getElementById(‘modalTitle’).textContent=‘New Task’;
-document.getElementById(‘editId’).value=’’;
-document.getElementById(‘f-name’).value=’’;
-document.getElementById(‘f-dept’).value=’’;
-document.getElementById(‘f-cat’).value=defaultCat;
-document.getElementById(‘f-pri’).value=‘Medium’;
-document.getElementById(‘f-status’).value=‘To Do’;
-document.getElementById(‘f-rec’).value=‘None’;
-document.getElementById(‘f-due’).value=today();
-document.getElementById(‘f-owner’).value=‘Self’;
-document.getElementById(‘f-follow’).value=today();
-document.getElementById(‘f-next’).value=’’;
-document.getElementById(‘f-comm-sel’).value=‘No’;
-document.getElementById(‘f-wait’).value=’’;
-document.getElementById(‘f-kpi’).value=’’;
-document.getElementById(‘f-effort’).value=’’;
-document.getElementById(‘f-risk’).value=’’;
-document.getElementById(‘f-vis’).value=’’;
-document.getElementById(‘f-rule’).value=’’;
-document.getElementById(‘f-output’).value=’’;
-document.getElementById(‘f-blocker’).value=’’;
-document.getElementById(‘f-notes’).value=’’;
-document.getElementById(‘f-links’).value=’’;
-document.getElementById(‘f-msg’).value=’’;
-document.getElementById(‘delBtn’).style.display=‘none’;
-mpInit([]);
-openModal(‘taskModal’);
-setTimeout(()=>document.getElementById(‘f-name’).focus(),100);
+function openAddModal(defaultCat='Marketing') {
+  document.getElementById('modalTitle').textContent='New Task';
+  document.getElementById('editId').value='';
+  document.getElementById('f-name').value='';
+  document.getElementById('f-dept').value='';
+  document.getElementById('f-cat').value=defaultCat;
+  document.getElementById('f-pri').value='Medium';
+  document.getElementById('f-status').value='To Do';
+  document.getElementById('f-rec').value='None';
+  document.getElementById('f-due').value=today();
+  document.getElementById('f-owner').value='Self';
+  document.getElementById('f-follow').value=today();
+  document.getElementById('f-next').value='';
+  document.getElementById('f-comm-sel').value='No';
+  document.getElementById('f-wait').value='';
+  document.getElementById('f-kpi').value='';
+  document.getElementById('f-effort').value='';
+  document.getElementById('f-risk').value='';
+  document.getElementById('f-vis').value='';
+  document.getElementById('f-rule').value='';
+  document.getElementById('f-output').value='';
+  document.getElementById('f-blocker').value='';
+  document.getElementById('f-notes').value='';
+  document.getElementById('f-links').value='';
+  document.getElementById('f-msg').value='';
+  document.getElementById('delBtn').style.display='none';
+  mpInit([]);
+  openModal('taskModal');
+  setTimeout(()=>document.getElementById('f-name').focus(),100);
 }
 
 function openEditModal(id) {
-const t=tasks.find(x=>x.id===id); if(!t) return;
-document.getElementById(‘modalTitle’).textContent=‘Edit Task’;
-document.getElementById(‘editId’).value=id;
-document.getElementById(‘f-name’).value=t.name;
-document.getElementById(‘f-dept’).value=t.department||’’;
-document.getElementById(‘f-cat’).value=t.category;
-document.getElementById(‘f-pri’).value=t.priority;
-document.getElementById(‘f-status’).value=t.status;
-document.getElementById(‘f-rec’).value=t.recurring;
-document.getElementById(‘f-due’).value=t.due||’’;
-document.getElementById(‘f-owner’).value=t.owner||‘Self’;
-document.getElementById(‘f-follow’).value=t.followUp||’’;
-document.getElementById(‘f-next’).value=t.nextAction||’’;
-document.getElementById(‘f-comm-sel’).value=t.communicationNeeded||‘No’;
-document.getElementById(‘f-wait’).value=t.waitingOn||’’;
-document.getElementById(‘f-kpi’).value=t.kpiImpact||’’;
-document.getElementById(‘f-effort’).value=t.effortLevel||’’;
-document.getElementById(‘f-risk’).value=t.riskLevel||’’;
-document.getElementById(‘f-vis’).value=t.managementVisibility||’’;
-document.getElementById(‘f-rule’).value=t.recurrenceRule||’’;
-document.getElementById(‘f-output’).value=t.expectedOutput||’’;
-document.getElementById(‘f-blocker’).value=t.blocker||’’;
-document.getElementById(‘f-notes’).value=t.quickNotes||’’;
-document.getElementById(‘f-links’).value=t.linksFiles||’’;
-document.getElementById(‘f-msg’).value=t.messageTemplate||defaultTaskMessage(t);
-document.getElementById(‘delBtn’).style.display=‘block’;
-mpInit(t.relatedPersons||[]);
-openModal(‘taskModal’);
+  const t=tasks.find(x=>x.id===id); if(!t) return;
+  document.getElementById('modalTitle').textContent='Edit Task';
+  document.getElementById('editId').value=id;
+  document.getElementById('f-name').value=t.name;
+  document.getElementById('f-dept').value=t.department||'';
+  document.getElementById('f-cat').value=t.category;
+  document.getElementById('f-pri').value=t.priority;
+  document.getElementById('f-status').value=t.status;
+  document.getElementById('f-rec').value=t.recurring;
+  document.getElementById('f-due').value=t.due||'';
+  document.getElementById('f-owner').value=t.owner||'Self';
+  document.getElementById('f-follow').value=t.followUp||'';
+  document.getElementById('f-next').value=t.nextAction||'';
+  document.getElementById('f-comm-sel').value=t.communicationNeeded||'No';
+  document.getElementById('f-wait').value=t.waitingOn||'';
+  document.getElementById('f-kpi').value=t.kpiImpact||'';
+  document.getElementById('f-effort').value=t.effortLevel||'';
+  document.getElementById('f-risk').value=t.riskLevel||'';
+  document.getElementById('f-vis').value=t.managementVisibility||'';
+  document.getElementById('f-rule').value=t.recurrenceRule||'';
+  document.getElementById('f-output').value=t.expectedOutput||'';
+  document.getElementById('f-blocker').value=t.blocker||'';
+  document.getElementById('f-notes').value=t.quickNotes||'';
+  document.getElementById('f-links').value=t.linksFiles||'';
+  document.getElementById('f-msg').value=t.messageTemplate||defaultTaskMessage(t);
+  document.getElementById('delBtn').style.display='block';
+  mpInit(t.relatedPersons||[]);
+  openModal('taskModal');
 }
 
 function saveTask() {
-const name=document.getElementById(‘f-name’).value.trim();
-if(!name){document.getElementById(‘f-name’).style.borderColor=‘var(–rose)’;return;}
-document.getElementById(‘f-name’).style.borderColor=’’;
-const editId=document.getElementById(‘editId’).value;
-const nowIso=new Date().toISOString();
+  const name=document.getElementById('f-name').value.trim();
+  if(!name){document.getElementById('f-name').style.borderColor='var(--rose)';return;}
+  document.getElementById('f-name').style.borderColor='';
+  const editId=document.getElementById('editId').value;
+  const nowIso=new Date().toISOString();
 
-// Sync mpSelected with latest contact data
-const syncedPersons = mpSelected.map(p => {
-const c = findContactByName(p.name);
-return c ? mpPersonObj(c) : p;
-});
+  // Sync mpSelected with latest contact data
+  const syncedPersons = mpSelected.map(p => {
+    const c = findContactByName(p.name);
+    return c ? mpPersonObj(c) : p;
+  });
 
-const commSel = document.getElementById(‘f-comm-sel’).value;
-const firstP = syncedPersons[0] || {};
+  const commSel = document.getElementById('f-comm-sel').value;
+  const firstP = syncedPersons[0] || {};
 
-const data={
-name,
-department:document.getElementById(‘f-dept’).value.trim(),
-category:document.getElementById(‘f-cat’).value,
-priority:document.getElementById(‘f-pri’).value,
-status:document.getElementById(‘f-status’).value,
-recurring:document.getElementById(‘f-rec’).value,
-due:document.getElementById(‘f-due’).value,
-owner:document.getElementById(‘f-owner’).value||‘Self’,
-// Multi
-relatedPersons: syncedPersons,
-// Legacy (first person)
-relatedPerson: firstP.name||’’,
-relatedPersonRole: firstP.role||’’,
-whatsapp: firstP.whatsapp||’’,
-email: firstP.email||’’,
-communicationNeeded: firstP.channel||commSel,
-// rest
-followUp:document.getElementById(‘f-follow’).value,
-nextAction:document.getElementById(‘f-next’).value.trim(),
-messageTemplate:document.getElementById(‘f-msg’).value.trim(),
-waitingOn:document.getElementById(‘f-wait’).value.trim(),
-kpiImpact:document.getElementById(‘f-kpi’).value.trim(),
-effortLevel:document.getElementById(‘f-effort’).value,
-riskLevel:document.getElementById(‘f-risk’).value,
-managementVisibility:document.getElementById(‘f-vis’).value,
-recurrenceRule:document.getElementById(‘f-rule’).value.trim(),
-expectedOutput:document.getElementById(‘f-output’).value.trim(),
-blocker:document.getElementById(‘f-blocker’).value.trim(),
-quickNotes:document.getElementById(‘f-notes’).value.trim(),
-linksFiles:document.getElementById(‘f-links’).value.trim(),
-updatedAt:nowIso
-};
-if(editId) {
-const idx=tasks.findIndex(x=>x.id===parseInt(editId));
-if(idx!==-1){tasks[idx]=normalizeTask({…tasks[idx],…data,done:data.status===‘Done’,completedAt:data.status===‘Done’?(tasks[idx].completedAt||nowIso):’’});}
-toast(‘Task updated ✎’,‘✎’);
-pushTask(tasks[idx>-1?idx:0]);
-} else {
-const t=normalizeTask({id:nextId++,…data,createdAt:nowIso,completedAt:data.status===‘Done’?nowIso:’’,commLog:[],done:data.status===‘Done’});
-tasks.unshift(t);
-toast(‘Task added ✓’,‘✓’);
-pushTask(t);
-}
-save(LS.tasks, tasks);
-closeModal(‘taskModal’);
-renderAll();
+  const data={
+    name,
+    department:document.getElementById('f-dept').value.trim(),
+    category:document.getElementById('f-cat').value,
+    priority:document.getElementById('f-pri').value,
+    status:document.getElementById('f-status').value,
+    recurring:document.getElementById('f-rec').value,
+    due:document.getElementById('f-due').value,
+    owner:document.getElementById('f-owner').value||'Self',
+    // Multi
+    relatedPersons: syncedPersons,
+    // Legacy (first person)
+    relatedPerson: firstP.name||'',
+    relatedPersonRole: firstP.role||'',
+    whatsapp: firstP.whatsapp||'',
+    email: firstP.email||'',
+    communicationNeeded: firstP.channel||commSel,
+    // rest
+    followUp:document.getElementById('f-follow').value,
+    nextAction:document.getElementById('f-next').value.trim(),
+    messageTemplate:document.getElementById('f-msg').value.trim(),
+    waitingOn:document.getElementById('f-wait').value.trim(),
+    kpiImpact:document.getElementById('f-kpi').value.trim(),
+    effortLevel:document.getElementById('f-effort').value,
+    riskLevel:document.getElementById('f-risk').value,
+    managementVisibility:document.getElementById('f-vis').value,
+    recurrenceRule:document.getElementById('f-rule').value.trim(),
+    expectedOutput:document.getElementById('f-output').value.trim(),
+    blocker:document.getElementById('f-blocker').value.trim(),
+    quickNotes:document.getElementById('f-notes').value.trim(),
+    linksFiles:document.getElementById('f-links').value.trim(),
+    updatedAt:nowIso
+  };
+  if(editId) {
+    const idx=tasks.findIndex(x=>x.id===parseInt(editId));
+    if(idx!==-1){tasks[idx]=normalizeTask({...tasks[idx],...data,done:data.status==='Done',completedAt:data.status==='Done'?(tasks[idx].completedAt||nowIso):''});}
+    toast('Task updated ✎','✎');
+    pushTask(tasks[idx>-1?idx:0]);
+  } else {
+    const t=normalizeTask({id:nextId++,...data,createdAt:nowIso,completedAt:data.status==='Done'?nowIso:'',commLog:[],done:data.status==='Done'});
+    tasks.unshift(t);
+    toast('Task added ✓','✓');
+    pushTask(t);
+  }
+  save(LS.tasks, tasks);
+  closeModal('taskModal');
+  renderAll();
 }
 
 function deleteTask() {
-const editId=parseInt(document.getElementById(‘editId’).value);
-if(!editId||!confirm(‘Delete this task?’)) return;
-tasks=tasks.filter(x=>x.id!==editId);
-save(LS.tasks, tasks);
-closeModal(‘taskModal’);
-renderAll();
-toast(‘Task deleted’,‘🗑’);
+  const editId=parseInt(document.getElementById('editId').value);
+  if(!editId||!confirm('Delete this task?')) return;
+  tasks=tasks.filter(x=>x.id!==editId);
+  save(LS.tasks, tasks);
+  closeModal('taskModal');
+  renderAll();
+  toast('Task deleted','🗑');
 }
 
 // Called after adding a new contact while task modal is open
 function mpRefreshAfterNewContact(name) {
-if(!_mpReturnToTask) return;
-_mpReturnToTask=false;
-const c=findContactByName(name);
-if(c && !mpSelected.some(p=>p.name===c.name)) {
-mpSelected.push(mpPersonObj(c));
-mpRenderChips();
-}
-mpFilter(document.getElementById(‘mp-search’)?.value||’’);
+  if(!_mpReturnToTask) return;
+  _mpReturnToTask=false;
+  const c=findContactByName(name);
+  if(c && !mpSelected.some(p=>p.name===c.name)) {
+    mpSelected.push(mpPersonObj(c));
+    mpRenderChips();
+  }
+  mpFilter(document.getElementById('mp-search')?.value||'');
 }
 
 // ════════════════════════════════════════
 // HABIT MODAL
 // ════════════════════════════════════════
-function openHabitModal(){openModal(‘habitModal’);setTimeout(()=>document.getElementById(‘h-name’).focus(),100);}
+function openHabitModal(){openModal('habitModal');setTimeout(()=>document.getElementById('h-name').focus(),100);}
 function saveHabit(){
-const name=document.getElementById(‘h-name’).value.trim();
-if(!name) return;
-habits.push({id:nextId++,name,color:document.getElementById(‘h-color’).value,streak:0,history:[]});
-save(LS.habits, habits);
-closeModal(‘habitModal’);
-renderHabits();
-toast(‘Habit added ✓’);
+  const name=document.getElementById('h-name').value.trim();
+  if(!name) return;
+  habits.push({id:nextId++,name,color:document.getElementById('h-color').value,streak:0,history:[]});
+  save(LS.habits, habits);
+  closeModal('habitModal');
+  renderHabits();
+  toast('Habit added ✓');
 }
 
 // ════════════════════════════════════════
 // GOAL MODAL
 // ════════════════════════════════════════
-function openGoalModal(){openModal(‘goalModal’);setTimeout(()=>document.getElementById(‘g-title’).focus(),100);}
+function openGoalModal(){openModal('goalModal');setTimeout(()=>document.getElementById('g-title').focus(),100);}
 function saveGoal(){
-const title=document.getElementById(‘g-title’).value.trim();
-if(!title) return;
-goals.push({id:nextId++,title,deadline:document.getElementById(‘g-dead’).value,progress:parseInt(document.getElementById(‘g-prog’).value)||0,notes:document.getElementById(‘g-notes’).value});
-save(LS.goals, goals);
-closeModal(‘goalModal’);
-renderGoals();
-toast(‘Goal added ✓’);
+  const title=document.getElementById('g-title').value.trim();
+  if(!title) return;
+  goals.push({id:nextId++,title,deadline:document.getElementById('g-dead').value,progress:parseInt(document.getElementById('g-prog').value)||0,notes:document.getElementById('g-notes').value});
+  save(LS.goals, goals);
+  closeModal('goalModal');
+  renderGoals();
+  toast('Goal added ✓');
 }
 function openGoalEdit(id){
-// For now just open goal modal for new; can expand later
+  // For now just open goal modal for new; can expand later
 }
 
 // ════════════════════════════════════════
 // LEARN MODAL
 // ════════════════════════════════════════
-function openLearnModal(){openModal(‘learnModal’);setTimeout(()=>document.getElementById(‘l-title’).focus(),100);}
+function openLearnModal(){openModal('learnModal');setTimeout(()=>document.getElementById('l-title').focus(),100);}
 function saveLearn(){
-const title=document.getElementById(‘l-title’).value.trim();
-if(!title) return;
-learn.push({id:nextId++,title,type:document.getElementById(‘l-type’).value,progress:parseInt(document.getElementById(‘l-prog’).value)||0});
-save(LS.learn, learn);
-closeModal(‘learnModal’);
-renderLearn();
-toast(‘Added ✓’);
+  const title=document.getElementById('l-title').value.trim();
+  if(!title) return;
+  learn.push({id:nextId++,title,type:document.getElementById('l-type').value,progress:parseInt(document.getElementById('l-prog').value)||0});
+  save(LS.learn, learn);
+  closeModal('learnModal');
+  renderLearn();
+  toast('Added ✓');
 }
 
 // ════════════════════════════════════════
 // CONTACT MODAL
 // ════════════════════════════════════════
 function openContactModal(){
-[‘c-name’,‘c-role’,‘c-dept’,‘c-wa’,‘c-email’,‘c-msg’,‘c-note’].forEach(id=>{const el=document.getElementById(id); if(el) el.value=’’;});
-const comm=document.getElementById(‘c-comm’); if(comm) comm.value=‘WhatsApp’;
-const color=document.getElementById(‘c-color’); if(color) color.value=‘gold’;
-openModal(‘contactModal’);
-setTimeout(()=>document.getElementById(‘c-name’).focus(),100);
+  ['c-name','c-role','c-dept','c-wa','c-email','c-msg','c-note'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
+  const comm=document.getElementById('c-comm'); if(comm) comm.value='WhatsApp';
+  const color=document.getElementById('c-color'); if(color) color.value='gold';
+  openModal('contactModal');
+  setTimeout(()=>document.getElementById('c-name').focus(),100);
 }
 function saveContact(){
-const name=document.getElementById(‘c-name’).value.trim();
-if(!name) return;
-const waVal=document.getElementById(‘c-wa’).value.trim();
-const emailVal=document.getElementById(‘c-email’).value.trim();
-if(!waVal && !emailVal){toast(‘Add WhatsApp or Email for this contact’,‘⚠’); return;}
-const nowIso=new Date().toISOString();
-const existingIdx=contacts.findIndex(c=>String(c.name||’’).trim().toLowerCase()===name.toLowerCase());
-const contact=normalizeContact({
-id: existingIdx>=0 ? contacts[existingIdx].id : nextId++,
-name,
-role:document.getElementById(‘c-role’).value.trim(),
-department:document.getElementById(‘c-dept’).value.trim(),
-whatsapp:waVal,
-email:emailVal,
-defaultCommunication:document.getElementById(‘c-comm’).value,
-defaultMessage:document.getElementById(‘c-msg’).value.trim(),
-color:document.getElementById(‘c-color’).value,
-note:document.getElementById(‘c-note’).value.trim(),
-createdAt: existingIdx>=0 ? contacts[existingIdx].createdAt : nowIso,
-updatedAt: nowIso
-});
-if(existingIdx>=0) contacts[existingIdx]=contact; else contacts.push(contact);
-save(LS.contacts, contacts);
-closeModal(‘contactModal’);
-renderContacts();
-refreshContactDropdown(name);
-pushContact(contact);
-toast(existingIdx>=0?‘Contact updated ✓’:‘Contact added ✓’);
-// If opened from task modal, add to mp picker
-mpRefreshAfterNewContact(name);
+  const name=document.getElementById('c-name').value.trim();
+  if(!name) return;
+  const waVal=document.getElementById('c-wa').value.trim();
+  const emailVal=document.getElementById('c-email').value.trim();
+  if(!waVal && !emailVal){toast('Add WhatsApp or Email for this contact','⚠'); return;}
+  const nowIso=new Date().toISOString();
+  const existingIdx=contacts.findIndex(c=>String(c.name||'').trim().toLowerCase()===name.toLowerCase());
+  const contact=normalizeContact({
+    id: existingIdx>=0 ? contacts[existingIdx].id : nextId++,
+    name,
+    role:document.getElementById('c-role').value.trim(),
+    department:document.getElementById('c-dept').value.trim(),
+    whatsapp:waVal,
+    email:emailVal,
+    defaultCommunication:document.getElementById('c-comm').value,
+    defaultMessage:document.getElementById('c-msg').value.trim(),
+    color:document.getElementById('c-color').value,
+    note:document.getElementById('c-note').value.trim(),
+    createdAt: existingIdx>=0 ? contacts[existingIdx].createdAt : nowIso,
+    updatedAt: nowIso
+  });
+  if(existingIdx>=0) contacts[existingIdx]=contact; else contacts.push(contact);
+  save(LS.contacts, contacts);
+  closeModal('contactModal');
+  renderContacts();
+  refreshContactDropdown(name);
+  pushContact(contact);
+  toast(existingIdx>=0?'Contact updated ✓':'Contact added ✓');
+  // If opened from task modal, add to mp picker
+  mpRefreshAfterNewContact(name);
 }
 
 // ════════════════════════════════════════
 // MODAL HELPERS
 // ════════════════════════════════════════
-function openModal(id){document.getElementById(id).classList.add(‘open’);}
-function closeModal(id){document.getElementById(id).classList.remove(‘open’);}
-document.querySelectorAll(’.overlay’).forEach(o=>o.addEventListener(‘click’,function(e){if(e.target===this)this.classList.remove(‘open’);}));
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');}));
 
 // ════════════════════════════════════════
 // VIEW SWITCHER
 // ════════════════════════════════════════
 function showView(v) {
-document.querySelectorAll(’.view’).forEach(x=>x.classList.remove(‘active’));
-const el=document.getElementById(‘view-’+v);
-if(el) el.classList.add(‘active’);
-document.querySelectorAll(’.tnav’).forEach(x=>x.classList.remove(‘active’));
-document.querySelectorAll(’.tnav’).forEach(x=>{if(x.textContent.toLowerCase().includes(v.substring(0,4)))x.classList.add(‘active’);});
-document.querySelectorAll(’.sb-item’).forEach(x=>x.classList.remove(‘active’));
-// Sync mobile bottom nav
-document.querySelectorAll(’.mnav-btn’).forEach(x=>x.classList.remove(‘active’));
-const mb=document.getElementById(‘mnav-’+v); if(mb) mb.classList.add(‘active’);
-// Scroll top on mobile
-if(window.innerWidth<=768) window.scrollTo({top:0,behavior:‘smooth’});
-if(v===‘weekly’){renderWeekGrid();renderWeekKPIs();renderWeekRecurring();renderMgmtReport();}
-if(v===‘tasks’) renderTaskTable();
-if(v===‘growth’){renderHabits();renderGoals();renderLearn();}
-if(v===‘network’) renderContacts();
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  const el=document.getElementById('view-'+v);
+  if(el) el.classList.add('active');
+  document.querySelectorAll('.tnav').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tnav').forEach(x=>{if(x.textContent.toLowerCase().includes(v.substring(0,4)))x.classList.add('active');});
+  document.querySelectorAll('.sb-item').forEach(x=>x.classList.remove('active'));
+  // Sync mobile bottom nav
+  document.querySelectorAll('.mnav-btn').forEach(x=>x.classList.remove('active'));
+  const mb=document.getElementById('mnav-'+v); if(mb) mb.classList.add('active');
+  // Scroll top on mobile
+  if(window.innerWidth<=768) window.scrollTo({top:0,behavior:'smooth'});
+  if(v==='weekly'){renderWeekGrid();renderWeekKPIs();renderWeekRecurring();renderMgmtReport();}
+  if(v==='tasks') renderTaskTable();
+  if(v==='growth'){renderHabits();renderGoals();renderLearn();}
+  if(v==='network') renderContacts();
 }
 
 function renderWeekKPIs() { updateKPIs(); }
@@ -2998,238 +2985,238 @@ function renderWeekKPIs() { updateKPIs(); }
 // GOOGLE SHEETS INTEGRATION
 // ════════════════════════════════════════
 function setSheetsStatus(state) {
-const dot=document.getElementById(‘sheets-dot’);
-const txt=document.getElementById(‘sheets-status’);
-if(state===‘connected’){dot.style.background=‘var(–green)’;dot.style.boxShadow=‘0 0 6px var(–green)’;if(txt)txt.textContent=‘Connected’;}
-else if(state===‘error’){dot.style.background=‘var(–rose)’;dot.style.boxShadow=’’;if(txt)txt.textContent=‘Error’;}
-else{dot.style.background=‘var(–td)’;dot.style.boxShadow=’’;if(txt)txt.textContent=‘Not connected’;}
+  const dot=document.getElementById('sheets-dot');
+  const txt=document.getElementById('sheets-status');
+  if(state==='connected'){dot.style.background='var(--green)';dot.style.boxShadow='0 0 6px var(--green)';if(txt)txt.textContent='Connected';}
+  else if(state==='error'){dot.style.background='var(--rose)';dot.style.boxShadow='';if(txt)txt.textContent='Error';}
+  else{dot.style.background='var(--td)';dot.style.boxShadow='';if(txt)txt.textContent='Not connected';}
 }
 
 function saveSheetUrl() {
-const url=document.getElementById(‘sheetsUrl’).value.trim();
-if(!url){toast(‘Please enter a URL’,‘⚠’);return;}
-sheetsUrl=url;
-localStorage.setItem(LS.sheetsUrl, url);
-setSheetsStatus(‘connected’);
-document.getElementById(‘setupBanner’).classList.add(‘hidden’);
-toast(‘Sheets URL saved ✓’);
-setText(‘connStatus’,‘✓ URL saved. Creating/refreshing Tasks and Related Persons sheets…’);
-// Force sheet setup after saving the URL so the Related Persons tab is created immediately.
-fetch(sheetsUrl+’?action=setup&_=’ + Date.now(), {method:‘GET’, cache:‘no-store’})
-.then(()=>loadFromSheets(false))
-.catch(()=>loadFromSheets(false));
+  const url=document.getElementById('sheetsUrl').value.trim();
+  if(!url){toast('Please enter a URL','⚠');return;}
+  sheetsUrl=url;
+  localStorage.setItem(LS.sheetsUrl, url);
+  setSheetsStatus('connected');
+  document.getElementById('setupBanner').classList.add('hidden');
+  toast('Sheets URL saved ✓');
+  setText('connStatus','✓ URL saved. Creating/refreshing Tasks and Related Persons sheets...');
+  // Force sheet setup after saving the URL so the Related Persons tab is created immediately.
+  fetch(sheetsUrl+'?action=setup&_=' + Date.now(), {method:'GET', cache:'no-store'})
+    .then(()=>loadFromSheets(false))
+    .catch(()=>loadFromSheets(false));
 }
 
 async function testConnection() {
-if(!sheetsUrl){toast(‘No URL saved yet’,‘⚠’);return;}
-setText(‘connStatus’,‘Testing connection…’);
-try {
-const r=await fetch(sheetsUrl+’?action=ping&_=’ + Date.now(), {method:‘GET’, cache:‘no-store’});
-const txt=await r.text();
-if(txt.includes(‘OK’) || txt.includes(‘Pro Life’)) {
-setSheetsStatus(‘connected’);
-setText(‘connStatus’,‘✓ Connection successful! Sheets is ready.’);
-toast(‘Connected to Google Sheets ✓’);
-loadFromSheets(false);
-} else {
-setSheetsStatus(‘error’);
-setText(‘connStatus’,‘Connection reached, but response was unexpected. Check deployment permissions.’);
-}
-} catch(e) {
-setSheetsStatus(‘error’);
-setText(‘connStatus’,‘Connection blocked or failed. Make sure Web App access = Anyone and deploy a NEW version.’);
-toast(‘Check Apps Script deployment’,‘⚠’);
-}
+  if(!sheetsUrl){toast('No URL saved yet','⚠');return;}
+  setText('connStatus','Testing connection...');
+  try {
+    const r=await fetch(sheetsUrl+'?action=ping&_=' + Date.now(), {method:'GET', cache:'no-store'});
+    const txt=await r.text();
+    if(txt.includes('OK') || txt.includes('Pro Life')) {
+      setSheetsStatus('connected');
+      setText('connStatus','✓ Connection successful! Sheets is ready.');
+      toast('Connected to Google Sheets ✓');
+      loadFromSheets(false);
+    } else {
+      setSheetsStatus('error');
+      setText('connStatus','Connection reached, but response was unexpected. Check deployment permissions.');
+    }
+  } catch(e) {
+    setSheetsStatus('error');
+    setText('connStatus','Connection blocked or failed. Make sure Web App access = Anyone and deploy a NEW version.');
+    toast('Check Apps Script deployment','⚠');
+  }
 }
 
 function postViaHiddenForm(payload) {
-if(!sheetsUrl) return false;
-try {
-let iframe=document.getElementById(‘sheetsPostFrame’);
-if(!iframe){
-iframe=document.createElement(‘iframe’);
-iframe.name=‘sheetsPostFrame’;
-iframe.id=‘sheetsPostFrame’;
-iframe.style.display=‘none’;
-document.body.appendChild(iframe);
-}
-const form=document.createElement(‘form’);
-form.method=‘POST’;
-form.action=sheetsUrl;
-form.target=‘sheetsPostFrame’;
-form.style.display=‘none’;
-const input=document.createElement(‘input’);
-input.type=‘hidden’;
-input.name=‘payload’;
-input.value=JSON.stringify(payload);
-form.appendChild(input);
-document.body.appendChild(form);
-form.submit();
-setTimeout(()=>form.remove(), 1500);
-return true;
-} catch(e) {
-console.warn(‘Hidden form POST failed’, e);
-return false;
-}
+  if(!sheetsUrl) return false;
+  try {
+    let iframe=document.getElementById('sheetsPostFrame');
+    if(!iframe){
+      iframe=document.createElement('iframe');
+      iframe.name='sheetsPostFrame';
+      iframe.id='sheetsPostFrame';
+      iframe.style.display='none';
+      document.body.appendChild(iframe);
+    }
+    const form=document.createElement('form');
+    form.method='POST';
+    form.action=sheetsUrl;
+    form.target='sheetsPostFrame';
+    form.style.display='none';
+    const input=document.createElement('input');
+    input.type='hidden';
+    input.name='payload';
+    input.value=JSON.stringify(payload);
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
+    setTimeout(()=>form.remove(), 1500);
+    return true;
+  } catch(e) {
+    console.warn('Hidden form POST failed', e);
+    return false;
+  }
 }
 
 async function postToSheets(payload) {
-if(!sheetsUrl) return false;
-// Hidden form is the most reliable from a local file:// HTML to Google Apps Script.
-// It avoids browser CORS blocks and sends payload as e.parameter.payload.
-const formOk = postViaHiddenForm(payload);
-try {
-await fetch(sheetsUrl, {
-method:‘POST’,
-mode:‘no-cors’,
-headers:{‘Content-Type’:‘text/plain;charset=utf-8’},
-body:JSON.stringify(payload)
-});
-} catch(e) {
-console.warn(‘Fetch POST fallback failed’, e);
-}
-return formOk;
+  if(!sheetsUrl) return false;
+  // Hidden form is the most reliable from a local file:// HTML to Google Apps Script.
+  // It avoids browser CORS blocks and sends payload as e.parameter.payload.
+  const formOk = postViaHiddenForm(payload);
+  try {
+    await fetch(sheetsUrl, {
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify(payload)
+    });
+  } catch(e) {
+    console.warn('Fetch POST fallback failed', e);
+  }
+  return formOk;
 }
 
 async function pushTask(task) {
-if(!sheetsUrl) return;
-const ok = await postToSheets({action:‘saveTask’, task: taskSheetRow(task)});
-if(ok) setSheetsStatus(‘connected’);
+  if(!sheetsUrl) return;
+  const ok = await postToSheets({action:'saveTask', task: taskSheetRow(task)});
+  if(ok) setSheetsStatus('connected');
 }
 
 async function pushContact(contact) {
-if(!sheetsUrl) return;
-const ok = await postToSheets({action:‘saveContact’, contact: contactSheetRow(contact)});
-if(ok) setSheetsStatus(‘connected’);
+  if(!sheetsUrl) return;
+  const ok = await postToSheets({action:'saveContact', contact: contactSheetRow(contact)});
+  if(ok) setSheetsStatus('connected');
 }
 
 async function pushToSheets() {
-if(!sheetsUrl){toast(‘Connect Sheets first’,‘⚠’);return;}
-setText(‘connStatus’,‘Pushing local tasks and contacts to Google Sheets…’);
-const ok = await postToSheets({action:‘bulkSave’, tasks: tasks.map(taskSheetRow), contacts: contacts.map(contactSheetRow)});
-if(ok) {
-setSheetsStatus(‘connected’);
-setText(‘connStatus’,‘✓ Push sent. Open the Sheet to confirm Tasks and Related Persons rows were written.’);
-toast(‘Data pushed to Sheets ✓’);
-setTimeout(()=>loadFromSheets(false), 1200);
-} else {
-setSheetsStatus(‘error’);
-setText(‘connStatus’,‘Push failed. Check Web App URL and deployment permissions.’);
-}
+  if(!sheetsUrl){toast('Connect Sheets first','⚠');return;}
+  setText('connStatus','Pushing local tasks and contacts to Google Sheets...');
+  const ok = await postToSheets({action:'bulkSave', tasks: tasks.map(taskSheetRow), contacts: contacts.map(contactSheetRow)});
+  if(ok) {
+    setSheetsStatus('connected');
+    setText('connStatus','✓ Push sent. Open the Sheet to confirm Tasks and Related Persons rows were written.');
+    toast('Data pushed to Sheets ✓');
+    setTimeout(()=>loadFromSheets(false), 1200);
+  } else {
+    setSheetsStatus('error');
+    setText('connStatus','Push failed. Check Web App URL and deployment permissions.');
+  }
 }
 
 async function loadFromSheets(showToast=true) {
-if(!sheetsUrl){ if(showToast) toast(‘Connect Sheets first’,‘⚠’); return; }
-try {
-if(showToast) setText(‘connStatus’,‘Loading tasks from Google Sheets…’);
-const r=await fetch(sheetsUrl+’?action=getAll&_=’ + Date.now(), {method:‘GET’, cache:‘no-store’});
-const d=await r.json();
-if(Array.isArray(d.tasks)){
-const loaded=d.tasks.filter(x => Object.values(x).some(v => String(v||’’).trim() !== ‘’)).map(normalizeTask);
-tasks=loaded;
-if(Array.isArray(d.contacts)) contacts=d.contacts.filter(x => Object.values(x).some(v => String(v||’’).trim() !== ‘’)).map(normalizeContact);
-save(LS.tasks, tasks);
-save(LS.contacts, contacts);
-const ids=[…tasks.map(t=>t.id), …contacts.map(c=>c.id)].filter(Boolean);
-nextId = ids.length ? Math.max(…ids)+1 : 1;
-renderAll();
-setSheetsStatus(‘connected’);
-if(showToast) toast(`Loaded ${tasks.length} tasks + ${contacts.length} persons ✓`,‘⬇’);
-setText(‘connStatus’,`✓ Synced. Loaded ${tasks.length} tasks and ${contacts.length} related persons from Google Sheets.`);
-} else {
-setText(‘connStatus’,‘Connected, but no tasks array was returned. Check Apps Script code.’);
-}
-} catch(e) {
-setSheetsStatus(‘error’);
-if(showToast) toast(‘Could not load from Sheets’,‘⚠’);
-setText(‘connStatus’,‘Could not read from Sheets. Check Web App URL, deployment access, and redeploy after code changes.’);
-}
+  if(!sheetsUrl){ if(showToast) toast('Connect Sheets first','⚠'); return; }
+  try {
+    if(showToast) setText('connStatus','Loading tasks from Google Sheets...');
+    const r=await fetch(sheetsUrl+'?action=getAll&_=' + Date.now(), {method:'GET', cache:'no-store'});
+    const d=await r.json();
+    if(Array.isArray(d.tasks)){
+      const loaded=d.tasks.filter(x => Object.values(x).some(v => String(v||'').trim() !== '')).map(normalizeTask);
+      tasks=loaded;
+      if(Array.isArray(d.contacts)) contacts=d.contacts.filter(x => Object.values(x).some(v => String(v||'').trim() !== '')).map(normalizeContact);
+      save(LS.tasks, tasks);
+      save(LS.contacts, contacts);
+      const ids=[...tasks.map(t=>t.id), ...contacts.map(c=>c.id)].filter(Boolean);
+      nextId = ids.length ? Math.max(...ids)+1 : 1;
+      renderAll();
+      setSheetsStatus('connected');
+      if(showToast) toast(`Loaded ${tasks.length} tasks + ${contacts.length} persons ✓`,'⬇');
+      setText('connStatus',`✓ Synced. Loaded ${tasks.length} tasks and ${contacts.length} related persons from Google Sheets.`);
+    } else {
+      setText('connStatus','Connected, but no tasks array was returned. Check Apps Script code.');
+    }
+  } catch(e) {
+    setSheetsStatus('error');
+    if(showToast) toast('Could not load from Sheets','⚠');
+    setText('connStatus','Could not read from Sheets. Check Web App URL, deployment access, and redeploy after code changes.');
+  }
 }
 
 // ════════════════════════════════════════
 // APPS SCRIPT CODE
 // ════════════════════════════════════════
 function injectAppsScript() {
-const code=`const TASKS_SHEET = “Tasks”;
-const CONTACTS_SHEET = “Related Persons”;
+  const code=`const TASKS_SHEET = "Tasks";
+const CONTACTS_SHEET = "Related Persons";
 const TASK_HEADERS = [
-“Task ID”,“Task Name”,“Department”,“Category”,“Priority”,“Status”,“Due Date”,“Follow-up Date”,“Owner”,
-“Related Person”,“Related Person Role”,“WhatsApp Number”,“WhatsApp Link”,“Email”,
-“Related Persons IDs”,“Related Persons Names”,“Related Persons Roles”,“Related Persons WhatsApp Numbers”,“Related Persons Emails”,“Communication Channels”,
-“Next Action”,“Communication Needed”,“Message Template”,“Last Follow-up”,“Last Response”,“Waiting On”,“KPI Impact”,“Effort Level”,“Risk Level”,“Management Visibility”,“Recurring”,“Recurrence Rule”,“Expected Output”,“Blocker”,“Quick Notes”,“Links / Files”,“Created Date”,“Updated Date”,“Completed Date”
+  "Task ID","Task Name","Department","Category","Priority","Status","Due Date","Follow-up Date","Owner",
+  "Related Person","Related Person Role","WhatsApp Number","WhatsApp Link","Email",
+  "Related Persons IDs","Related Persons Names","Related Persons Roles","Related Persons WhatsApp Numbers","Related Persons Emails","Communication Channels",
+  "Next Action","Communication Needed","Message Template","Last Follow-up","Last Response","Waiting On","KPI Impact","Effort Level","Risk Level","Management Visibility","Recurring","Recurrence Rule","Expected Output","Blocker","Quick Notes","Links / Files","Created Date","Updated Date","Completed Date"
 ];
 const CONTACT_HEADERS = [
-“Person ID”,“Person Name”,“Role”,“Department”,“WhatsApp Number”,“WhatsApp Link”,“Email”,“Default Communication”,“Default Message Template”,“Notes”,“Color”,“Created Date”,“Updated Date”
+  "Person ID","Person Name","Role","Department","WhatsApp Number","WhatsApp Link","Email","Default Communication","Default Message Template","Notes","Color","Created Date","Updated Date"
 ];
 
 function doGet(e) {
-const action = (e && e.parameter && e.parameter.action) || “”;
-if (action === “ping”) return jsonOutput({success:true, message:“OK”});
-if (action === “getTasks”) return getTasks();
-if (action === “getContacts”) return getContacts();
-if (action === “getAll”) return getAll();
-if (action === “setup”) { setupSheets(); return jsonOutput({success:true, message:“Sheets ready”}); }
-return jsonOutput({success:true, message:“Pro Life OS API is running”});
+  const action = (e && e.parameter && e.parameter.action) || "";
+  if (action === "ping") return jsonOutput({success:true, message:"OK"});
+  if (action === "getTasks") return getTasks();
+  if (action === "getContacts") return getContacts();
+  if (action === "getAll") return getAll();
+  if (action === "setup") { setupSheets(); return jsonOutput({success:true, message:"Sheets ready"}); }
+  return jsonOutput({success:true, message:"Pro Life OS API is running"});
 }
 
 function doPost(e) {
-try {
-let raw = “{}”;
-if (e && e.parameter && e.parameter.payload) raw = e.parameter.payload;
-else if (e && e.postData && e.postData.contents) raw = e.postData.contents;
-const body = JSON.parse(raw || “{}”);
-if (body.action === “bulkSave”) {
-bulkSave(body.tasks || [], body.contacts || []);
-} else if (body.action === “saveTask”) {
-saveTask(body.task || body);
-} else if (body.action === “saveContact”) {
-saveContact(body.contact || body);
-} else {
-saveTask(body.task || body);
-}
-return jsonOutput({success:true});
-} catch(err) {
-return jsonOutput({success:false, error:String(err && err.message ? err.message : err)});
-}
+  try {
+    let raw = "{}";
+    if (e && e.parameter && e.parameter.payload) raw = e.parameter.payload;
+    else if (e && e.postData && e.postData.contents) raw = e.postData.contents;
+    const body = JSON.parse(raw || "{}");
+    if (body.action === "bulkSave") {
+      bulkSave(body.tasks || [], body.contacts || []);
+    } else if (body.action === "saveTask") {
+      saveTask(body.task || body);
+    } else if (body.action === "saveContact") {
+      saveContact(body.contact || body);
+    } else {
+      saveTask(body.task || body);
+    }
+    return jsonOutput({success:true});
+  } catch(err) {
+    return jsonOutput({success:false, error:String(err && err.message ? err.message : err)});
+  }
 }
 
 function jsonOutput(obj) {
-return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
 
 function setupSheets() {
-ensureHeaders(getSheet(TASKS_SHEET), TASK_HEADERS);
-ensureHeaders(getSheet(CONTACTS_SHEET), CONTACT_HEADERS);
+  ensureHeaders(getSheet(TASKS_SHEET), TASK_HEADERS);
+  ensureHeaders(getSheet(CONTACTS_SHEET), CONTACT_HEADERS);
 }
 
 function getSheet(name) {
-const ss = SpreadsheetApp.getActiveSpreadsheet();
-let sheet = ss.getSheetByName(name);
-if (!sheet) sheet = ss.insertSheet(name);
-return sheet;
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName(name);
+  if (!sheet) sheet = ss.insertSheet(name);
+  return sheet;
 }
 
 function ensureHeaders(sheet, headers) {
-sheet.getRange(1,1,1,headers.length).setValues([headers]);
-sheet.setFrozenRows(1);
+  sheet.getRange(1,1,1,headers.length).setValues([headers]);
+  sheet.setFrozenRows(1);
 }
 
-function cleanPhone(n) { return String(n || ‘’).replace(/[^0-9]/g,’’).replace(/^00/,’’); }
+function cleanPhone(n) { return String(n || '').replace(/[^0-9]/g,'').replace(/^00/,''); }
 function formatCell(v) {
-if (v instanceof Date) return Utilities.formatDate(v, Session.getScriptTimeZone(), ‘yyyy-MM-dd’);
-return v;
+  if (v instanceof Date) return Utilities.formatDate(v, Session.getScriptTimeZone(), 'yyyy-MM-dd');
+  return v;
 }
 function sheetToObjects(sheetName, headers) {
-const sheet = getSheet(sheetName);
-ensureHeaders(sheet, headers);
-const data = sheet.getDataRange().getValues();
-if (data.length <= 1) return [];
-const hs = data[0];
-return data.slice(1).filter(r => r.some(Boolean)).map(row => {
-const obj = {};
-hs.forEach((h, i) => obj[h] = formatCell(row[i]));
-return obj;
-});
+  const sheet = getSheet(sheetName);
+  ensureHeaders(sheet, headers);
+  const data = sheet.getDataRange().getValues();
+  if (data.length <= 1) return [];
+  const hs = data[0];
+  return data.slice(1).filter(r => r.some(Boolean)).map(row => {
+    const obj = {};
+    hs.forEach((h, i) => obj[h] = formatCell(row[i]));
+    return obj;
+  });
 }
 
 function getAll(){ return jsonOutput({success:true, tasks:sheetToObjects(TASKS_SHEET,TASK_HEADERS), contacts:sheetToObjects(CONTACTS_SHEET,CONTACT_HEADERS)}); }
@@ -3237,110 +3224,110 @@ function getTasks(){ return jsonOutput({success:true, tasks:sheetToObjects(TASKS
 function getContacts(){ return jsonOutput({success:true, contacts:sheetToObjects(CONTACTS_SHEET,CONTACT_HEADERS)}); }
 
 function makeTaskId(raw) {
-raw = String(raw || ‘’).trim();
-if (raw) return raw;
-const sheet = getSheet(TASKS_SHEET);
-const last = Math.max(sheet.getLastRow() - 1, 0) + 1;
-return ‘TASK-’ + String(last).padStart(3,‘0’);
+  raw = String(raw || '').trim();
+  if (raw) return raw;
+  const sheet = getSheet(TASKS_SHEET);
+  const last = Math.max(sheet.getLastRow() - 1, 0) + 1;
+  return 'TASK-' + String(last).padStart(3,'0');
 }
 function makePersonId(raw) {
-raw = String(raw || ‘’).trim();
-if (raw) return raw;
-const sheet = getSheet(CONTACTS_SHEET);
-const last = Math.max(sheet.getLastRow() - 1, 0) + 1;
-return ‘PERSON-’ + String(last).padStart(3,‘0’);
+  raw = String(raw || '').trim();
+  if (raw) return raw;
+  const sheet = getSheet(CONTACTS_SHEET);
+  const last = Math.max(sheet.getLastRow() - 1, 0) + 1;
+  return 'PERSON-' + String(last).padStart(3,'0');
 }
 
 function getVal(obj, col, aliases) {
-const keys = aliases[col] || [col, col.toLowerCase()];
-for (let i=0;i<keys.length;i++) if (obj[keys[i]] !== undefined && obj[keys[i]] !== null) return obj[keys[i]];
-return ‘’;
+  const keys = aliases[col] || [col, col.toLowerCase()];
+  for (let i=0;i<keys.length;i++) if (obj[keys[i]] !== undefined && obj[keys[i]] !== null) return obj[keys[i]];
+  return '';
 }
 const TASK_ALIASES = {
-“Task ID”:[“Task ID”,“id”], “Task Name”:[“Task Name”,“name”,“task”], “Due Date”:[“Due Date”,“due”], “Follow-up Date”:[“Follow-up Date”,“followUp”],
-“Related Person”:[“Related Person”,“relatedPerson”], “Related Person Role”:[“Related Person Role”,“relatedPersonRole”], “WhatsApp Number”:[“WhatsApp Number”,“whatsapp”],
-“WhatsApp Link”:[“WhatsApp Link”,“whatsappLink”], “Email”:[“Email”,“email”], “Next Action”:[“Next Action”,“nextAction”], “Communication Needed”:[“Communication Needed”,“communicationNeeded”],
-“Message Template”:[“Message Template”,“messageTemplate”], “Last Follow-up”:[“Last Follow-up”,“lastFollowUp”], “Last Response”:[“Last Response”,“lastResponse”],
-“Waiting On”:[“Waiting On”,“waitingOn”], “KPI Impact”:[“KPI Impact”,“kpiImpact”], “Effort Level”:[“Effort Level”,“effortLevel”],
-“Risk Level”:[“Risk Level”,“riskLevel”], “Management Visibility”:[“Management Visibility”,“managementVisibility”], “Recurrence Rule”:[“Recurrence Rule”,“recurrenceRule”],
-“Expected Output”:[“Expected Output”,“expectedOutput”], “Quick Notes”:[“Quick Notes”,“quickNotes”], “Links / Files”:[“Links / Files”,“linksFiles”],
-“Created Date”:[“Created Date”,“createdAt”], “Updated Date”:[“Updated Date”,“updatedAt”], “Completed Date”:[“Completed Date”,“completedAt”]
+  "Task ID":["Task ID","id"], "Task Name":["Task Name","name","task"], "Due Date":["Due Date","due"], "Follow-up Date":["Follow-up Date","followUp"],
+  "Related Person":["Related Person","relatedPerson"], "Related Person Role":["Related Person Role","relatedPersonRole"], "WhatsApp Number":["WhatsApp Number","whatsapp"],
+  "WhatsApp Link":["WhatsApp Link","whatsappLink"], "Email":["Email","email"], "Next Action":["Next Action","nextAction"], "Communication Needed":["Communication Needed","communicationNeeded"],
+  "Message Template":["Message Template","messageTemplate"], "Last Follow-up":["Last Follow-up","lastFollowUp"], "Last Response":["Last Response","lastResponse"],
+  "Waiting On":["Waiting On","waitingOn"], "KPI Impact":["KPI Impact","kpiImpact"], "Effort Level":["Effort Level","effortLevel"],
+  "Risk Level":["Risk Level","riskLevel"], "Management Visibility":["Management Visibility","managementVisibility"], "Recurrence Rule":["Recurrence Rule","recurrenceRule"],
+  "Expected Output":["Expected Output","expectedOutput"], "Quick Notes":["Quick Notes","quickNotes"], "Links / Files":["Links / Files","linksFiles"],
+  "Created Date":["Created Date","createdAt"], "Updated Date":["Updated Date","updatedAt"], "Completed Date":["Completed Date","completedAt"]
 };
 const CONTACT_ALIASES = {
-“Person ID”:[“Person ID”,“id”], “Person Name”:[“Person Name”,“name”,“Name”], “Role”:[“Role”,“role”], “Department”:[“Department”,“department”],
-“WhatsApp Number”:[“WhatsApp Number”,“whatsapp”,“whatsappNumber”], “WhatsApp Link”:[“WhatsApp Link”,“whatsappLink”], “Email”:[“Email”,“email”],
-“Default Communication”:[“Default Communication”,“defaultCommunication”,“Default Send Method”], “Default Message Template”:[“Default Message Template”,“defaultMessage”],
-“Notes”:[“Notes”,“note”,“Quick Notes”], “Color”:[“Color”,“color”], “Created Date”:[“Created Date”,“createdAt”], “Updated Date”:[“Updated Date”,“updatedAt”]
+  "Person ID":["Person ID","id"], "Person Name":["Person Name","name","Name"], "Role":["Role","role"], "Department":["Department","department"],
+  "WhatsApp Number":["WhatsApp Number","whatsapp","whatsappNumber"], "WhatsApp Link":["WhatsApp Link","whatsappLink"], "Email":["Email","email"],
+  "Default Communication":["Default Communication","defaultCommunication","Default Send Method"], "Default Message Template":["Default Message Template","defaultMessage"],
+  "Notes":["Notes","note","Quick Notes"], "Color":["Color","color"], "Created Date":["Created Date","createdAt"], "Updated Date":["Updated Date","updatedAt"]
 };
 
 function taskVal(task, col) {
-if (col === “Task ID”) return makeTaskId(getVal(task, col, TASK_ALIASES));
-if (col === “WhatsApp Link”) { const explicit=getVal(task,col,TASK_ALIASES); const wa=getVal(task,“WhatsApp Number”,TASK_ALIASES); return explicit || (cleanPhone(wa)?‘https://wa.me/’+cleanPhone(wa):’’); }
-if (col === “Created Date”) return getVal(task,col,TASK_ALIASES) || new Date().toISOString();
-if (col === “Updated Date”) return new Date().toISOString();
-if (col === “Completed Date”) { const st=String(getVal(task,“Status”,TASK_ALIASES)||’’).toLowerCase(); return getVal(task,col,TASK_ALIASES) || ((st===‘done’||st===‘completed’)?new Date().toISOString():’’); }
-return getVal(task,col,TASK_ALIASES);
+  if (col === "Task ID") return makeTaskId(getVal(task, col, TASK_ALIASES));
+  if (col === "WhatsApp Link") { const explicit=getVal(task,col,TASK_ALIASES); const wa=getVal(task,"WhatsApp Number",TASK_ALIASES); return explicit || (cleanPhone(wa)?'https://wa.me/'+cleanPhone(wa):''); }
+  if (col === "Created Date") return getVal(task,col,TASK_ALIASES) || new Date().toISOString();
+  if (col === "Updated Date") return new Date().toISOString();
+  if (col === "Completed Date") { const st=String(getVal(task,"Status",TASK_ALIASES)||'').toLowerCase(); return getVal(task,col,TASK_ALIASES) || ((st==='done'||st==='completed')?new Date().toISOString():''); }
+  return getVal(task,col,TASK_ALIASES);
 }
 function contactVal(c, col) {
-if (col === “Person ID”) return makePersonId(getVal(c, col, CONTACT_ALIASES));
-if (col === “WhatsApp Link”) { const explicit=getVal(c,col,CONTACT_ALIASES); const wa=getVal(c,“WhatsApp Number”,CONTACT_ALIASES); return explicit || (cleanPhone(wa)?‘https://wa.me/’+cleanPhone(wa):’’); }
-if (col === “Created Date”) return getVal(c,col,CONTACT_ALIASES) || new Date().toISOString();
-if (col === “Updated Date”) return new Date().toISOString();
-return getVal(c,col,CONTACT_ALIASES);
+  if (col === "Person ID") return makePersonId(getVal(c, col, CONTACT_ALIASES));
+  if (col === "WhatsApp Link") { const explicit=getVal(c,col,CONTACT_ALIASES); const wa=getVal(c,"WhatsApp Number",CONTACT_ALIASES); return explicit || (cleanPhone(wa)?'https://wa.me/'+cleanPhone(wa):''); }
+  if (col === "Created Date") return getVal(c,col,CONTACT_ALIASES) || new Date().toISOString();
+  if (col === "Updated Date") return new Date().toISOString();
+  return getVal(c,col,CONTACT_ALIASES);
 }
 
 function deleteDuplicateRowsById(sheetName, headers, idCol) {
-const sheet = getSheet(sheetName);
-ensureHeaders(sheet, headers);
-const lastRow = sheet.getLastRow();
-if (lastRow <= 2) return;
-const values = sheet.getRange(2, 1, lastRow - 1, headers.length).getValues();
-const seen = {};
-const rowsToDelete = [];
-for (let i = values.length - 1; i >= 0; i–) {
-const id = String(values[i][idCol] || ‘’).trim();
-if (!id) continue;
-if (seen[id]) rowsToDelete.push(i + 2);
-else seen[id] = true;
-}
-rowsToDelete.sort((a,b)=>b-a).forEach(r => sheet.deleteRow(r));
+  const sheet = getSheet(sheetName);
+  ensureHeaders(sheet, headers);
+  const lastRow = sheet.getLastRow();
+  if (lastRow <= 2) return;
+  const values = sheet.getRange(2, 1, lastRow - 1, headers.length).getValues();
+  const seen = {};
+  const rowsToDelete = [];
+  for (let i = values.length - 1; i >= 0; i--) {
+    const id = String(values[i][idCol] || '').trim();
+    if (!id) continue;
+    if (seen[id]) rowsToDelete.push(i + 2);
+    else seen[id] = true;
+  }
+  rowsToDelete.sort((a,b)=>b-a).forEach(r => sheet.deleteRow(r));
 }
 
 function upsertById(sheetName, headers, row, idCol) {
-const sheet = getSheet(sheetName);
-ensureHeaders(sheet, headers);
-const id = String(row[idCol] || ‘’).trim();
-if (!id) return;
-const lastRow = sheet.getLastRow();
-if (lastRow < 2) { sheet.appendRow(row); return; }
-const ids = sheet.getRange(2, idCol + 1, lastRow - 1, 1).getValues().map(r => String(r[0] || ‘’).trim());
-const matchedRows = [];
-ids.forEach((x, i) => { if (x === id) matchedRows.push(i + 2); });
-if (matchedRows.length) {
-sheet.getRange(matchedRows[0], 1, 1, row.length).setValues([row]);
-matchedRows.slice(1).sort((a,b)=>b-a).forEach(r => sheet.deleteRow(r));
-} else {
-sheet.appendRow(row);
-}
+  const sheet = getSheet(sheetName);
+  ensureHeaders(sheet, headers);
+  const id = String(row[idCol] || '').trim();
+  if (!id) return;
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) { sheet.appendRow(row); return; }
+  const ids = sheet.getRange(2, idCol + 1, lastRow - 1, 1).getValues().map(r => String(r[0] || '').trim());
+  const matchedRows = [];
+  ids.forEach((x, i) => { if (x === id) matchedRows.push(i + 2); });
+  if (matchedRows.length) {
+    sheet.getRange(matchedRows[0], 1, 1, row.length).setValues([row]);
+    matchedRows.slice(1).sort((a,b)=>b-a).forEach(r => sheet.deleteRow(r));
+  } else {
+    sheet.appendRow(row);
+  }
 }
 
 function saveTask(task) { if (!task) return; upsertById(TASKS_SHEET, TASK_HEADERS, TASK_HEADERS.map(h=>taskVal(task,h)), 0); }
 function saveContact(contact) { if (!contact) return; upsertById(CONTACTS_SHEET, CONTACT_HEADERS, CONTACT_HEADERS.map(h=>contactVal(contact,h)), 0); }
 function bulkSave(tasks, contacts) {
-setupSheets();
-deleteDuplicateRowsById(TASKS_SHEET, TASK_HEADERS, 0);
-deleteDuplicateRowsById(CONTACTS_SHEET, CONTACT_HEADERS, 0);
-(tasks || []).forEach(saveTask);
-(contacts || []).forEach(saveContact);
+  setupSheets();
+  deleteDuplicateRowsById(TASKS_SHEET, TASK_HEADERS, 0);
+  deleteDuplicateRowsById(CONTACTS_SHEET, CONTACT_HEADERS, 0);
+  (tasks || []).forEach(saveTask);
+  (contacts || []).forEach(saveContact);
 }`;
 
-const el=document.getElementById(‘appsScriptCode’);
-if(el) el.textContent=code;
+  const el=document.getElementById('appsScriptCode');
+  if(el) el.textContent=code;
 }
 
 function copyScript() {
-const code=document.getElementById(‘appsScriptCode’).textContent;
-navigator.clipboard.writeText(code).then(()=>toast(‘Code copied ✓’,‘📋’)).catch(()=>toast(‘Select and copy manually’));
+  const code=document.getElementById('appsScriptCode').textContent;
+  navigator.clipboard.writeText(code).then(()=>toast('Code copied ✓','📋')).catch(()=>toast('Select and copy manually'));
 }
 
 // ════════════════════════════════════════
@@ -3348,6 +3335,5 @@ navigator.clipboard.writeText(code).then(()=>toast(‘Code copied ✓’,‘📋
 // ════════════════════════════════════════
 init();
 </script>
-
 </body>
 </html>
