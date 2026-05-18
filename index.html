@@ -3337,6 +3337,8 @@ async function loadFromSheets(showToast=true) {
 function injectAppsScript() {
   const code=`const TASKS_SHEET = "Tasks";
 const CONTACTS_SHEET = "Related Persons";
+const FAMILY_SHEET = "Family Members";
+const PERSONAL_TASKS_SHEET = "Personal Tasks";
 const TASK_HEADERS = [
   "Task ID","Task Name","Department","Category","Priority","Status","Due Date","Follow-up Date","Owner",
   "Related Person","Related Person Role","WhatsApp Number","WhatsApp Link","Email",
@@ -3345,6 +3347,12 @@ const TASK_HEADERS = [
 ];
 const CONTACT_HEADERS = [
   "Person ID","Person Name","Role","Department","WhatsApp Number","WhatsApp Link","Email","Default Communication","Default Message Template","Notes","Color","Created Date","Updated Date"
+];
+const FAMILY_HEADERS = [
+  "ID","Name","Relation","Color","WhatsApp","WhatsApp Link","Email","Default Message","Notes","Created Date","Updated Date"
+];
+const PERSONAL_TASK_HEADERS = [
+  "ID","Name","Person ID","Person Name","Priority","Status","Due Date","Message","Notes","Created Date","Updated Date"
 ];
 
 function doGet(e) {
@@ -3392,15 +3400,6 @@ function doPost(e) {
 function jsonOutput(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
-
-const FAMILY_SHEET = "Family Members";
-const PERSONAL_TASKS_SHEET = "Personal Tasks";
-const FAMILY_HEADERS = [
-  "ID","Name","Relation","Color","WhatsApp","WhatsApp Link","Email","Default Message","Notes","Created Date","Updated Date"
-];
-const PERSONAL_TASK_HEADERS = [
-  "ID","Name","Person ID","Person Name","Priority","Status","Due Date","Message","Notes","Created Date","Updated Date"
-];
 
 function setupSheets() {
   ensureHeaders(getSheet(TASKS_SHEET), TASK_HEADERS);
