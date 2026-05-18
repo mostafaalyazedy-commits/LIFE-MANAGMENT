@@ -806,6 +806,7 @@ body{
     <button class="tnav" onclick="showView('campaigns')">Campaigns</button>
     <button class="tnav" onclick="showView('growth')">Growth</button>
     <button class="tnav" onclick="showView('network')">Network</button>
+    <button class="tnav" onclick="showView('personallife')" style="color:var(--rose);">🏠 Personal Life</button>
     <button class="tnav" onclick="showView('setup')">⚙ Setup</button>
   </div>
   <div class="topbar-right">
@@ -821,6 +822,9 @@ body{
   </button>
   <button class="mnav-btn" id="mnav-tasks" onclick="showView('tasks')">
     <span class="ico">≡</span><span>Tasks</span>
+  </button>
+  <button class="mnav-btn" id="mnav-personallife" onclick="showView('personallife')">
+    <span class="ico">🏠</span><span>Family</span>
   </button>
   <button class="mnav-btn" id="mnav-network" onclick="showView('network')">
     <span class="ico">🤝</span><span>Contacts</span>
@@ -859,6 +863,7 @@ body{
   <div class="sb-div"></div>
   <div class="sb-section">
     <div class="sb-label">Personal</div>
+    <div class="sb-item" onclick="showView('personallife')" style="color:var(--rose);">🏠 &nbsp;Personal Life <span class="sb-count" id="sb-personal-count">—</span></div>
     <div class="sb-item" onclick="showView('growth')">🌱 &nbsp;Growth</div>
     <div class="sb-item" onclick="showView('network')">🤝 &nbsp;Network</div>
     <div class="sb-item" onclick="showView('setup')">⚙ &nbsp;Sheets Setup</div>
@@ -1312,6 +1317,98 @@ body{
         <div style="background:var(--s2);border-radius:var(--r);padding:8px 10px;font-size:11px;"><div style="color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:9px;margin-bottom:3px;">Habits Sheet</div>id · name · color · streak · history (dates)</div>
         <div style="background:var(--s2);border-radius:var(--r);padding:8px 10px;font-size:11px;"><div style="color:var(--violet);font-family:'JetBrains Mono',monospace;font-size:9px;margin-bottom:3px;">Goals Sheet</div>id · title · deadline · progress · notes</div>
         <div style="background:var(--s2);border-radius:var(--r);padding:8px 10px;font-size:11px;"><div style="color:var(--blue);font-family:'JetBrains Mono',monospace;font-size:9px;margin-bottom:3px;">Related Persons Sheet</div>Person ID · Person Name · Role · Department · WhatsApp Number · WhatsApp Link · Email · Default Send Method</div>
+        <div style="background:var(--s2);border-radius:var(--r);padding:8px 10px;font-size:11px;"><div style="color:var(--rose);font-family:'JetBrains Mono',monospace;font-size:9px;margin-bottom:3px;">Family Members Sheet 🆕</div>ID · Name · Relation · Color · WhatsApp · Email · Default Message · Notes</div>
+        <div style="background:var(--s2);border-radius:var(--r);padding:8px 10px;font-size:11px;"><div style="color:var(--rose);font-family:'JetBrains Mono',monospace;font-size:9px;margin-bottom:3px;">Personal Tasks Sheet 🆕</div>ID · Name · Person ID · Person Name · Priority · Status · Due Date · Message · Notes</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PERSONAL LIFE ══════════════ -->
+<div class="view" id="view-personallife">
+  <div class="ph">
+    <div>
+      <div class="ph-title">Personal <em>Life</em></div>
+      <div class="ph-sub">Family · مراتي · أمي · أخواتي · وغيرهم</div>
+    </div>
+    <div class="ph-right">
+      <button class="btn btn-ghost" onclick="plLoadFromSheets()" title="مزامنة مع Google Sheets">⬇ Sync</button>
+      <button class="btn btn-ghost" onclick="openPersonalTaskModal()">+ مهمة</button>
+      <button class="btn btn-primary" onclick="openFamilyMemberModal()">+ شخص</button>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;">
+    <div class="kpi" style="--kc:var(--rose);"><div class="kpi-l">أفراد العيلة</div><div class="kpi-v" id="plKpiMembers">0</div><div class="kpi-s">في قاعدة البيانات</div></div>
+    <div class="kpi" style="--kc:var(--amber);"><div class="kpi-l">مهام مفتوحة</div><div class="kpi-v" id="plKpiOpen">0</div><div class="kpi-s">تحتاج متابعة</div></div>
+    <div class="kpi" style="--kc:var(--teal);"><div class="kpi-l">منجزة</div><div class="kpi-v" id="plKpiDone">0</div><div class="kpi-s">مهام مكتملة</div></div>
+    <div class="kpi" style="--kc:var(--rose);"><div class="kpi-l">متأخرة</div><div class="kpi-v" id="plKpiOverdue">0</div><div class="kpi-s">تحتاج اهتمام</div></div>
+  </div>
+
+  <div class="g21">
+    <div class="col">
+      <div class="panel">
+        <div class="panel-h"><div class="panel-t">👨‍👩‍👧‍👦 أفراد العيلة والمقربين</div><button class="btn btn-ghost btn-sm" onclick="openFamilyMemberModal()">+ إضافة</button></div>
+        <div class="panel-b" id="familyMembersList"><div style="color:var(--td);font-size:11px;text-align:center;padding:20px 0;">لم تضف أحد بعد. ابدأ بإضافة مراتك أو أمك أو أخواتك.</div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-h">
+          <div class="panel-t">📋 المهام الشخصية</div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <select class="fselect" id="plTaskFilter" onchange="renderPersonalTasks()" style="padding:4px 8px;font-size:11px;width:auto;">
+              <option value="all">الكل</option><option value="To Do">لم تبدأ</option><option value="In Progress">جاري</option><option value="Done">منجزة</option>
+            </select>
+            <button class="btn btn-ghost btn-sm" onclick="openPersonalTaskModal()">+ مهمة</button>
+          </div>
+        </div>
+        <div class="panel-b0 panel-scroll" id="personalTasksList"><div style="color:var(--td);font-size:11px;padding:16px;">لا توجد مهام بعد.</div></div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="panel">
+        <div class="panel-h"><div class="panel-t">💬 إرسال رسائل سريعة</div></div>
+        <div class="panel-b">
+          <div class="fg" style="margin-bottom:10px;">
+            <label class="flabel">اختر الشخص</label>
+            <select class="fselect" id="plSendPerson" onchange="plUpdateSendTarget()"><option value="">— اختر شخص —</option></select>
+          </div>
+          <div id="plSendTargetInfo" style="display:none;background:var(--s2);border:1px solid var(--b1);border-radius:var(--r);padding:10px;margin-bottom:10px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div id="plSendAvatar" style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;"></div>
+              <div><div id="plSendName" style="font-size:13px;font-weight:600;"></div><div id="plSendRole" style="font-size:10px;color:var(--tm);"></div><div id="plSendPhone" style="font-size:11px;color:var(--teal);font-family:'JetBrains Mono',monospace;"></div></div>
+            </div>
+          </div>
+          <div class="fg" style="margin-bottom:10px;">
+            <label class="flabel">الرسالة</label>
+            <textarea class="finput" id="plSendMsg" rows="4" placeholder="اكتب رسالتك هنا..."></textarea>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <button class="action-btn green" onclick="plSendWhatsApp()"><span>📱</span> واتساب</button>
+            <button class="action-btn gold" onclick="plCopyMsg()"><span>📋</span> نسخ الرسالة</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-h"><div class="panel-t">📡 إرسال جماعي</div></div>
+        <div class="panel-b">
+          <div class="fg" style="margin-bottom:10px;">
+            <label class="flabel">الرسالة الجماعية</label>
+            <textarea class="finput" id="plBroadcastMsg" rows="3" placeholder="مثال: رمضان كريم على الجميع 🌙"></textarea>
+          </div>
+          <div class="fg" style="margin-bottom:10px;">
+            <label class="flabel">أرسل لـ</label>
+            <div id="plBroadcastCheckboxes" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;"></div>
+          </div>
+          <button class="action-btn green" style="width:100%;justify-content:center;" onclick="plBroadcastWhatsApp()"><span>📱</span> فتح واتساب لكل شخص محدد</button>
+          <div style="font-size:10px;color:var(--td);margin-top:6px;text-align:center;">سيفتح تبويب واتساب منفصل لكل شخص</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-h"><div class="panel-t">⏰ مهام قريبة الموعد</div></div>
+        <div class="panel-b0 panel-scroll" id="plUpcomingTasks"><div style="color:var(--td);font-size:11px;padding:14px;">لا توجد مهام قريبة.</div></div>
       </div>
     </div>
   </div>
@@ -1319,6 +1416,71 @@ body{
 
 </div><!-- /main -->
 </div><!-- /shell -->
+
+<!-- ══ PERSONAL LIFE MODALS ══ -->
+<div class="overlay" id="familyMemberModal">
+  <div class="modal" style="width:500px;">
+    <div class="modal-h"><div class="modal-title" id="fmModalTitle">إضافة شخص</div><div class="modal-x" onclick="closeModal('familyMemberModal')">×</div></div>
+    <div class="modal-b">
+      <input type="hidden" id="fm-id">
+      <div class="fg"><label class="flabel">الاسم *</label><input class="finput" id="fm-name" placeholder="مثال: أم خالد / سارة / أختي منى"></div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">صلة القرابة</label>
+          <select class="fselect" id="fm-relation">
+            <option value="زوجة">زوجة</option><option value="أم">أم</option><option value="أب">أب</option><option value="أخ">أخ</option><option value="أخت">أخت</option><option value="ابن">ابن</option><option value="ابنة">ابنة</option><option value="صديق مقرب">صديق مقرب</option><option value="قريب">قريب</option><option value="آخر">آخر</option>
+          </select>
+        </div>
+        <div class="fg"><label class="flabel">اللون</label>
+          <select class="fselect" id="fm-color">
+            <option value="rose">وردي</option><option value="gold">ذهبي</option><option value="teal">أخضر فاتح</option><option value="blue">أزرق</option><option value="violet">بنفسجي</option><option value="green">أخضر</option>
+          </select>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">رقم الواتساب *</label><input class="finput" id="fm-wa" placeholder="+966XXXXXXXXX"></div>
+        <div class="fg"><label class="flabel">الإيميل (اختياري)</label><input class="finput" id="fm-email" placeholder="name@email.com"></div>
+      </div>
+      <div class="fg"><label class="flabel">رسالة افتراضية</label><textarea class="finput" id="fm-defaultmsg" rows="2" placeholder="مثال: السلام عليكم، كيف حالك؟"></textarea></div>
+      <div class="fg"><label class="flabel">ملاحظات</label><input class="finput" id="fm-notes" placeholder="أي ملاحظة مهمة"></div>
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-danger btn-sm" id="fmDelBtn" onclick="deleteFamilyMember()" style="display:none;margin-right:auto;">🗑 حذف</button>
+      <button class="btn btn-ghost" onclick="closeModal('familyMemberModal')">إلغاء</button>
+      <button class="btn btn-primary" onclick="saveFamilyMember()">💾 حفظ</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="personalTaskModal">
+  <div class="modal" style="width:500px;">
+    <div class="modal-h"><div class="modal-title" id="ptModalTitle">مهمة شخصية جديدة</div><div class="modal-x" onclick="closeModal('personalTaskModal')">×</div></div>
+    <div class="modal-b">
+      <input type="hidden" id="pt-id">
+      <div class="fg"><label class="flabel">اسم المهمة *</label><input class="finput" id="pt-name" placeholder="مثال: شراء هدية لمراتي / تذكير أمي بالدواء"></div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">متعلق بـ</label><select class="fselect" id="pt-person"><option value="">— عام —</option></select></div>
+        <div class="fg"><label class="flabel">الأولوية</label>
+          <select class="fselect" id="pt-priority">
+            <option value="Medium">متوسط</option><option value="High">عالي</option><option value="Critical">عاجل</option><option value="Low">منخفض</option>
+          </select>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flabel">الحالة</label>
+          <select class="fselect" id="pt-status"><option value="To Do">لم تبدأ</option><option value="In Progress">جاري</option><option value="Done">منجزة</option></select>
+        </div>
+        <div class="fg"><label class="flabel">تاريخ الاستحقاق</label><input class="finput" id="pt-due" type="date"></div>
+      </div>
+      <div class="fg"><label class="flabel">رسالة مرتبطة (اختياري)</label><textarea class="finput" id="pt-msg" rows="2" placeholder="نص الرسالة التي ستبعتها مع هذه المهمة..."></textarea></div>
+      <div class="fg"><label class="flabel">ملاحظات</label><input class="finput" id="pt-notes" placeholder="أي تفاصيل إضافية"></div>
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-danger btn-sm" id="ptDelBtn" onclick="deletePersonalTask()" style="display:none;margin-right:auto;">🗑 حذف</button>
+      <button class="btn btn-ghost" onclick="closeModal('personalTaskModal')">إلغاء</button>
+      <button class="btn btn-primary" onclick="savePersonalTask()">💾 حفظ</button>
+    </div>
+  </div>
+</div>
 
 
 
@@ -3092,12 +3254,18 @@ async function pushContact(contact) {
 
 async function pushToSheets() {
   if(!sheetsUrl){toast('Connect Sheets first','⚠');return;}
-  setText('connStatus','Pushing local tasks and contacts to Google Sheets...');
-  const ok = await postToSheets({action:'bulkSave', tasks: tasks.map(taskSheetRow), contacts: contacts.map(contactSheetRow)});
-  if(ok) {
+  setText('connStatus','Pushing local data to Google Sheets...');
+  const ok1 = await postToSheets({action:'bulkSave', tasks: tasks.map(taskSheetRow), contacts: contacts.map(contactSheetRow)});
+  // Push personal life data
+  const fam = loadFamilyMembers();
+  const pt = loadPersonalTasks();
+  if(fam.length || pt.length) {
+    await postToSheets({action:'bulkSavePersonalLife', members: fam, personalTasks: pt});
+  }
+  if(ok1) {
     setSheetsStatus('connected');
-    setText('connStatus','✓ Push sent. Open the Sheet to confirm Tasks and Related Persons rows were written.');
-    toast('Data pushed to Sheets ✓');
+    setText('connStatus','✓ Push sent. Tasks, Contacts, Family Members, and Personal Tasks are all synced.');
+    toast('All data pushed to Sheets ✓');
     setTimeout(()=>loadFromSheets(false), 1200);
   } else {
     setSheetsStatus('error');
@@ -3119,7 +3287,37 @@ async function loadFromSheets(showToast=true) {
       save(LS.contacts, contacts);
       const ids=[...tasks.map(t=>t.id), ...contacts.map(c=>c.id)].filter(Boolean);
       nextId = ids.length ? Math.max(...ids)+1 : 1;
+      // Load Personal Life data from Sheets
+      if(Array.isArray(d.members) && d.members.length) {
+        const fam = d.members.filter(x=>Object.values(x).some(v=>String(v||'').trim()!=='')).map(r=>({
+          id: r['ID']||r.id||'',
+          name: r['Name']||r.name||'',
+          relation: r['Relation']||r.relation||'',
+          color: r['Color']||r.color||'rose',
+          wa: r['WhatsApp']||r.wa||'',
+          email: r['Email']||r.email||'',
+          defaultmsg: r['Default Message']||r.defaultmsg||'',
+          notes: r['Notes']||r.notes||'',
+          createdAt: r['Created Date']||r.createdAt||''
+        })).filter(x=>x.id&&x.name);
+        saveFamilyMembers(fam);
+      }
+      if(Array.isArray(d.personalTasks) && d.personalTasks.length) {
+        const pt = d.personalTasks.filter(x=>Object.values(x).some(v=>String(v||'').trim()!=='')).map(r=>({
+          id: r['ID']||r.id||'',
+          name: r['Name']||r.name||'',
+          personId: r['Person ID']||r.personId||'',
+          priority: r['Priority']||r.priority||'Medium',
+          status: r['Status']||r.status||'To Do',
+          due: r['Due Date']||r.due||'',
+          msg: r['Message']||r.msg||'',
+          notes: r['Notes']||r.notes||'',
+          createdAt: r['Created Date']||r.createdAt||''
+        })).filter(x=>x.id&&x.name);
+        savePersonalTasks(pt);
+      }
       renderAll();
+      if(typeof renderFamilyMembers === 'function') { renderFamilyMembers(); renderPersonalTasks(); updatePersonalKPIs(); refreshPersonalSelects(); }
       setSheetsStatus('connected');
       if(showToast) toast(`Loaded ${tasks.length} tasks + ${contacts.length} persons ✓`,'⬇');
       setText('connStatus',`✓ Synced. Loaded ${tasks.length} tasks and ${contacts.length} related persons from Google Sheets.`);
@@ -3156,6 +3354,7 @@ function doGet(e) {
   if (action === "getContacts") return getContacts();
   if (action === "getAll") return getAll();
   if (action === "setup") { setupSheets(); return jsonOutput({success:true, message:"Sheets ready"}); }
+  if (action === "getPersonalLife") return getPersonalLife();
   return jsonOutput({success:true, message:"Pro Life OS API is running"});
 }
 
@@ -3171,6 +3370,16 @@ function doPost(e) {
       saveTask(body.task || body);
     } else if (body.action === "saveContact") {
       saveContact(body.contact || body);
+    } else if (body.action === "saveFamilyMember") {
+      saveFamilyMember(body.member || {});
+    } else if (body.action === "savePersonalTask") {
+      savePersonalTask(body.task || {});
+    } else if (body.action === "deleteFamilyMember") {
+      deleteById(FAMILY_SHEET, body.id || "");
+    } else if (body.action === "deletePersonalTask") {
+      deleteById(PERSONAL_TASKS_SHEET, body.id || "");
+    } else if (body.action === "bulkSavePersonalLife") {
+      bulkSavePersonalLife(body.members || [], body.personalTasks || []);
     } else {
       saveTask(body.task || body);
     }
@@ -3184,9 +3393,69 @@ function jsonOutput(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
 
+const FAMILY_SHEET = "Family Members";
+const PERSONAL_TASKS_SHEET = "Personal Tasks";
+const FAMILY_HEADERS = [
+  "ID","Name","Relation","Color","WhatsApp","WhatsApp Link","Email","Default Message","Notes","Created Date","Updated Date"
+];
+const PERSONAL_TASK_HEADERS = [
+  "ID","Name","Person ID","Person Name","Priority","Status","Due Date","Message","Notes","Created Date","Updated Date"
+];
+
 function setupSheets() {
   ensureHeaders(getSheet(TASKS_SHEET), TASK_HEADERS);
   ensureHeaders(getSheet(CONTACTS_SHEET), CONTACT_HEADERS);
+  ensureHeaders(getSheet(FAMILY_SHEET), FAMILY_HEADERS);
+  ensureHeaders(getSheet(PERSONAL_TASKS_SHEET), PERSONAL_TASK_HEADERS);
+}
+
+function getPersonalLife() {
+  return jsonOutput({
+    success: true,
+    members: sheetToObjects(FAMILY_SHEET, FAMILY_HEADERS),
+    personalTasks: sheetToObjects(PERSONAL_TASKS_SHEET, PERSONAL_TASK_HEADERS)
+  });
+}
+
+function saveFamilyMember(m) {
+  if (!m || !m.id) return;
+  const waClean = cleanPhone(m.wa || m.WhatsApp || "");
+  const row = [
+    m.id, m.name||"", m.relation||"", m.color||"",
+    m.wa||"", waClean ? "https://wa.me/"+waClean : "",
+    m.email||"", m.defaultmsg||"", m.notes||"",
+    m.createdAt || new Date().toISOString(), new Date().toISOString()
+  ];
+  upsertById(FAMILY_SHEET, FAMILY_HEADERS, row, 0);
+}
+
+function savePersonalTask(t) {
+  if (!t || !t.id) return;
+  const row = [
+    t.id, t.name||"", t.personId||"", t.personName||"",
+    t.priority||"Medium", t.status||"To Do", t.due||"",
+    t.msg||"", t.notes||"",
+    t.createdAt || new Date().toISOString(), new Date().toISOString()
+  ];
+  upsertById(PERSONAL_TASKS_SHEET, PERSONAL_TASK_HEADERS, row, 0);
+}
+
+function deleteById(sheetName, id) {
+  if (!id) return;
+  const sheet = getSheet(sheetName);
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return;
+  const ids = sheet.getRange(2, 1, lastRow-1, 1).getValues().map(r=>String(r[0]||"").trim());
+  for (let i = ids.length-1; i >= 0; i--) {
+    if (ids[i] === String(id).trim()) sheet.deleteRow(i+2);
+  }
+}
+
+function bulkSavePersonalLife(members, personalTasks) {
+  ensureHeaders(getSheet(FAMILY_SHEET), FAMILY_HEADERS);
+  ensureHeaders(getSheet(PERSONAL_TASKS_SHEET), PERSONAL_TASK_HEADERS);
+  (members||[]).forEach(saveFamilyMember);
+  (personalTasks||[]).forEach(savePersonalTask);
 }
 
 function getSheet(name) {
@@ -3219,7 +3488,7 @@ function sheetToObjects(sheetName, headers) {
   });
 }
 
-function getAll(){ return jsonOutput({success:true, tasks:sheetToObjects(TASKS_SHEET,TASK_HEADERS), contacts:sheetToObjects(CONTACTS_SHEET,CONTACT_HEADERS)}); }
+function getAll(){ return jsonOutput({success:true, tasks:sheetToObjects(TASKS_SHEET,TASK_HEADERS), contacts:sheetToObjects(CONTACTS_SHEET,CONTACT_HEADERS), members:sheetToObjects(FAMILY_SHEET,FAMILY_HEADERS), personalTasks:sheetToObjects(PERSONAL_TASKS_SHEET,PERSONAL_TASK_HEADERS)}); }
 function getTasks(){ return jsonOutput({success:true, tasks:sheetToObjects(TASKS_SHEET,TASK_HEADERS)}); }
 function getContacts(){ return jsonOutput({success:true, contacts:sheetToObjects(CONTACTS_SHEET,CONTACT_HEADERS)}); }
 
@@ -3331,9 +3600,361 @@ function copyScript() {
 }
 
 // ════════════════════════════════════════
+// PERSONAL LIFE MODULE
+// ════════════════════════════════════════
+
+const COLOR_MAP = {
+  rose: { bg: 'var(--rosed)', text: 'var(--rose)' },
+  gold: { bg: 'var(--goldd)', text: 'var(--gold)' },
+  teal: { bg: 'var(--teald)', text: 'var(--teal)' },
+  blue: { bg: 'var(--blued)', text: 'var(--blue)' },
+  violet: { bg: 'var(--violetd)', text: 'var(--violet)' },
+  green: { bg: 'var(--greend)', text: 'var(--green)' },
+};
+
+function loadFamilyMembers() { try { return JSON.parse(localStorage.getItem('pl_family') || '[]'); } catch(e) { return []; } }
+function saveFamilyMembers(arr) { localStorage.setItem('pl_family', JSON.stringify(arr)); }
+function loadPersonalTasks() { try { return JSON.parse(localStorage.getItem('pl_tasks') || '[]'); } catch(e) { return []; } }
+function savePersonalTasks(arr) { localStorage.setItem('pl_tasks', JSON.stringify(arr)); }
+
+async function plPushMember(member) {
+  if(!sheetsUrl) return;
+  await postToSheets({action:'saveFamilyMember', member});
+  setSheetsStatus('connected');
+}
+async function plPushTask(task, members) {
+  if(!sheetsUrl) return;
+  const m = (members||loadFamilyMembers()).find(x=>x.id===task.personId);
+  await postToSheets({action:'savePersonalTask', task: {...task, personName: m ? m.name : ''}});
+  setSheetsStatus('connected');
+}
+async function plDeleteMember(id) {
+  if(!sheetsUrl) return;
+  await postToSheets({action:'deleteFamilyMember', id});
+}
+async function plDeleteTask(id) {
+  if(!sheetsUrl) return;
+  await postToSheets({action:'deletePersonalTask', id});
+}
+async function plLoadFromSheets() {
+  if(!sheetsUrl) return;
+  try {
+    const r = await fetch(sheetsUrl+'?action=getPersonalLife&_='+Date.now(), {method:'GET',cache:'no-store'});
+    const d = await r.json();
+    if(Array.isArray(d.members) && d.members.length) {
+      const fam = d.members.filter(x=>x['ID']||x.id).map(r=>({
+        id:r['ID']||r.id, name:r['Name']||r.name||'', relation:r['Relation']||r.relation||'',
+        color:r['Color']||r.color||'rose', wa:r['WhatsApp']||r.wa||'',
+        email:r['Email']||r.email||'', defaultmsg:r['Default Message']||r.defaultmsg||'',
+        notes:r['Notes']||r.notes||'', createdAt:r['Created Date']||r.createdAt||''
+      }));
+      saveFamilyMembers(fam);
+    }
+    if(Array.isArray(d.personalTasks) && d.personalTasks.length) {
+      const pt = d.personalTasks.filter(x=>x['ID']||x.id).map(r=>({
+        id:r['ID']||r.id, name:r['Name']||r.name||'', personId:r['Person ID']||r.personId||'',
+        priority:r['Priority']||r.priority||'Medium', status:r['Status']||r.status||'To Do',
+        due:r['Due Date']||r.due||'', msg:r['Message']||r.msg||'',
+        notes:r['Notes']||r.notes||'', createdAt:r['Created Date']||r.createdAt||''
+      }));
+      savePersonalTasks(pt);
+    }
+    renderFamilyMembers(); renderPersonalTasks(); updatePersonalKPIs(); refreshPersonalSelects();
+    toast('Personal Life synced ✓','❤️');
+  } catch(e) { toast('Sync failed','⚠️'); }
+}
+
+function openFamilyMemberModal(id) {
+  document.getElementById('fmModalTitle').textContent = id ? 'تعديل بيانات الشخص' : 'إضافة شخص جديد';
+  document.getElementById('fmDelBtn').style.display = id ? '' : 'none';
+  document.getElementById('fm-id').value = id || '';
+  if (id) {
+    const m = loadFamilyMembers().find(x => x.id === id) || {};
+    document.getElementById('fm-name').value = m.name || '';
+    document.getElementById('fm-relation').value = m.relation || 'زوجة';
+    document.getElementById('fm-color').value = m.color || 'rose';
+    document.getElementById('fm-wa').value = m.wa || '';
+    document.getElementById('fm-email').value = m.email || '';
+    document.getElementById('fm-defaultmsg').value = m.defaultmsg || '';
+    document.getElementById('fm-notes').value = m.notes || '';
+  } else {
+    ['fm-name','fm-wa','fm-email','fm-defaultmsg','fm-notes'].forEach(fid => document.getElementById(fid).value = '');
+    document.getElementById('fm-relation').value = 'زوجة';
+    document.getElementById('fm-color').value = 'rose';
+  }
+  document.getElementById('familyMemberModal').classList.add('open');
+}
+
+function saveFamilyMember() {
+  const name = document.getElementById('fm-name').value.trim();
+  if (!name) { toast('اكتب الاسم أولاً', '⚠️'); return; }
+  const members = loadFamilyMembers();
+  const editId = document.getElementById('fm-id').value;
+  const member = {
+    id: editId || ('fm_' + Date.now()),
+    name, relation: document.getElementById('fm-relation').value,
+    color: document.getElementById('fm-color').value,
+    wa: document.getElementById('fm-wa').value.trim(),
+    email: document.getElementById('fm-email').value.trim(),
+    defaultmsg: document.getElementById('fm-defaultmsg').value.trim(),
+    notes: document.getElementById('fm-notes').value.trim(),
+    createdAt: editId ? (members.find(x=>x.id===editId)||{}).createdAt : new Date().toISOString(),
+  };
+  if (editId) {
+    const idx = members.findIndex(x => x.id === editId);
+    if (idx >= 0) members[idx] = member; else members.push(member);
+  } else { members.push(member); }
+  saveFamilyMembers(members);
+  plPushMember(member);
+  closeModal('familyMemberModal');
+  renderFamilyMembers(); renderPersonalTasks(); refreshPersonalSelects();
+  toast('تم الحفظ ✓', '❤️');
+}
+
+function deleteFamilyMember() {
+  const editId = document.getElementById('fm-id').value;
+  if (!editId || !confirm('هل تريد حذف هذا الشخص؟')) return;
+  saveFamilyMembers(loadFamilyMembers().filter(x => x.id !== editId));
+  plDeleteMember(editId);
+  closeModal('familyMemberModal'); renderFamilyMembers();
+  toast('تم الحذف', '🗑');
+}
+
+function renderFamilyMembers() {
+  const members = loadFamilyMembers();
+  const el = document.getElementById('familyMembersList');
+  if (!el) return;
+  const kpiEl = document.getElementById('plKpiMembers');
+  if (kpiEl) kpiEl.textContent = members.length;
+  if (!members.length) {
+    el.innerHTML = '<div style="color:var(--td);font-size:11px;text-align:center;padding:20px 0;">لم تضف أحد بعد.</div>';
+    return;
+  }
+  const tasks = loadPersonalTasks();
+  el.innerHTML = members.map(m => {
+    const c = COLOR_MAP[m.color] || COLOR_MAP.rose;
+    const initials = m.name.split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+    const memberTasks = tasks.filter(t => t.personId === m.id && t.status !== 'Done');
+    const waClean = (m.wa||'').replace(/[^0-9]/g,'').replace(/^00/,'');
+    const waLink = waClean ? ('https://wa.me/' + waClean + (m.defaultmsg ? '?text='+encodeURIComponent(m.defaultmsg) : '')) : '';
+    return '<div class="net-card" style="cursor:default;">' +
+      '<div class="net-av" style="background:'+c.bg+';color:'+c.text+';">'+initials+'</div>' +
+      '<div style="flex:1;min-width:0;"><div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;"><div class="net-name">'+m.name+'</div><span class="tag" style="background:'+c.bg+';color:'+c.text+';">'+m.relation+'</span></div>' +
+      '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">'+
+      (m.wa ? '<span style="font-size:10px;color:var(--teal);font-family:JetBrains Mono,monospace;">'+m.wa+'</span>' : '') +
+      (memberTasks.length ? '<span style="font-size:10px;background:var(--amberd);color:var(--amber);border-radius:3px;padding:1px 5px;">'+memberTasks.length+' مهام</span>' : '') +
+      '</div></div>' +
+      '<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;">' +
+      (waLink ? '<a href="'+waLink+'" target="_blank" class="pa-btn wa" title="واتساب">📱 واتساب</a>' : '') +
+      '<button class="pa-btn copy" onclick="event.stopPropagation();openFamilyMemberModal('+"'"+''+m.id+''+"'"+')">✏️ تعديل</button>' +
+      '</div></div>';
+  }).join('');
+}
+
+function openPersonalTaskModal(id) {
+  document.getElementById('ptModalTitle').textContent = id ? 'تعديل المهمة' : 'مهمة شخصية جديدة';
+  document.getElementById('ptDelBtn').style.display = id ? '' : 'none';
+  document.getElementById('pt-id').value = id || '';
+  const sel = document.getElementById('pt-person');
+  const members = loadFamilyMembers();
+  sel.innerHTML = '<option value="">— عام —</option>' + members.map(m=>'<option value="'+m.id+'">'+m.name+' ('+m.relation+')</option>').join('');
+  if (id) {
+    const t = loadPersonalTasks().find(x => x.id === id) || {};
+    document.getElementById('pt-name').value = t.name || '';
+    sel.value = t.personId || '';
+    document.getElementById('pt-priority').value = t.priority || 'Medium';
+    document.getElementById('pt-status').value = t.status || 'To Do';
+    document.getElementById('pt-due').value = t.due || '';
+    document.getElementById('pt-msg').value = t.msg || '';
+    document.getElementById('pt-notes').value = t.notes || '';
+  } else {
+    ['pt-name','pt-due','pt-msg','pt-notes'].forEach(fid => document.getElementById(fid).value = '');
+    document.getElementById('pt-priority').value = 'Medium';
+    document.getElementById('pt-status').value = 'To Do';
+  }
+  document.getElementById('personalTaskModal').classList.add('open');
+}
+
+function savePersonalTask() {
+  const name = document.getElementById('pt-name').value.trim();
+  if (!name) { toast('اكتب اسم المهمة أولاً', '⚠️'); return; }
+  const tasks = loadPersonalTasks();
+  const editId = document.getElementById('pt-id').value;
+  const task = {
+    id: editId || ('pt_' + Date.now()),
+    name, personId: document.getElementById('pt-person').value,
+    priority: document.getElementById('pt-priority').value,
+    status: document.getElementById('pt-status').value,
+    due: document.getElementById('pt-due').value,
+    msg: document.getElementById('pt-msg').value.trim(),
+    notes: document.getElementById('pt-notes').value.trim(),
+    createdAt: editId ? (tasks.find(x=>x.id===editId)||{}).createdAt : new Date().toISOString(),
+  };
+  if (editId) { const idx = tasks.findIndex(x => x.id === editId); if (idx >= 0) tasks[idx] = task; else tasks.push(task); }
+  else { tasks.push(task); }
+  savePersonalTasks(tasks);
+  plPushTask(task);
+  closeModal('personalTaskModal');
+  renderPersonalTasks(); renderFamilyMembers(); updatePersonalKPIs();
+  toast('تم حفظ المهمة ✓', '✅');
+}
+
+function deletePersonalTask() {
+  const editId = document.getElementById('pt-id').value;
+  if (!editId || !confirm('هل تريد حذف هذه المهمة؟')) return;
+  savePersonalTasks(loadPersonalTasks().filter(x => x.id !== editId));
+  plDeleteTask(editId);
+  closeModal('personalTaskModal'); renderPersonalTasks(); updatePersonalKPIs();
+  toast('تم الحذف', '🗑');
+}
+
+function togglePersonalTaskDone(id) {
+  const tasks = loadPersonalTasks();
+  const t = tasks.find(x => x.id === id);
+  if (!t) return;
+  t.status = t.status === 'Done' ? 'To Do' : 'Done';
+  savePersonalTasks(tasks);
+  renderPersonalTasks(); updatePersonalKPIs(); renderFamilyMembers();
+}
+
+function renderPersonalTasks() {
+  const el = document.getElementById('personalTasksList');
+  const upcomingEl = document.getElementById('plUpcomingTasks');
+  if (!el) return;
+  const filter = (document.getElementById('plTaskFilter') || {}).value || 'all';
+  const members = loadFamilyMembers();
+  const memberMap = {};
+  members.forEach(m => memberMap[m.id] = m);
+  let tasks = loadPersonalTasks();
+  if (filter !== 'all') tasks = tasks.filter(t => t.status === filter);
+  tasks.sort((a,b) => { const pm={Critical:0,High:1,Medium:2,Low:3}; const d=(pm[a.priority]||2)-(pm[b.priority]||2); return d!==0?d:(a.due||'9999')<(b.due||'9999')?-1:1; });
+  if (!tasks.length) { el.innerHTML = '<div style="color:var(--td);font-size:11px;padding:16px;">لا توجد مهام.</div>'; }
+  else {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const prioColors = {Critical:'var(--rose)',High:'var(--amber)',Medium:'var(--teal)',Low:'var(--td)'};
+    el.innerHTML = tasks.map(t => {
+      const m = memberMap[t.personId];
+      const c = m ? (COLOR_MAP[m.color]||COLOR_MAP.rose) : {bg:'var(--s3)',text:'var(--tm)'};
+      const isDone = t.status === 'Done';
+      let dueClass='',dueLabel='';
+      if (t.due) { const d=new Date(t.due);d.setHours(0,0,0,0);const diff=Math.round((d-today)/86400000);if(!isDone){dueClass=diff<0?'ov':diff===0?'td':'ok';}dueLabel=diff<0?'متأخر '+Math.abs(diff)+' يوم':diff===0?'اليوم':diff===1?'غداً':diff+' يوم'; }
+      const waClean = t.personId && m ? (m.wa||'').replace(/[^0-9]/g,'').replace(/^00/,'') : '';
+      const msgEncoded = (t.msg||'').trim() ? encodeURIComponent(t.msg) : (m&&m.defaultmsg?encodeURIComponent(m.defaultmsg):'');
+      const waLink = waClean ? ('https://wa.me/'+waClean+(msgEncoded?'?text='+msgEncoded:'')) : '';
+      return '<div class="task-row" onclick="openPersonalTaskModal('+"'"+''+t.id+''+"'"+')">' +
+        '<div class="chk '+(isDone?'done':'')+' " onclick="event.stopPropagation();togglePersonalTaskDone('+"'"+''+t.id+''+"'"+')">'+( isDone?'✓':'' )+'</div>' +
+        '<div class="task-body"><div class="task-name '+(isDone?'done':'')+'">'+t.name+'</div>' +
+        '<div class="task-meta">' +
+        (m?'<span class="tag" style="background:'+c.bg+';color:'+c.text+';">'+m.name+'</span>':'') +
+        '<span style="width:6px;height:6px;border-radius:50%;background:'+(prioColors[t.priority]||'var(--td)')+';display:inline-block;flex-shrink:0;"></span>' +
+        '<span class="status '+(isDone?'s-done':t.status==='In Progress'?'s-prog':'s-todo')+'">'+(isDone?'✓ منجزة':t.status==='In Progress'?'جاري':'لم تبدأ')+'</span>' +
+        (t.notes?'<span style="font-size:10px;color:var(--td);">'+t.notes.slice(0,30)+(t.notes.length>30?'...':'')+'</span>':'') +
+        '</div></div>' +
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">' +
+        (t.due?'<span class="task-due '+dueClass+'">'+dueLabel+'</span>':'') +
+        (waLink&&!isDone?'<a href="'+waLink+'" target="_blank" onclick="event.stopPropagation();" class="pa-btn wa" style="font-size:10px;padding:3px 7px;">📱</a>':'') +
+        '</div></div>';
+    }).join('');
+  }
+  if (upcomingEl) {
+    const allT = loadPersonalTasks().filter(t=>t.status!=='Done'&&t.due);
+    const today2=new Date();today2.setHours(0,0,0,0);
+    const upcoming=allT.filter(t=>{const d=new Date(t.due);d.setHours(0,0,0,0);return(d-today2)/86400000<=7;}).sort((a,b)=>a.due<b.due?-1:1).slice(0,6);
+    if(!upcoming.length){upcomingEl.innerHTML='<div style="color:var(--td);font-size:11px;padding:14px;">لا توجد مهام خلال الأسبوع.</div>';}
+    else{
+      const today3=new Date();today3.setHours(0,0,0,0);
+      upcomingEl.innerHTML=upcoming.map(t=>{
+        const m=memberMap[t.personId];const d=new Date(t.due);d.setHours(0,0,0,0);
+        const diff=Math.round((d-today3)/86400000);
+        const dl=diff<0?'متأخر '+Math.abs(diff)+' يوم':diff===0?'اليوم':diff===1?'غداً':diff+' يوم';
+        const c=m?(COLOR_MAP[m.color]||COLOR_MAP.rose):{bg:'var(--s3)',text:'var(--tm)'};
+        return '<div class="fu-row" style="padding:8px 14px;cursor:pointer;" onclick="openPersonalTaskModal('+"'"+''+t.id+''+"'"+')">' +
+          '<div class="fu-av" style="background:'+c.bg+';color:'+c.text+';">'+( m?m.name[0].toUpperCase():'?' )+'</div>' +
+          '<div><div class="fu-name">'+t.name+'</div><div class="fu-task">'+(m?m.name+' · '+m.relation:'عام')+'</div></div>' +
+          '<div class="fu-age '+(diff<0?'ov':diff===0?'td':'ok')+'">'+dl+'</div></div>';
+      }).join('');
+    }
+  }
+}
+
+function updatePersonalKPIs() {
+  const tasks = loadPersonalTasks();
+  const today = new Date(); today.setHours(0,0,0,0);
+  const kpiOpen=document.getElementById('plKpiOpen'),kpiDone=document.getElementById('plKpiDone'),kpiOverdue=document.getElementById('plKpiOverdue');
+  if(kpiOpen) kpiOpen.textContent=tasks.filter(t=>t.status!=='Done').length;
+  if(kpiDone) kpiDone.textContent=tasks.filter(t=>t.status==='Done').length;
+  if(kpiOverdue) kpiOverdue.textContent=tasks.filter(t=>t.status!=='Done'&&t.due&&new Date(t.due)<today).length;
+}
+
+function refreshPersonalSelects() {
+  const members = loadFamilyMembers();
+  const opts = '<option value="">— اختر شخص —</option>'+members.map(m=>'<option value="'+m.id+'">'+m.name+' ('+m.relation+')</option>').join('');
+  const sendSel=document.getElementById('plSendPerson');
+  if(sendSel){const v=sendSel.value;sendSel.innerHTML=opts;sendSel.value=v;}
+  const bc=document.getElementById('plBroadcastCheckboxes');
+  if(bc){bc.innerHTML=members.map(m=>{const col=COLOR_MAP[m.color]||COLOR_MAP.rose;return '<label style="display:inline-flex;align-items:center;gap:5px;background:'+col.bg+';color:'+col.text+';padding:4px 9px;border-radius:99px;font-size:11px;cursor:pointer;"><input type="checkbox" value="'+m.id+'" style="margin:0;" checked> '+m.name+'</label>';}).join('');}
+  const sbCount=document.getElementById('sb-personal-count');
+  if(sbCount) sbCount.textContent=loadPersonalTasks().filter(t=>t.status!=='Done').length||'—';
+}
+
+function plUpdateSendTarget() {
+  const val=document.getElementById('plSendPerson').value;
+  const info=document.getElementById('plSendTargetInfo');
+  if(!val){info.style.display='none';return;}
+  const m=loadFamilyMembers().find(x=>x.id===val);
+  if(!m){info.style.display='none';return;}
+  const c=COLOR_MAP[m.color]||COLOR_MAP.rose;
+  const initials=m.name.split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+  document.getElementById('plSendAvatar').style.background=c.bg;
+  document.getElementById('plSendAvatar').style.color=c.text;
+  document.getElementById('plSendAvatar').textContent=initials;
+  document.getElementById('plSendName').textContent=m.name;
+  document.getElementById('plSendRole').textContent=m.relation;
+  document.getElementById('plSendPhone').textContent=m.wa||'لا يوجد رقم';
+  info.style.display='';
+  if(m.defaultmsg&&!document.getElementById('plSendMsg').value){document.getElementById('plSendMsg').value=m.defaultmsg;}
+}
+
+function plSendWhatsApp() {
+  const val=document.getElementById('plSendPerson').value;
+  const msg=document.getElementById('plSendMsg').value.trim();
+  if(!val){toast('اختر شخصاً أولاً','⚠️');return;}
+  const m=loadFamilyMembers().find(x=>x.id===val);
+  if(!m||!m.wa){toast('لا يوجد رقم واتساب لهذا الشخص','⚠️');return;}
+  const waClean=m.wa.replace(/[^0-9]/g,'').replace(/^00/,'');
+  window.open('https://wa.me/'+waClean+(msg?'?text='+encodeURIComponent(msg):''),'_blank');
+  toast('تم فتح واتساب ✓','📱');
+}
+
+function plCopyMsg() {
+  const msg=document.getElementById('plSendMsg').value.trim();
+  if(!msg){toast('اكتب رسالة أولاً','⚠️');return;}
+  navigator.clipboard.writeText(msg).then(()=>toast('تم نسخ الرسالة ✓','📋')).catch(()=>toast('يرجى النسخ يدوياً'));
+}
+
+function plBroadcastWhatsApp() {
+  const msg=document.getElementById('plBroadcastMsg').value.trim();
+  const checkboxes=document.querySelectorAll('#plBroadcastCheckboxes input[type=checkbox]:checked');
+  if(!checkboxes.length){toast('اختر أشخاصاً أولاً','⚠️');return;}
+  if(!msg){toast('اكتب الرسالة أولاً','⚠️');return;}
+  const members=loadFamilyMembers();
+  let sent=0;
+  checkboxes.forEach(cb=>{
+    const m=members.find(x=>x.id===cb.value);
+    if(m&&m.wa){const waClean=m.wa.replace(/[^0-9]/g,'').replace(/^00/,'');setTimeout(()=>window.open('https://wa.me/'+waClean+'?text='+encodeURIComponent(msg),'_blank'),sent*400);sent++;}
+  });
+  toast('تم فتح واتساب لـ '+sent+' شخص ✓','📡');
+}
+
+function initPersonalLife() {
+  renderFamilyMembers(); renderPersonalTasks(); updatePersonalKPIs(); refreshPersonalSelects();
+}
+
+// ════════════════════════════════════════
 // START
 // ════════════════════════════════════════
 init();
+initPersonalLife();
 </script>
 </body>
 </html>
