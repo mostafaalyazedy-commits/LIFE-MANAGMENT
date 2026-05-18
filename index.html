@@ -812,6 +812,34 @@ body{
 
 /* Link Modal */
 #linkModal .modal { width:480px; }
+
+/* ── ATTACHMENTS ── */
+.attach-tabs { display:flex; gap:4px; background:var(--s2); border-radius:8px; padding:3px; margin-bottom:14px; }
+.attach-tab { flex:1; padding:7px; border-radius:6px; font-size:11px; font-weight:600; color:var(--tm); border:none; background:none; cursor:pointer; transition:all .15s; text-align:center; }
+.attach-tab.active { background:var(--s4); color:var(--tx); }
+.attach-drop-zone { border:2px dashed var(--b3); border-radius:var(--r2); padding:28px 20px; text-align:center; cursor:pointer; transition:all .2s; position:relative; }
+.attach-drop-zone:hover, .attach-drop-zone.drag-over { border-color:var(--gold); background:var(--goldd); }
+.attach-drop-zone input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+.attach-drop-icon { font-size:32px; margin-bottom:8px; }
+.attach-drop-text { font-size:12px; color:var(--tm); }
+.attach-drop-sub { font-size:10px; color:var(--td); margin-top:4px; }
+.attach-preview { margin-top:12px; }
+.attach-preview-img { width:100%; max-height:160px; object-fit:contain; border-radius:var(--r); background:var(--s2); border:1px solid var(--b1); }
+.attach-preview-file { display:flex; align-items:center; gap:10px; background:var(--s2); border:1px solid var(--b1); border-radius:var(--r); padding:10px 12px; }
+.attach-preview-icon { font-size:24px; }
+.attach-preview-name { font-size:12px; font-weight:600; color:var(--tx); }
+.attach-preview-size { font-size:10px; color:var(--td); margin-top:2px; }
+.attach-card { display:flex; align-items:center; gap:10px; background:var(--s2); border:1px solid var(--b1); border-radius:var(--r); padding:10px 12px; margin-bottom:8px; transition:border-color .15s; }
+.attach-card:hover { border-color:var(--b3); }
+.attach-card-thumb { width:40px; height:40px; border-radius:6px; object-fit:cover; flex-shrink:0; }
+.attach-card-icon { width:40px; height:40px; border-radius:6px; background:var(--s3); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.attach-card-info { flex:1; min-width:0; }
+.attach-card-name { font-size:12px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.attach-card-meta { font-size:10px; color:var(--td); margin-top:2px; }
+.attach-card-actions { display:flex; gap:4px; flex-shrink:0; }
+.attach-count-badge { display:inline-flex; align-items:center; gap:4px; background:var(--blued); color:var(--blue); border-radius:4px; padding:1px 7px; font-size:10px; font-family:"JetBrains Mono",monospace; }
+.attach-size-warn { font-size:10px; color:var(--amber); background:var(--amberd); border-radius:4px; padding:4px 10px; margin-top:8px; display:none; }
+#lm-tab-url, #lm-tab-file { }
 </style>
 </head>
 <body>
@@ -2800,7 +2828,7 @@ function openTaskPanel(id){
     <div class="drawer-sec">
       <div class="tl-header">
         <div class="drawer-sec-title" style="margin:0;">Task Links <span id="drawerLinksCount" style="font-size:10px;color:var(--td);margin-left:6px;"></span></div>
-        <button class="tl-add-btn" onclick="openLinkModal(${id})">+ Add Link</button>
+        <button class="tl-add-btn" onclick="openLinkModal(${id})">+ Add Link / File</button>
       </div>
       <div id="drawerLinksContainer"></div>
     </div>
@@ -3679,7 +3707,15 @@ function normalizeTaskLinks(raw) {
 function serializeTaskLinks(t) {
   const links = t.links || [];
   if (!links.length) return '';
-  return JSON.stringify(links);
+  // Strip dataUrl when saving to sheets (too large) — keep metadata only
+  const forSheet = links.map(lk => {
+    if (lk.attachType === 'file') {
+      const { dataUrl, ...rest } = lk;
+      return { ...rest, _hasLocalData: true };
+    }
+    return lk;
+  });
+  return JSON.stringify(forSheet);
 }
 
 function getLinksCount(t) {
@@ -3713,20 +3749,106 @@ function lmPreviewType(url) {
   if (sel) sel.value = type;
 }
 
+// Temp storage for file attach during modal open
+let _attachTempFile = null;
+
+function lmSwitchTab(tab) {
+  document.getElementById('lm-attachmode').value = tab;
+  document.getElementById('lm-url-panel').style.display = tab === 'url' ? '' : 'none';
+  document.getElementById('lm-file-panel').style.display = tab === 'file' ? '' : 'none';
+  document.getElementById('lm-tab-url').classList.toggle('active', tab === 'url');
+  document.getElementById('lm-tab-file').classList.toggle('active', tab === 'file');
+  if (tab === 'file') {
+    document.getElementById('lm-url').value = '';
+    _attachTempFile = null;
+    document.getElementById('attachPreviewArea').innerHTML = '';
+    document.getElementById('attachSizeWarn').style.display = 'none';
+  }
+}
+
+function attachDragOver(e) { e.preventDefault(); document.getElementById('attachDropZone').classList.add('drag-over'); }
+function attachDragLeave(e) { document.getElementById('attachDropZone').classList.remove('drag-over'); }
+function attachDrop(e) {
+  e.preventDefault();
+  document.getElementById('attachDropZone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) attachFileSelected(file);
+}
+
+function attachFileSelected(file) {
+  if (!file) return;
+  const MAX = 4 * 1024 * 1024; // 4MB
+  const warnEl = document.getElementById('attachSizeWarn');
+  if (file.size > MAX) {
+    warnEl.style.display = '';
+    document.getElementById('attachPreviewArea').innerHTML = '';
+    _attachTempFile = null;
+    return;
+  }
+  warnEl.style.display = 'none';
+
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    _attachTempFile = { name: file.name, size: file.size, type: file.type, dataUrl: ev.target.result };
+    // Auto-fill title if empty
+    const titleEl = document.getElementById('lm-title');
+    if (!titleEl.value) titleEl.value = file.name.replace(/\.[^.]+$/, '');
+    // Preview
+    const prev = document.getElementById('attachPreviewArea');
+    const isImg = file.type.startsWith('image/');
+    if (isImg) {
+      prev.innerHTML = `<div class="attach-preview"><img class="attach-preview-img" src="${ev.target.result}"></div>`;
+    } else {
+      const ext = file.name.split('.').pop().toUpperCase();
+      prev.innerHTML = `<div class="attach-preview"><div class="attach-preview-file">
+        <div class="attach-preview-icon">${getFileEmoji(file.name)}</div>
+        <div><div class="attach-preview-name">${esc(file.name)}</div><div class="attach-preview-size">${ext} · ${formatBytes(file.size)}</div></div>
+      </div></div>`;
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function getFileEmoji(name) {
+  const ext = (name||'').split('.').pop().toLowerCase();
+  const m = {'pdf':'📑','doc':'📝','docx':'📝','xls':'📊','xlsx':'📊','csv':'📊',
+    'zip':'🗜️','rar':'🗜️','mp4':'🎬','mov':'🎬','mp3':'🎵','wav':'🎵',
+    'jpg':'🖼️','jpeg':'🖼️','png':'🖼️','gif':'🖼️','svg':'🖼️'};
+  return m[ext] || '📄';
+}
+
 function openLinkModal(taskId, linkIdx) {
   const t = tasks.find(x => x.id === taskId); if (!t) return;
   const isEdit = linkIdx !== undefined && linkIdx !== null && linkIdx >= 0;
-  document.getElementById('linkModalTitle').textContent = isEdit ? 'Edit Link' : 'Add Link';
+  document.getElementById('linkModalTitle').textContent = isEdit ? 'Edit Attachment' : 'Add Attachment';
   document.getElementById('lm-taskid').value = taskId;
   document.getElementById('lm-idx').value = isEdit ? linkIdx : '';
+  _attachTempFile = null;
+  document.getElementById('attachPreviewArea').innerHTML = '';
+  document.getElementById('attachSizeWarn').style.display = 'none';
+
   if (isEdit) {
     const lk = (t.links || [])[linkIdx] || {};
+    const isFile = lk.attachType === 'file';
+    lmSwitchTab(isFile ? 'file' : 'url');
     document.getElementById('lm-title').value = lk.title === 'Legacy Link' ? '' : (lk.title || '');
     document.getElementById('lm-url').value = lk.url || '';
     document.getElementById('lm-type').value = lk.type || 'Other';
     document.getElementById('lm-source').value = lk.source || '';
     document.getElementById('lm-notes').value = lk.notes || '';
+    if (isFile && lk.dataUrl) {
+      const prev = document.getElementById('attachPreviewArea');
+      if (isImageFile(lk)) {
+        prev.innerHTML = `<div class="attach-preview"><img class="attach-preview-img" src="${lk.dataUrl}"></div>`;
+      } else {
+        prev.innerHTML = `<div class="attach-preview"><div class="attach-preview-file">
+          <div class="attach-preview-icon">${getFileEmoji(lk.fileName||'')}</div>
+          <div><div class="attach-preview-name">${esc(lk.fileName||'')}</div><div class="attach-preview-size">${formatBytes(lk.fileSize)}</div></div>
+        </div></div>`;
+      }
+    }
   } else {
+    lmSwitchTab('url');
     document.getElementById('lm-title').value = '';
     document.getElementById('lm-url').value = '';
     document.getElementById('lm-type').value = 'Other';
@@ -3740,15 +3862,42 @@ function saveTaskLink() {
   const taskId = parseInt(document.getElementById('lm-taskid').value);
   const idxRaw = document.getElementById('lm-idx').value;
   const idx = idxRaw !== '' ? parseInt(idxRaw) : null;
-  const url = ensureHttps(document.getElementById('lm-url').value);
-  if (!url) { toast('Add a URL first', '⚠'); return; }
-  const title = document.getElementById('lm-title').value.trim() || 'Untitled Link';
-  const type = document.getElementById('lm-type').value || 'Other';
-  const source = document.getElementById('lm-source').value.trim();
+  const mode = document.getElementById('lm-attachmode').value || 'url';
+  const title = document.getElementById('lm-title').value.trim();
   const notes = document.getElementById('lm-notes').value.trim();
   const t = tasks.find(x => x.id === taskId); if (!t) return;
   if (!Array.isArray(t.links)) t.links = [];
-  const linkObj = { title, url, type, source, notes, createdAt: new Date().toISOString().split('T')[0] };
+
+  let linkObj;
+
+  if (mode === 'file') {
+    // File attach mode
+    if (idx !== null && idx >= 0 && !_attachTempFile) {
+      // Editing without re-uploading — just update title/notes
+      const existing = t.links[idx] || {};
+      linkObj = { ...existing, title: title || existing.title || existing.fileName || 'Untitled', notes };
+    } else {
+      if (!_attachTempFile) { toast('اختر ملف أولاً', '⚠'); return; }
+      linkObj = {
+        attachType: 'file',
+        title: title || _attachTempFile.name.replace(/\.[^.]+$/, '') || 'Untitled',
+        fileName: _attachTempFile.name,
+        fileSize: _attachTempFile.size,
+        fileMime: _attachTempFile.type,
+        dataUrl: _attachTempFile.dataUrl,
+        notes,
+        createdAt: new Date().toISOString().split('T')[0]
+      };
+    }
+  } else {
+    // URL mode
+    const url = ensureHttps(document.getElementById('lm-url').value);
+    if (!url) { toast('Add a URL first', '⚠'); return; }
+    const type = document.getElementById('lm-type').value || 'Other';
+    const source = document.getElementById('lm-source').value.trim();
+    linkObj = { attachType: 'url', title: title || 'Untitled Link', url, type, source, notes, createdAt: new Date().toISOString().split('T')[0] };
+  }
+
   if (idx !== null && idx >= 0) {
     t.links[idx] = linkObj;
   } else {
@@ -3756,12 +3905,13 @@ function saveTaskLink() {
   }
   t.linksFiles = serializeTaskLinks(t);
   t.updatedAt = new Date().toISOString();
+  _attachTempFile = null;
   save(LS.tasks, tasks);
   pushTask(t);
   closeModal('linkModal');
   renderTaskLinks(taskId);
   renderTaskTable();
-  toast('Link saved ✓', '🔗');
+  toast(mode === 'file' ? 'File attached ✓' : 'Link saved ✓', mode === 'file' ? '📎' : '🔗');
 }
 
 function deleteTaskLink(taskId, linkIdx) {
@@ -3782,6 +3932,33 @@ function copyTaskLink(url) {
   navigator.clipboard.writeText(url).then(() => toast('Link copied ✓', '📋')).catch(() => toast('Copy manually'));
 }
 
+function getAttachIcon(lk) {
+  if (lk.attachType === 'file') {
+    const ext = (lk.fileName || '').split('.').pop().toLowerCase();
+    if (['jpg','jpeg','png','gif','webp','svg'].includes(ext)) return '🖼️';
+    if (['pdf'].includes(ext)) return '📑';
+    if (['doc','docx'].includes(ext)) return '📝';
+    if (['xls','xlsx','csv'].includes(ext)) return '📊';
+    if (['zip','rar','7z'].includes(ext)) return '🗜️';
+    if (['mp4','mov','avi','mkv'].includes(ext)) return '🎬';
+    if (['mp3','wav','aac'].includes(ext)) return '🎵';
+    return '📄';
+  }
+  return LINK_TYPE_ICONS[lk.type] || '🔗';
+}
+
+function isImageFile(lk) {
+  const ext = (lk.fileName || '').split('.').pop().toLowerCase();
+  return ['jpg','jpeg','png','gif','webp'].includes(ext);
+}
+
+function formatBytes(bytes) {
+  if (!bytes) return '';
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+  return (bytes/(1024*1024)).toFixed(1) + ' MB';
+}
+
 function renderTaskLinks(taskId) {
   const container = document.getElementById('drawerLinksContainer');
   const countEl = document.getElementById('drawerLinksCount');
@@ -3789,34 +3966,78 @@ function renderTaskLinks(taskId) {
   const t = tasks.find(x => x.id === taskId);
   if (!t) { container.innerHTML = ''; return; }
   const links = t.links || [];
-  if (countEl) countEl.textContent = links.length ? `${links.length} link${links.length > 1 ? 's' : ''}` : '';
+  if (countEl) countEl.textContent = links.length ? `${links.length} attachment${links.length > 1 ? 's' : ''}` : '';
   if (!links.length) {
-    container.innerHTML = '<div class="tl-empty">No links yet — add Canva, Drive, Blogger, or any URL related to this task.</div>';
+    container.innerHTML = '<div class="tl-empty">No attachments yet — add links (Canva, Drive...) or upload files and images directly.</div>';
     return;
   }
   container.innerHTML = links.map((lk, i) => {
-    const icon = LINK_TYPE_ICONS[lk.type] || '🔗';
-    const color = LINK_TYPE_COLORS[lk.type] || 'var(--td)';
+    const isFile = lk.attachType === 'file';
+    const icon = getAttachIcon(lk);
+    const color = isFile ? 'var(--blue)' : (LINK_TYPE_COLORS[lk.type] || 'var(--td)');
+    const safeTitle = esc(lk.title || lk.fileName || 'Untitled');
     const isLegacy = lk.legacy;
-    const safeUrl = esc(lk.url || '');
-    const safeTitle = esc(lk.title || 'Untitled Link');
-    const shortUrl = (lk.url || '').replace(/^https?:\/\//, '').substring(0, 55);
-    return `<div class="link-card">
-      <div class="link-type-badge" style="background:${color}22;color:${color};" title="${esc(lk.type)}">${icon}</div>
-      <div class="link-info">
-        <div class="link-title-text">${safeTitle}${isLegacy ? ' <span style="font-size:9px;color:var(--td);">(legacy)</span>' : ''}</div>
-        <div class="link-url-text">${esc(shortUrl)}${(lk.url||'').length > 55 ? '…' : ''}</div>
-        ${lk.notes ? `<div class="link-notes-text">${esc(lk.notes)}</div>` : ''}
-        ${lk.source ? `<div style="font-size:9px;color:var(--td);margin-top:2px;">by ${esc(lk.source)}</div>` : ''}
+
+    // Thumbnail or icon
+    let thumbHTML = '';
+    if (isFile && isImageFile(lk) && lk.dataUrl) {
+      thumbHTML = `<img class="attach-card-thumb" src="${lk.dataUrl}" alt="${safeTitle}" onclick="attachPreviewFull('${i}',${taskId})">`;
+    } else {
+      thumbHTML = `<div class="attach-card-icon" style="color:${color};">${icon}</div>`;
+    }
+
+    // Sub-info
+    let subInfo = '';
+    if (isFile) {
+      subInfo = `📎 ${esc(lk.fileName||'')}${lk.fileSize ? ' · '+formatBytes(lk.fileSize) : ''}`;
+    } else {
+      const shortUrl = (lk.url || '').replace(/^https?:\/\//, '').substring(0,50);
+      subInfo = esc(shortUrl) + ((lk.url||'').length > 50 ? '…' : '');
+    }
+
+    // Action buttons
+    let openBtn = '';
+    if (isFile && lk.dataUrl) {
+      openBtn = `<button class="link-btn open" title="Download / View" onclick="attachOpen(${i},${taskId})">↗</button>`;
+    } else if (!isFile && lk.url) {
+      const safeUrl = esc(lk.url);
+      openBtn = `<button class="link-btn open" title="Open" onclick="window.open('${safeUrl}','_blank')">↗</button>`;
+    }
+    const copyBtn = isFile
+      ? `<button class="link-btn copy" title="Copy filename" onclick="copyTaskLink('${esc(lk.fileName||lk.title||'')}')">📋</button>`
+      : `<button class="link-btn copy" title="Copy URL" onclick="copyTaskLink('${esc(lk.url||'')}')">📋</button>`;
+
+    return `<div class="attach-card">
+      ${thumbHTML}
+      <div class="attach-card-info">
+        <div class="attach-card-name">${safeTitle}${isLegacy?' <span style="font-size:9px;color:var(--td);">(legacy)</span>':''}</div>
+        <div class="attach-card-meta">${subInfo}</div>
+        ${lk.notes?`<div class="attach-card-meta" style="color:var(--tm);">${esc(lk.notes)}</div>`:''}
       </div>
-      <div class="link-actions">
-        <button class="link-btn open" title="Open" onclick="window.open('${safeUrl}','_blank')">↗</button>
-        <button class="link-btn copy" title="Copy URL" onclick="copyTaskLink('${safeUrl}')">📋</button>
+      <div class="attach-card-actions">
+        ${openBtn}
+        ${copyBtn}
         <button class="link-btn edit" title="Edit" onclick="openLinkModal(${taskId},${i})">✎</button>
         <button class="link-btn del" title="Delete" onclick="deleteTaskLink(${taskId},${i})">×</button>
       </div>
     </div>`;
   }).join('');
+}
+
+function attachOpen(idx, taskId) {
+  const t = tasks.find(x => x.id === taskId); if (!t) return;
+  const lk = (t.links||[])[idx]; if (!lk || !lk.dataUrl) return;
+  const a = document.createElement('a');
+  a.href = lk.dataUrl;
+  a.download = lk.fileName || lk.title || 'attachment';
+  a.click();
+}
+
+function attachPreviewFull(idx, taskId) {
+  const t = tasks.find(x => x.id === taskId); if (!t) return;
+  const lk = (t.links||[])[idx]; if (!lk || !lk.dataUrl) return;
+  const w = window.open('','_blank');
+  w.document.write(`<html><body style="margin:0;background:#000;display:flex;align-items:center;justify-content:center;min-height:100vh;"><img src="${lk.dataUrl}" style="max-width:100%;max-height:100vh;object-fit:contain;"></body></html>`);
 }
 
 // ════════════════════════════════════════
@@ -4179,53 +4400,79 @@ initPersonalLife();
 
 <!-- Task Link Modal -->
 <div class="overlay" id="linkModal">
-  <div class="modal" style="width:480px;">
+  <div class="modal" style="width:500px;">
     <div class="modal-h">
-      <div class="modal-title" id="linkModalTitle">Add Link</div>
+      <div class="modal-title" id="linkModalTitle">Add Attachment</div>
       <div class="modal-x" onclick="closeModal('linkModal')">×</div>
     </div>
     <div class="modal-b">
       <input type="hidden" id="lm-taskid">
       <input type="hidden" id="lm-idx">
-      <div class="fg">
-        <label class="flabel">Link Title</label>
-        <input class="finput" id="lm-title" placeholder="e.g. Canva Eid Design / Google Drive Folder">
+      <input type="hidden" id="lm-attachmode" value="url">
+
+      <!-- TABS -->
+      <div class="attach-tabs">
+        <button class="attach-tab active" id="lm-tab-url" onclick="lmSwitchTab('url')">🔗 Link / URL</button>
+        <button class="attach-tab" id="lm-tab-file" onclick="lmSwitchTab('file')">📎 File / Image</button>
       </div>
+
+      <!-- COMMON: Title + Notes + Source -->
       <div class="fg">
-        <label class="flabel">URL *</label>
-        <input class="finput" id="lm-url" placeholder="https://..." oninput="lmPreviewType(this.value)">
+        <label class="flabel">Title</label>
+        <input class="finput" id="lm-title" placeholder="e.g. Canva Design / Supplier Invoice / Product Photo">
       </div>
-      <div class="frow">
+
+      <!-- URL TAB CONTENT -->
+      <div id="lm-url-panel">
         <div class="fg">
-          <label class="flabel">Link Type</label>
-          <select class="fselect" id="lm-type">
-            <option value="Canva">🎨 Canva</option>
-            <option value="Google Drive">📁 Google Drive</option>
-            <option value="Blogger">✍️ Blogger</option>
-            <option value="TikTok">🎵 TikTok</option>
-            <option value="Instagram">📸 Instagram</option>
-            <option value="Website">🌐 Website</option>
-            <option value="File">📄 File</option>
-            <option value="Reference">📌 Reference</option>
-            <option value="WhatsApp">💬 WhatsApp</option>
-            <option value="YouTube">▶️ YouTube</option>
-            <option value="Spreadsheet">📊 Spreadsheet</option>
-            <option value="Other">🔗 Other</option>
-          </select>
+          <label class="flabel">URL *</label>
+          <input class="finput" id="lm-url" placeholder="https://..." oninput="lmPreviewType(this.value)">
         </div>
-        <div class="fg">
-          <label class="flabel">Source / Added By</label>
-          <input class="finput" id="lm-source" placeholder="e.g. Self / Designer / Supplier">
+        <div class="frow">
+          <div class="fg">
+            <label class="flabel">Link Type</label>
+            <select class="fselect" id="lm-type">
+              <option value="Canva">🎨 Canva</option>
+              <option value="Google Drive">📁 Google Drive</option>
+              <option value="Blogger">✍️ Blogger</option>
+              <option value="TikTok">🎵 TikTok</option>
+              <option value="Instagram">📸 Instagram</option>
+              <option value="Website">🌐 Website</option>
+              <option value="File">📄 File</option>
+              <option value="Reference">📌 Reference</option>
+              <option value="WhatsApp">💬 WhatsApp</option>
+              <option value="YouTube">▶️ YouTube</option>
+              <option value="Spreadsheet">📊 Spreadsheet</option>
+              <option value="Other">🔗 Other</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label class="flabel">Source / Added By</label>
+            <input class="finput" id="lm-source" placeholder="Self / Designer / Supplier">
+          </div>
         </div>
       </div>
-      <div class="fg">
+
+      <!-- FILE TAB CONTENT -->
+      <div id="lm-file-panel" style="display:none;">
+        <div class="attach-drop-zone" id="attachDropZone" ondragover="attachDragOver(event)" ondragleave="attachDragLeave(event)" ondrop="attachDrop(event)">
+          <input type="file" id="attachFileInput" accept="*/*" onchange="attachFileSelected(this.files[0])">
+          <div class="attach-drop-icon">📎</div>
+          <div class="attach-drop-text">اسحب الملف هنا أو اضغط للاختيار</div>
+          <div class="attach-drop-sub">صور · PDF · Word · Excel · ZIP · أي ملف — Max 4MB</div>
+        </div>
+        <div class="attach-size-warn" id="attachSizeWarn">⚠ الملف كبير جداً (+4MB). استخدم Google Drive وارفع الرابط بدلاً من ذلك.</div>
+        <div id="attachPreviewArea"></div>
+      </div>
+
+      <div class="fg" style="margin-top:12px;">
         <label class="flabel">Notes (optional)</label>
-        <input class="finput" id="lm-notes" placeholder="e.g. تصميم العروض — جاهز للتعديل">
+        <input class="finput" id="lm-notes" placeholder="e.g. تصميم العروض — جاهز للتعديل / Invoice for May">
       </div>
     </div>
     <div class="modal-f">
       <button class="btn btn-ghost" onclick="closeModal('linkModal')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveTaskLink()">💾 Save Link</button>
+      <button class="btn btn-primary" onclick="saveTaskLink()">💾 Save</button>
     </div>
   </div>
 </div>
