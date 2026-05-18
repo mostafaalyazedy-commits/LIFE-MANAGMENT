@@ -786,6 +786,32 @@ body{
   .action-grid{grid-template-columns:1fr;}
 }
 
+
+/* ── TASK LINKS ── */
+.tl-section { margin-top:4px; }
+.tl-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.tl-title { font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--tm); }
+.tl-add-btn { display:flex; align-items:center; gap:5px; padding:5px 12px; border-radius:6px; background:var(--goldd); color:var(--gold); border:1px solid rgba(201,169,110,.2); font-size:11px; font-weight:600; cursor:pointer; transition:all .15s; }
+.tl-add-btn:hover { background:var(--gold); color:var(--bg); }
+.tl-empty { font-size:11px; color:var(--td); padding:12px; text-align:center; background:var(--s2); border-radius:var(--r); border:1px dashed var(--b2); }
+.link-card { display:flex; align-items:center; gap:10px; background:var(--s2); border:1px solid var(--b1); border-radius:var(--r); padding:10px 12px; margin-bottom:8px; transition:border-color .15s; }
+.link-card:hover { border-color:var(--b3); }
+.link-type-badge { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+.link-info { flex:1; min-width:0; }
+.link-title-text { font-size:12px; font-weight:600; color:var(--tx); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.link-url-text { font-size:10px; color:var(--td); font-family:'JetBrains Mono',monospace; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px; }
+.link-notes-text { font-size:10px; color:var(--tm); margin-top:2px; }
+.link-actions { display:flex; gap:4px; flex-shrink:0; }
+.link-btn { width:28px; height:28px; border-radius:6px; border:1px solid var(--b2); background:var(--s3); color:var(--tm); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:12px; transition:all .15s; }
+.link-btn:hover { background:var(--s4); color:var(--tx); }
+.link-btn.open:hover { background:var(--teald); color:var(--teal); border-color:var(--teal); }
+.link-btn.copy:hover { background:var(--goldd); color:var(--gold); border-color:var(--gold); }
+.link-btn.edit:hover { background:var(--blued); color:var(--blue); border-color:var(--blue); }
+.link-btn.del:hover { background:var(--rosed); color:var(--rose); border-color:var(--rose); }
+.links-count-badge { display:inline-flex; align-items:center; gap:4px; background:var(--goldd); color:var(--gold); border-radius:4px; padding:1px 7px; font-size:10px; font-family:'JetBrains Mono',monospace; }
+
+/* Link Modal */
+#linkModal .modal { width:480px; }
 </style>
 </head>
 <body>
@@ -1588,7 +1614,14 @@ body{
       <div class="fg"><label class="flabel">Expected Output</label><input class="finput" id="f-output" placeholder="What final output should be delivered?"></div>
       <div class="fg"><label class="flabel">Blocker</label><input class="finput" id="f-blocker" placeholder="Any blocker preventing completion?"></div>
       <div class="fg"><label class="flabel">Quick Notes</label><input class="finput" id="f-notes" placeholder="Internal notes"></div>
-      <div class="fg"><label class="flabel">Links / Files</label><input class="finput" id="f-links" placeholder="Paste related links or file names"></div>
+      <div class="fg">
+        <label class="flabel">Links / Files</label>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input class="finput" id="f-links" placeholder="Quick link (or manage from Task Drawer)" style="flex:1;">
+          <button type="button" class="btn btn-ghost btn-sm" style="flex-shrink:0;white-space:nowrap;" onclick="closeModal('taskModal');setTimeout(()=>{ const eid=document.getElementById('editId').value; if(eid){ openTaskPanel(parseInt(eid)); } },100);">🔗 Manage Links</button>
+        </div>
+        <div style="font-size:10px;color:var(--td);margin-top:4px;">Add multiple links (Canva, Drive, Blogger...) from the Task Drawer → Task Links section.</div>
+      </div>
       <div class="fg"><label class="flabel">Prepared Message</label><textarea class="finput" id="f-msg" rows="3" placeholder="Write or auto-generate the message you will send..."></textarea></div>
     </div>
     <div class="modal-f">
@@ -1787,7 +1820,7 @@ function getTaskCol(t, col) {
     "Expected Output": t.expectedOutput || '',
     "Blocker": t.blocker || '',
     "Quick Notes": t.quickNotes || '',
-    "Links / Files": t.linksFiles || '',
+    "Links / Files": serializeTaskLinks(t),
     "Created Date": t.createdAt || '',
     "Updated Date": t.updatedAt || '',
     "Completed Date": t.completedAt || ''
@@ -1870,11 +1903,12 @@ function normalizeTask(raw) {
     expectedOutput: raw.expectedOutput || raw["Expected Output"] || '',
     blocker: raw.blocker || raw["Blocker"] || '',
     quickNotes: raw.quickNotes || raw["Quick Notes"] || '',
-    linksFiles: raw.linksFiles || raw["Links / Files"] || '',
+    linksFiles: raw.linksFiles || raw["Links / Files"] || '', // kept for legacy
     createdAt: created,
     updatedAt: updated,
     completedAt: completed,
     commLog: raw.commLog || [],
+    links: normalizeTaskLinks(raw),
     done: raw.done === true || raw.done === 'TRUE' || status === 'Done' || status === 'Completed'
   };
 }
@@ -2224,6 +2258,7 @@ function normalizeSearchText(v) {
     .trim();
 }
 function taskSearchBlob(t) {
+  // links search is injected below
   const multiPeople = (t.relatedPersons||[]).map(p=>`${p.name} ${p.role} ${p.whatsapp} ${p.email}`).join(' ');
   return normalizeSearchText(TASK_COLUMNS.map(col=>getTaskCol(t,col)).join(' ') + ' ' + multiPeople);
 }
@@ -2259,6 +2294,7 @@ function renderTaskTable() {
       if(col==='Status') return `<td><span class="status ${statClass[t.status]||'s-todo'}">${esc(t.status)}</span></td>`;
       if(col==='Due Date') { const ov=isOv(t), td2=isTd(t); return `<td class="task-due ${ov?'ov':td2?'td':''}" style="font-family:'JetBrains Mono',monospace;">${esc(fmtDate(t.due))}</td>`; }
       if(col==='WhatsApp Link' && getTaskCol(t,col)) return `<td><a class="icon-btn" style="width:auto;padding:0 8px;" href="${esc(getTaskCol(t,col))}" target="_blank">Open</a></td>`;
+      if(col==='Links / Files') { const cnt=getLinksCount(t); return cnt>0?`<td><span class="links-count-badge">🔗 ${cnt} Link${cnt>1?'s':''}</span></td>`:'<td style="color:var(--td);">—</td>'; }
       return `<td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--tm);" title="${v}">${v||'—'}</td>`;
     }).join('');
     return `<tr onclick="openTaskPanel(${t.id})">
@@ -2761,6 +2797,13 @@ function openTaskPanel(id){
         <button class="action-btn gold" onclick="saveDrawerMessage(${id});sendToAll(${id})">🚀 Save & Send All</button>
       </div>
     </div>
+    <div class="drawer-sec">
+      <div class="tl-header">
+        <div class="drawer-sec-title" style="margin:0;">Task Links <span id="drawerLinksCount" style="font-size:10px;color:var(--td);margin-left:6px;"></span></div>
+        <button class="tl-add-btn" onclick="openLinkModal(${id})">+ Add Link</button>
+      </div>
+      <div id="drawerLinksContainer"></div>
+    </div>
     <div class="drawer-sec"><div class="drawer-sec-title">Communication Log</div>${log}
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px;">
         <button class="action-btn" onclick="logComm(${id},'Sent WhatsApp')">Sent WhatsApp</button>
@@ -2772,6 +2815,7 @@ function openTaskPanel(id){
       </div>
     </div>
   `;
+  renderTaskLinks(id);
   document.getElementById('drawerOverlay').classList.add('open');
   document.getElementById('taskDrawer').classList.add('open');
 }
@@ -3599,6 +3643,183 @@ function copyScript() {
 }
 
 // ════════════════════════════════════════
+// TASK LINKS MODULE
+// ════════════════════════════════════════
+
+const LINK_TYPE_ICONS = {
+  'Canva':'🎨','Google Drive':'📁','Blogger':'✍️','TikTok':'🎵','Instagram':'📸',
+  'Website':'🌐','File':'📄','Reference':'📌','WhatsApp':'💬','YouTube':'▶️',
+  'Spreadsheet':'📊','Other':'🔗'
+};
+const LINK_TYPE_COLORS = {
+  'Canva':'var(--violet)','Google Drive':'var(--teal)','Blogger':'var(--amber)',
+  'TikTok':'var(--rose)','Instagram':'var(--rose)','Website':'var(--blue)',
+  'File':'var(--gold)','Reference':'var(--tm)','WhatsApp':'var(--green)',
+  'YouTube':'var(--rose)','Spreadsheet':'var(--green)','Other':'var(--td)'
+};
+
+function normalizeTaskLinks(raw) {
+  // Priority: raw.links array
+  if (Array.isArray(raw.links) && raw.links.length) return raw.links;
+  // Try parsing linksFiles as JSON
+  const lf = raw.linksFiles || raw['Links / Files'] || '';
+  if (lf && String(lf).trim().startsWith('[')) {
+    try {
+      const parsed = JSON.parse(lf);
+      if (Array.isArray(parsed)) return parsed;
+    } catch(e) {}
+  }
+  // Legacy plain text — wrap as legacy link
+  if (lf && String(lf).trim()) {
+    return [{ title: 'Legacy Link', url: String(lf).trim(), type: 'Other', notes: '', createdAt: '', legacy: true }];
+  }
+  return [];
+}
+
+function serializeTaskLinks(t) {
+  const links = t.links || [];
+  if (!links.length) return '';
+  return JSON.stringify(links);
+}
+
+function getLinksCount(t) {
+  return (t.links || []).length;
+}
+
+function ensureHttps(url) {
+  if (!url) return '';
+  url = url.trim();
+  if (url && !url.startsWith('http://') && !url.startsWith('https://')) url = 'https://' + url;
+  return url;
+}
+
+function autoDetectLinkType(url) {
+  if (!url) return 'Other';
+  const u = url.toLowerCase();
+  if (u.includes('canva.com')) return 'Canva';
+  if (u.includes('drive.google.com') || u.includes('docs.google.com') || u.includes('sheets.google')) return 'Google Drive';
+  if (u.includes('blogger.com') || u.includes('blogspot.com')) return 'Blogger';
+  if (u.includes('tiktok.com')) return 'TikTok';
+  if (u.includes('instagram.com')) return 'Instagram';
+  if (u.includes('youtube.com') || u.includes('youtu.be')) return 'YouTube';
+  if (u.includes('wa.me') || u.includes('whatsapp.com')) return 'WhatsApp';
+  if (u.includes('.pdf') || u.includes('.docx') || u.includes('.xlsx') || u.includes('.zip')) return 'File';
+  return 'Website';
+}
+
+function lmPreviewType(url) {
+  const type = autoDetectLinkType(url);
+  const sel = document.getElementById('lm-type');
+  if (sel) sel.value = type;
+}
+
+function openLinkModal(taskId, linkIdx) {
+  const t = tasks.find(x => x.id === taskId); if (!t) return;
+  const isEdit = linkIdx !== undefined && linkIdx !== null && linkIdx >= 0;
+  document.getElementById('linkModalTitle').textContent = isEdit ? 'Edit Link' : 'Add Link';
+  document.getElementById('lm-taskid').value = taskId;
+  document.getElementById('lm-idx').value = isEdit ? linkIdx : '';
+  if (isEdit) {
+    const lk = (t.links || [])[linkIdx] || {};
+    document.getElementById('lm-title').value = lk.title === 'Legacy Link' ? '' : (lk.title || '');
+    document.getElementById('lm-url').value = lk.url || '';
+    document.getElementById('lm-type').value = lk.type || 'Other';
+    document.getElementById('lm-source').value = lk.source || '';
+    document.getElementById('lm-notes').value = lk.notes || '';
+  } else {
+    document.getElementById('lm-title').value = '';
+    document.getElementById('lm-url').value = '';
+    document.getElementById('lm-type').value = 'Other';
+    document.getElementById('lm-source').value = '';
+    document.getElementById('lm-notes').value = '';
+  }
+  document.getElementById('linkModal').classList.add('open');
+}
+
+function saveTaskLink() {
+  const taskId = parseInt(document.getElementById('lm-taskid').value);
+  const idxRaw = document.getElementById('lm-idx').value;
+  const idx = idxRaw !== '' ? parseInt(idxRaw) : null;
+  const url = ensureHttps(document.getElementById('lm-url').value);
+  if (!url) { toast('Add a URL first', '⚠'); return; }
+  const title = document.getElementById('lm-title').value.trim() || 'Untitled Link';
+  const type = document.getElementById('lm-type').value || 'Other';
+  const source = document.getElementById('lm-source').value.trim();
+  const notes = document.getElementById('lm-notes').value.trim();
+  const t = tasks.find(x => x.id === taskId); if (!t) return;
+  if (!Array.isArray(t.links)) t.links = [];
+  const linkObj = { title, url, type, source, notes, createdAt: new Date().toISOString().split('T')[0] };
+  if (idx !== null && idx >= 0) {
+    t.links[idx] = linkObj;
+  } else {
+    t.links.push(linkObj);
+  }
+  t.linksFiles = serializeTaskLinks(t);
+  t.updatedAt = new Date().toISOString();
+  save(LS.tasks, tasks);
+  pushTask(t);
+  closeModal('linkModal');
+  renderTaskLinks(taskId);
+  renderTaskTable();
+  toast('Link saved ✓', '🔗');
+}
+
+function deleteTaskLink(taskId, linkIdx) {
+  const t = tasks.find(x => x.id === taskId); if (!t) return;
+  if (!Array.isArray(t.links) || !t.links[linkIdx]) return;
+  if (!confirm('Delete this link?')) return;
+  t.links.splice(linkIdx, 1);
+  t.linksFiles = serializeTaskLinks(t);
+  t.updatedAt = new Date().toISOString();
+  save(LS.tasks, tasks);
+  pushTask(t);
+  renderTaskLinks(taskId);
+  renderTaskTable();
+  toast('Link deleted', '🗑');
+}
+
+function copyTaskLink(url) {
+  navigator.clipboard.writeText(url).then(() => toast('Link copied ✓', '📋')).catch(() => toast('Copy manually'));
+}
+
+function renderTaskLinks(taskId) {
+  const container = document.getElementById('drawerLinksContainer');
+  const countEl = document.getElementById('drawerLinksCount');
+  if (!container) return;
+  const t = tasks.find(x => x.id === taskId);
+  if (!t) { container.innerHTML = ''; return; }
+  const links = t.links || [];
+  if (countEl) countEl.textContent = links.length ? `${links.length} link${links.length > 1 ? 's' : ''}` : '';
+  if (!links.length) {
+    container.innerHTML = '<div class="tl-empty">No links yet — add Canva, Drive, Blogger, or any URL related to this task.</div>';
+    return;
+  }
+  container.innerHTML = links.map((lk, i) => {
+    const icon = LINK_TYPE_ICONS[lk.type] || '🔗';
+    const color = LINK_TYPE_COLORS[lk.type] || 'var(--td)';
+    const isLegacy = lk.legacy;
+    const safeUrl = esc(lk.url || '');
+    const safeTitle = esc(lk.title || 'Untitled Link');
+    const shortUrl = (lk.url || '').replace(/^https?:\/\//, '').substring(0, 55);
+    return `<div class="link-card">
+      <div class="link-type-badge" style="background:${color}22;color:${color};" title="${esc(lk.type)}">${icon}</div>
+      <div class="link-info">
+        <div class="link-title-text">${safeTitle}${isLegacy ? ' <span style="font-size:9px;color:var(--td);">(legacy)</span>' : ''}</div>
+        <div class="link-url-text">${esc(shortUrl)}${(lk.url||'').length > 55 ? '…' : ''}</div>
+        ${lk.notes ? `<div class="link-notes-text">${esc(lk.notes)}</div>` : ''}
+        ${lk.source ? `<div style="font-size:9px;color:var(--td);margin-top:2px;">by ${esc(lk.source)}</div>` : ''}
+      </div>
+      <div class="link-actions">
+        <button class="link-btn open" title="Open" onclick="window.open('${safeUrl}','_blank')">↗</button>
+        <button class="link-btn copy" title="Copy URL" onclick="copyTaskLink('${safeUrl}')">📋</button>
+        <button class="link-btn edit" title="Edit" onclick="openLinkModal(${taskId},${i})">✎</button>
+        <button class="link-btn del" title="Delete" onclick="deleteTaskLink(${taskId},${i})">×</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════
 // PERSONAL LIFE MODULE
 // ════════════════════════════════════════
 
@@ -3955,5 +4176,59 @@ function initPersonalLife() {
 init();
 initPersonalLife();
 </script>
+
+<!-- Task Link Modal -->
+<div class="overlay" id="linkModal">
+  <div class="modal" style="width:480px;">
+    <div class="modal-h">
+      <div class="modal-title" id="linkModalTitle">Add Link</div>
+      <div class="modal-x" onclick="closeModal('linkModal')">×</div>
+    </div>
+    <div class="modal-b">
+      <input type="hidden" id="lm-taskid">
+      <input type="hidden" id="lm-idx">
+      <div class="fg">
+        <label class="flabel">Link Title</label>
+        <input class="finput" id="lm-title" placeholder="e.g. Canva Eid Design / Google Drive Folder">
+      </div>
+      <div class="fg">
+        <label class="flabel">URL *</label>
+        <input class="finput" id="lm-url" placeholder="https://..." oninput="lmPreviewType(this.value)">
+      </div>
+      <div class="frow">
+        <div class="fg">
+          <label class="flabel">Link Type</label>
+          <select class="fselect" id="lm-type">
+            <option value="Canva">🎨 Canva</option>
+            <option value="Google Drive">📁 Google Drive</option>
+            <option value="Blogger">✍️ Blogger</option>
+            <option value="TikTok">🎵 TikTok</option>
+            <option value="Instagram">📸 Instagram</option>
+            <option value="Website">🌐 Website</option>
+            <option value="File">📄 File</option>
+            <option value="Reference">📌 Reference</option>
+            <option value="WhatsApp">💬 WhatsApp</option>
+            <option value="YouTube">▶️ YouTube</option>
+            <option value="Spreadsheet">📊 Spreadsheet</option>
+            <option value="Other">🔗 Other</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label class="flabel">Source / Added By</label>
+          <input class="finput" id="lm-source" placeholder="e.g. Self / Designer / Supplier">
+        </div>
+      </div>
+      <div class="fg">
+        <label class="flabel">Notes (optional)</label>
+        <input class="finput" id="lm-notes" placeholder="e.g. تصميم العروض — جاهز للتعديل">
+      </div>
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-ghost" onclick="closeModal('linkModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTaskLink()">💾 Save Link</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
