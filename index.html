@@ -1646,7 +1646,7 @@ body{
         <label class="flabel">Links / Files</label>
         <div style="display:flex;gap:8px;align-items:center;">
           <input class="finput" id="f-links" placeholder="Quick link (or manage from Task Drawer)" style="flex:1;">
-          <button type="button" class="btn btn-ghost btn-sm" style="flex-shrink:0;white-space:nowrap;" onclick="closeModal('taskModal');setTimeout(()=>{ const eid=document.getElementById('editId').value; if(eid){ openTaskPanel(parseInt(eid)); } },100);">🔗 Manage Links</button>
+          <button type="button" class="btn btn-ghost btn-sm" style="flex-shrink:0;white-space:nowrap;" onclick="closeModal('taskModal');setTimeout(()=>{ const eid=document.getElementById('editId').value; if(eid){ const _id=isNaN(parseInt(eid))?eid:parseInt(eid); openTaskPanel(_id); } },100);">🔗 Manage Links</button>
         </div>
         <div style="font-size:10px;color:var(--td);margin-top:4px;">Add multiple links (Canva, Drive, Blogger...) from the Task Drawer → Task Links section.</div>
       </div>
@@ -3003,7 +3003,9 @@ function openEditModal(id) {
   document.getElementById('f-output').value=t.expectedOutput||'';
   document.getElementById('f-blocker').value=t.blocker||'';
   document.getElementById('f-notes').value=t.quickNotes||'';
-  document.getElementById('f-links').value=t.linksFiles||'';
+  // Show count of Drive/file links — don't overwrite JSON with plain text
+  const _lcount = (t.links||[]).length;
+  document.getElementById('f-links').value = _lcount > 0 ? '' : (typeof t.linksFiles==='string' && !t.linksFiles.startsWith('[') ? t.linksFiles : '');
   document.getElementById('f-msg').value=t.messageTemplate||defaultTaskMessage(t);
   document.getElementById('delBtn').style.display='block';
   mpInit(t.relatedPersons||[]);
@@ -3057,15 +3059,23 @@ function saveTask() {
     blocker:document.getElementById('f-blocker').value.trim(),
     quickNotes:document.getElementById('f-notes').value.trim(),
     linksFiles:document.getElementById('f-links').value.trim(),
+    // links array will be preserved from existing task in update path
     updatedAt:nowIso
   };
   if(editId) {
-    const idx=tasks.findIndex(x=>x.id===parseInt(editId));
-    if(idx!==-1){tasks[idx]=normalizeTask({...tasks[idx],...data,done:data.status==='Done',completedAt:data.status==='Done'?(tasks[idx].completedAt||nowIso):''});}
+    const _eid = isNaN(parseInt(editId)) ? editId : parseInt(editId);
+    const idx=tasks.findIndex(x=>x.id===_eid || String(x.id)===String(editId));
+    if(idx!==-1){
+      // Preserve links array — never overwrite with linksFiles string
+      const existingLinks = tasks[idx].links || [];
+      tasks[idx]=normalizeTask({...tasks[idx],...data,done:data.status==='Done',completedAt:data.status==='Done'?(tasks[idx].completedAt||nowIso):''});
+      if(existingLinks.length && !tasks[idx].links?.length) tasks[idx].links = existingLinks;
+      tasks[idx].linksFiles = tasks[idx].linksFiles || data.linksFiles || '';
+    }
     toast('Task updated ✎','✎');
     pushTask(tasks[idx>-1?idx:0]);
   } else {
-    const t=normalizeTask({id:nextId++,...data,createdAt:nowIso,completedAt:data.status==='Done'?nowIso:'',commLog:[],done:data.status==='Done'});
+    const t=normalizeTask({id:nextId++,...data,links:[],createdAt:nowIso,completedAt:data.status==='Done'?nowIso:'',commLog:[],done:data.status==='Done'});
     tasks.unshift(t);
     toast('Task added ✓','✓');
     pushTask(t);
@@ -3076,9 +3086,10 @@ function saveTask() {
 }
 
 function deleteTask() {
-  const editId=parseInt(document.getElementById('editId').value);
+  const _rawId=document.getElementById('editId').value;
+  const editId=isNaN(parseInt(_rawId))?_rawId:parseInt(_rawId);
   if(!editId||!confirm('Delete this task?')) return;
-  tasks=tasks.filter(x=>x.id!==editId);
+  tasks=tasks.filter(x=>x.id!==editId && String(x.id)!==String(_rawId));
   save(LS.tasks, tasks);
   closeModal('taskModal');
   renderAll();
