@@ -796,20 +796,14 @@ body{
 .task-row { position:relative; }
 
 /* ── DASHBOARD DRAG & DROP ── */
-.dash-section { position:relative; transition:transform .15s, opacity .15s; }
-.dash-section.drag-mode { cursor:grab; }
-.dash-section.drag-mode:active { cursor:grabbing; }
-.dash-section.drag-mode .panel,
-.dash-section.drag-mode .focus,
-.dash-section.drag-mode .g21,
-.dash-section.drag-mode .g3 { pointer-events:none; user-select:none; }
-.dash-section.dragging { opacity:.35; transform:scale(.98); }
-.dash-section.drag-over-top { border-top:3px solid var(--gold); padding-top:3px; }
-.dash-section.drag-over-bot { border-bottom:3px solid var(--gold); padding-bottom:3px; }
-.drag-mode-overlay { position:absolute; inset:0; z-index:10; border-radius:var(--r2); border:2px dashed transparent; transition:border-color .15s, background .15s; cursor:grab; display:none; align-items:center; justify-content:center; }
-.dash-section.drag-mode .drag-mode-overlay { display:flex; }
-.drag-mode-overlay:hover { border-color:var(--gold); background:rgba(201,169,110,.06); }
-.drag-handle-icon { font-size:22px; color:var(--gold); opacity:.7; pointer-events:none; }
+.dash-section { position:relative; transition:opacity .15s; }
+.dash-section.dragging { opacity:.3; }
+.dash-section.drag-over-top { border-top:3px solid var(--gold); }
+.dash-section.drag-over-bot { border-bottom:3px solid var(--gold); }
+.dash-handle { display:none; position:absolute; left:-8px; top:50%; transform:translateY(-50%); width:28px; height:48px; background:var(--goldd); border:1px solid var(--gold); border-radius:8px; align-items:center; justify-content:center; cursor:grab; z-index:20; color:var(--gold); font-size:16px; letter-spacing:1px; user-select:none; }
+.dash-handle:active { cursor:grabbing; background:var(--gold); color:var(--bg); }
+.dash-section.drag-mode .dash-handle { display:flex; }
+.drag-ghost { position:fixed; pointer-events:none; z-index:9999; opacity:.85; border-radius:12px; border:2px solid var(--gold); box-shadow:0 20px 50px rgba(0,0,0,.6); background:var(--s2); overflow:hidden; }
 .drag-mode-btn { font-size:10px; color:var(--td); background:none; border:1px solid var(--b2); border-radius:5px; padding:4px 10px; cursor:pointer; margin-left:8px; transition:all .15s; }
 .drag-mode-btn.active { color:var(--gold); border-color:var(--gold); background:var(--goldd); }
 .dash-reorder-hint { font-size:10px; color:var(--gold); background:var(--goldd); border-radius:5px; padding:4px 10px; display:none; margin-left:8px; }
@@ -1050,7 +1044,7 @@ body{
   <div id="dashDragContainer" style="display:flex;flex-direction:column;gap:12px;">
 
     <!-- Focus -->
-    <div class="dash-section" data-sec="focus"><div class="drag-mode-overlay" onmousedown="dashDragStart(event,this.parentElement)"><span class="drag-handle-icon">⠿</span></div>
+    <div class="dash-section" data-sec="focus"><div class="dash-handle" onmousedown="dashDragStart(event,this.parentElement)" ontouchstart="dashDragStart(event,this.parentElement)">⠿</div>
       <div class="focus au d2" id="focusPanel">
         <span class="focus-ico">🎯</span>
         <div style="flex:1;">
@@ -1063,7 +1057,7 @@ body{
     </div>
 
     <!-- Tasks + Team -->
-    <div class="dash-section" data-sec="todayRow"><div class="drag-mode-overlay" onmousedown="dashDragStart(event,this.parentElement)"><span class="drag-handle-icon">⠿</span></div>
+    <div class="dash-section" data-sec="todayRow"><div class="dash-handle" onmousedown="dashDragStart(event,this.parentElement)" ontouchstart="dashDragStart(event,this.parentElement)">⠿</div>
       <div class="g21 au d3">
         <!-- Today Tasks -->
         <div class="panel">
@@ -1100,7 +1094,7 @@ body{
     </div>
 
     <!-- Bottom Row -->
-    <div class="dash-section" data-sec="bottomRow"><div class="drag-mode-overlay" onmousedown="dashDragStart(event,this.parentElement)"><span class="drag-handle-icon">⠿</span></div>
+    <div class="dash-section" data-sec="bottomRow"><div class="dash-handle" onmousedown="dashDragStart(event,this.parentElement)" ontouchstart="dashDragStart(event,this.parentElement)">⠿</div>
       <div class="g3 au d4">
         <div class="panel">
           <div class="panel-h">
@@ -2238,10 +2232,9 @@ function saveDashOrder(order) { localStorage.setItem(DASH_ORDER_KEY, JSON.string
 let _dashDragMode = false;
 let _dragSrc = null;
 let _dragGhost = null;
-let _dragStartY = 0;
 let _dragOffsetY = 0;
 
-function initDashDrag() { /* init is now mouse-event based, done inline */ }
+function initDashDrag() { /* handled via handle onmousedown */ }
 
 function applyDashOrder() {
   const container = document.getElementById('dashDragContainer');
@@ -2275,33 +2268,38 @@ function toggleDragMode() {
 function dashDragStart(e, sec) {
   if (!_dashDragMode) return;
   e.preventDefault();
-  _dragSrc = sec;
-  _dragStartY = e.clientY;
-  const rect = sec.getBoundingClientRect();
-  _dragOffsetY = e.clientY - rect.top;
+  e.stopPropagation();
 
-  // Ghost
-  _dragGhost = sec.cloneNode(true);
-  _dragGhost.style.cssText = `position:fixed;left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;opacity:.7;z-index:9999;pointer-events:none;border-radius:12px;background:var(--s2);border:2px solid var(--gold);box-shadow:0 16px 40px rgba(0,0,0,.5);transition:none;`;
+  _dragSrc = sec;
+  const rect = sec.getBoundingClientRect();
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  _dragOffsetY = clientY - rect.top;
+
+  // Create ghost — just a simple label
+  _dragGhost = document.createElement('div');
+  _dragGhost.className = 'drag-ghost';
+  const label = { focus:'🎯 Top Priority', todayRow:"📋 Today's Tasks + Team", bottomRow:'📊 Habits + Goals + Reporting' };
+  _dragGhost.innerHTML = `<div style="padding:16px 20px;font-size:13px;font-weight:600;color:var(--gold);">${label[sec.dataset.sec]||sec.dataset.sec}</div>`;
+  _dragGhost.style.cssText = `position:fixed;left:${rect.left+20}px;top:${rect.top}px;width:${Math.min(rect.width-40,400)}px;pointer-events:none;z-index:9999;`;
   document.body.appendChild(_dragGhost);
+
   sec.classList.add('dragging');
+
+  const container = document.getElementById('dashDragContainer');
 
   const onMove = (ev) => {
     const cy = ev.touches ? ev.touches[0].clientY : ev.clientY;
     _dragGhost.style.top = (cy - _dragOffsetY) + 'px';
-    // Find target
-    const container = document.getElementById('dashDragContainer');
-    const sections = [...container.querySelectorAll('.dash-section:not(.dragging)')];
-    sections.forEach(s => s.classList.remove('drag-over-top','drag-over-bot'));
-    let target = null;
-    let pos = 'after';
-    for (const s of sections) {
+
+    const others = [...container.querySelectorAll('.dash-section:not(.dragging)')];
+    others.forEach(s => s.classList.remove('drag-over-top','drag-over-bot'));
+
+    for (const s of others) {
       const r = s.getBoundingClientRect();
-      const mid = r.top + r.height/2;
-      if (cy < mid) { target = s; pos = 'before'; break; }
-      else { target = s; pos = 'after'; }
+      const mid = r.top + r.height / 2;
+      if (cy < mid) { s.classList.add('drag-over-top'); break; }
+      else { s.classList.add('drag-over-bot'); }
     }
-    if (target) target.classList.add(pos === 'before' ? 'drag-over-top' : 'drag-over-bot');
   };
 
   const onUp = (ev) => {
@@ -2309,28 +2307,32 @@ function dashDragStart(e, sec) {
     document.removeEventListener('mouseup', onUp);
     document.removeEventListener('touchmove', onMove);
     document.removeEventListener('touchend', onUp);
+
     if (_dragGhost) { _dragGhost.remove(); _dragGhost = null; }
     _dragSrc.classList.remove('dragging');
+
     const cy = ev.touches ? ev.changedTouches[0].clientY : ev.clientY;
-    const container = document.getElementById('dashDragContainer');
-    const sections = [...container.querySelectorAll('.dash-section:not(.dragging)')];
-    sections.forEach(s => s.classList.remove('drag-over-top','drag-over-bot'));
-    let target = null; let pos = 'after';
-    for (const s of sections) {
+    const others = [...container.querySelectorAll('.dash-section:not(.dragging)')];
+    others.forEach(s => s.classList.remove('drag-over-top','drag-over-bot'));
+
+    let insertBefore = null;
+    for (const s of others) {
       const r = s.getBoundingClientRect();
-      if (cy < r.top + r.height/2) { target = s; pos = 'before'; break; }
-      else { target = s; pos = 'after'; }
+      if (cy < r.top + r.height / 2) { insertBefore = s; break; }
     }
-    if (target && target !== _dragSrc) {
-      if (pos === 'before') target.before(_dragSrc);
-      else target.after(_dragSrc);
+
+    if (insertBefore) {
+      container.insertBefore(_dragSrc, insertBefore);
+    } else {
+      container.appendChild(_dragSrc);
     }
+
     _dragSrc = null;
   };
 
   document.addEventListener('mousemove', onMove);
   document.addEventListener('mouseup', onUp);
-  document.addEventListener('touchmove', onMove, {passive:true});
+  document.addEventListener('touchmove', onMove, { passive: false });
   document.addEventListener('touchend', onUp);
 }
 
