@@ -1807,6 +1807,7 @@ const LS = {
   goals:    'prolife_goals_v1',
   learn:    'prolife_learn_v1',
   contacts: 'prolife_contacts_v1',
+  deletedTasks: 'prolife_deleted_tasks_v1',
   sheetsUrl:'prolife_sheets_url',
 };
 
@@ -1814,6 +1815,7 @@ const LS = {
 // STATE
 // ════════════════════════════════════════
 let tasks=[], habits=[], goals=[], learn=[], contacts=[];
+let deletedTasks = [];
 let sheetsUrl='';
 let taskFilter='all', catFilter='all', searchQuery='';
 let nextId = Date.now();
@@ -1841,6 +1843,27 @@ function cleanPhoneForWa(n) {
 function taskIdLabel(id) {
   const n = parseInt(id,10);
   return isNaN(n) ? String(id||'') : `TASK-${String(n).padStart(3,'0')}`;
+}
+
+function taskIdKey(id) {
+  const s = String(id || '').trim();
+  const n = parseInt(s.replace(/[^0-9]/g,''), 10);
+  return isNaN(n) ? s : `TASK-${String(n).padStart(3,'0')}`;
+}
+function deletedTaskMap() {
+  const map = {};
+  (deletedTasks || []).forEach(x => {
+    const id = taskIdKey(x.id || x['Task ID'] || x.taskId || '');
+    if (id) map[id] = x.deletedAt || x['Deleted Date'] || new Date().toISOString();
+  });
+  return map;
+}
+function markTaskDeleted(id) {
+  const key = taskIdKey(id);
+  if (!key) return;
+  deletedTasks = (deletedTasks || []).filter(x => taskIdKey(x.id || x['Task ID'] || x.taskId) !== key);
+  deletedTasks.push({id:key, deletedAt:new Date().toISOString()});
+  save(LS.deletedTasks, deletedTasks);
 }
 function getTaskCol(t, col) {
   const rp = t.relatedPersons || [];
@@ -2091,6 +2114,7 @@ function init() {
   goals    = load(LS.goals, []);
   learn    = load(LS.learn, []);
   contacts = load(LS.contacts, []).map(normalizeContact);
+  deletedTasks = load(LS.deletedTasks, []);
   sheetsUrl= localStorage.getItem(LS.sheetsUrl) || '';
 
   if(sheetsUrl) {
@@ -3404,11 +3428,14 @@ function deleteTask() {
   const _rawId=document.getElementById('editId').value;
   const editId=isNaN(parseInt(_rawId))?_rawId:parseInt(_rawId);
   if(!editId||!confirm('Delete this task?')) return;
-  tasks=tasks.filter(x=>x.id!==editId && String(x.id)!==String(_rawId));
+  const key = taskIdKey(editId || _rawId);
+  markTaskDeleted(key);
+  tasks=tasks.filter(x=>taskIdKey(x.id)!==key && String(x.id)!==String(_rawId));
   save(LS.tasks, tasks);
+  postToSheets({action:'deleteTask', id:key});
   closeModal('taskModal');
   renderAll();
-  toast('Task deleted','🗑');
+  toast('Task deleted from all devices','🗑');
 }
 
 // Called after adding a new contact while task modal is open
@@ -3653,7 +3680,7 @@ async function pushContact(contact) {
 async function pushToSheets() {
   if(!sheetsUrl){toast('Connect Sheets first','⚠');return;}
   setText('connStatus','Pushing local data to Google Sheets...');
-  const ok1 = await postToSheets({action:'bulkSave', tasks: tasks.map(taskSheetRow), contacts: contacts.map(contactSheetRow)});
+  const ok1 = await postToSheets({action:'bulkSave', tasks: tasks.map(taskSheetRow), contacts: contacts.map(contactSheetRow), deletedTasks});
   // Push personal life data
   const fam = loadFamilyMembers();
   const pt = loadPersonalTasks();
@@ -3678,12 +3705,36 @@ async function loadFromSheets(showToast=true) {
     const r=await fetch(sheetsUrl+'?action=getAll&_=' + Date.now(), {method:'GET', cache:'no-store'});
     const d=await r.json();
     if(Array.isArray(d.tasks)){
-      const loaded=d.tasks.filter(x => Object.values(x).some(v => String(v||'').trim() !== '')).map(normalizeTask);
-      tasks=loaded;
+      if(Array.isArray(d.deletedTasks)) {
+        const remoteDeleted = d.deletedTasks.filter(x => Object.values(x).some(v => String(v||'').trim() !== '')).map(x => ({
+          id: taskIdKey(x['Task ID'] || x.id || x.taskId || ''),
+          deletedAt: x['Deleted Date'] || x.deletedAt || new Date().toISOString()
+        })).filter(x=>x.id);
+        const merged = {};
+        [...deletedTasks, ...remoteDeleted].forEach(x => { const id=taskIdKey(x.id); if(id) merged[id] = x; });
+        deletedTasks = Object.values(merged);
+        save(LS.deletedTasks, deletedTasks);
+      }
+      const deleted = deletedTaskMap();
+      const loaded=d.tasks
+        .filter(x => Object.values(x).some(v => String(v||'').trim() !== ''))
+        .map(normalizeTask)
+        .filter(t => !deleted[taskIdKey(t.id)]);
+      // Merge by Task ID and keep the newest Updated Date if a device has unsynced local edits.
+      const byId = {};
+      [...loaded, ...tasks].forEach(t => {
+        const id = taskIdKey(t.id);
+        if(!id || deleted[id]) return;
+        const old = byId[id];
+        const tu = Date.parse(t.updatedAt || t.createdAt || 0) || 0;
+        const ou = old ? (Date.parse(old.updatedAt || old.createdAt || 0) || 0) : -1;
+        if(!old || tu >= ou) byId[id] = t;
+      });
+      tasks=Object.values(byId).sort((a,b)=>(Date.parse(b.updatedAt||b.createdAt||0)||0)-(Date.parse(a.updatedAt||a.createdAt||0)||0));
       if(Array.isArray(d.contacts)) contacts=d.contacts.filter(x => Object.values(x).some(v => String(v||'').trim() !== '')).map(normalizeContact);
       save(LS.tasks, tasks);
       save(LS.contacts, contacts);
-      const ids=[...tasks.map(t=>t.id), ...contacts.map(c=>c.id)].filter(Boolean);
+      const ids=[...tasks.map(t=>parseInt(t.id,10)), ...contacts.map(c=>parseInt(c.id,10))].filter(n=>!isNaN(n));
       nextId = ids.length ? Math.max(...ids)+1 : 1;
       // Load Personal Life data from Sheets
       if(Array.isArray(d.members) && d.members.length) {
@@ -3737,6 +3788,7 @@ function injectAppsScript() {
 const CONTACTS_SHEET = "Related Persons";
 const FAMILY_SHEET = "Family Members";
 const PERSONAL_TASKS_SHEET = "Personal Tasks";
+const DELETED_TASKS_SHEET = "Deleted Tasks";
 const TASK_HEADERS = [
   "Task ID","Task Name","Department","Category","Priority","Status","Due Date","Follow-up Date","Owner",
   "Related Person","Related Person Role","WhatsApp Number","WhatsApp Link","Email",
@@ -3752,6 +3804,7 @@ const FAMILY_HEADERS = [
 const PERSONAL_TASK_HEADERS = [
   "ID","Name","Person ID","Person Name","Priority","Status","Due Date","Message","Notes","Created Date","Updated Date"
 ];
+const DELETED_TASK_HEADERS = ["Task ID","Deleted Date"];
 
 function doGet(e) {
   const action = (e && e.parameter && e.parameter.action) || "";
@@ -3771,9 +3824,11 @@ function doPost(e) {
     else if (e && e.postData && e.postData.contents) raw = e.postData.contents;
     const body = JSON.parse(raw || "{}");
     if (body.action === "bulkSave") {
-      bulkSave(body.tasks || [], body.contacts || []);
+      bulkSave(body.tasks || [], body.contacts || [], body.deletedTasks || []);
     } else if (body.action === "saveTask") {
       saveTask(body.task || body);
+    } else if (body.action === "deleteTask") {
+      deleteTaskById(body.id || body["Task ID"] || "");
     } else if (body.action === "saveContact") {
       saveContact(body.contact || body);
     } else if (body.action === "saveFamilyMember") {
@@ -3804,6 +3859,7 @@ function setupSheets() {
   ensureHeaders(getSheet(CONTACTS_SHEET), CONTACT_HEADERS);
   ensureHeaders(getSheet(FAMILY_SHEET), FAMILY_HEADERS);
   ensureHeaders(getSheet(PERSONAL_TASKS_SHEET), PERSONAL_TASK_HEADERS);
+  ensureHeaders(getSheet(DELETED_TASKS_SHEET), DELETED_TASK_HEADERS);
 }
 
 function getPersonalLife() {
@@ -3885,7 +3941,7 @@ function sheetToObjects(sheetName, headers) {
   });
 }
 
-function getAll(){ return jsonOutput({success:true, tasks:sheetToObjects(TASKS_SHEET,TASK_HEADERS), contacts:sheetToObjects(CONTACTS_SHEET,CONTACT_HEADERS), members:sheetToObjects(FAMILY_SHEET,FAMILY_HEADERS), personalTasks:sheetToObjects(PERSONAL_TASKS_SHEET,PERSONAL_TASK_HEADERS)}); }
+function getAll(){ return jsonOutput({success:true, tasks:sheetToObjects(TASKS_SHEET,TASK_HEADERS), contacts:sheetToObjects(CONTACTS_SHEET,CONTACT_HEADERS), members:sheetToObjects(FAMILY_SHEET,FAMILY_HEADERS), personalTasks:sheetToObjects(PERSONAL_TASKS_SHEET,PERSONAL_TASK_HEADERS), deletedTasks:sheetToObjects(DELETED_TASKS_SHEET,DELETED_TASK_HEADERS)}); }
 function getTasks(){ return jsonOutput({success:true, tasks:sheetToObjects(TASKS_SHEET,TASK_HEADERS)}); }
 function getContacts(){ return jsonOutput({success:true, contacts:sheetToObjects(CONTACTS_SHEET,CONTACT_HEADERS)}); }
 
@@ -3942,6 +3998,29 @@ function contactVal(c, col) {
   return getVal(c,col,CONTACT_ALIASES);
 }
 
+
+function normalizeTaskId(id) {
+  const raw = String(id || '').trim();
+  const n = parseInt(raw.replace(/[^0-9]/g,''), 10);
+  return isNaN(n) ? raw : 'TASK-' + String(n).padStart(3,'0');
+}
+function deleteTaskById(id) {
+  const key = normalizeTaskId(id);
+  if (!key) return;
+  upsertById(DELETED_TASKS_SHEET, DELETED_TASK_HEADERS, [key, new Date().toISOString()], 0);
+  deleteById(TASKS_SHEET, key);
+}
+function isDeletedTaskId(id) {
+  const key = normalizeTaskId(id);
+  if (!key) return false;
+  const sheet = getSheet(DELETED_TASKS_SHEET);
+  ensureHeaders(sheet, DELETED_TASK_HEADERS);
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return false;
+  const ids = sheet.getRange(2, 1, lastRow-1, 1).getValues().map(r => String(r[0]||'').trim());
+  return ids.indexOf(key) !== -1;
+}
+
 function deleteDuplicateRowsById(sheetName, headers, idCol) {
   const sheet = getSheet(sheetName);
   ensureHeaders(sheet, headers);
@@ -3977,10 +4056,11 @@ function upsertById(sheetName, headers, row, idCol) {
   }
 }
 
-function saveTask(task) { if (!task) return; upsertById(TASKS_SHEET, TASK_HEADERS, TASK_HEADERS.map(h=>taskVal(task,h)), 0); }
+function saveTask(task) { if (!task) return; const row=TASK_HEADERS.map(h=>taskVal(task,h)); if (isDeletedTaskId(row[0])) return; upsertById(TASKS_SHEET, TASK_HEADERS, row, 0); }
 function saveContact(contact) { if (!contact) return; upsertById(CONTACTS_SHEET, CONTACT_HEADERS, CONTACT_HEADERS.map(h=>contactVal(contact,h)), 0); }
-function bulkSave(tasks, contacts) {
+function bulkSave(tasks, contacts, deletedTasks) {
   setupSheets();
+  (deletedTasks || []).forEach(d => deleteTaskById(d.id || d["Task ID"] || d.taskId || ""));
   deleteDuplicateRowsById(TASKS_SHEET, TASK_HEADERS, 0);
   deleteDuplicateRowsById(CONTACTS_SHEET, CONTACT_HEADERS, 0);
   (tasks || []).forEach(saveTask);
