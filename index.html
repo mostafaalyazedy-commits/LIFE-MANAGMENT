@@ -787,6 +787,16 @@ body{
 }
 
 
+/* ── TASK DRAG & DROP ── */
+.task-row { position:relative; transition:opacity .15s, background .15s; }
+.task-row.task-dragging { opacity:.3; }
+.task-row.task-drag-over { border-top:2px solid var(--gold); }
+.task-drag-handle { width:18px; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; cursor:grab; padding:0 2px; flex-shrink:0; opacity:0; transition:opacity .15s; }
+.task-drag-handle:active { cursor:grabbing; }
+.task-drag-handle span { width:10px; height:2px; border-radius:1px; background:var(--b3); display:block; }
+.task-row:hover .task-drag-handle { opacity:1; }
+.task-drag-handle:hover span { background:var(--gold); }
+
 /* ── SNOOZE / DEFER BUTTON ── */
 .snooze-btn { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-radius:5px; font-size:10px; font-weight:600; border:1px solid var(--b2); background:var(--s3); color:var(--tm); cursor:pointer; transition:all .15s; white-space:nowrap; }
 .snooze-btn:hover { background:var(--amberd); color:var(--amber); border-color:var(--amber); }
@@ -2445,23 +2455,112 @@ function renderAlerts() {
 }
 
 // ════════════════════════════════════════
-// TODAY LIST
+// TODAY LIST + TASK DRAG ORDER
 // ════════════════════════════════════════
+const TODAY_ORDER_KEY = 'pl_today_order';
+let _taskDragSrc = null;
+let _taskDragGhost = null;
+
+function loadTodayOrder() {
+  try { return JSON.parse(localStorage.getItem(TODAY_ORDER_KEY) || '[]'); } catch(e) { return []; }
+}
+function saveTodayOrder(ids) { localStorage.setItem(TODAY_ORDER_KEY, JSON.stringify(ids)); }
+
 function renderTodayList() {
-  const el=document.getElementById('todayList'); if(!el) return;
-  const show=tasks.filter(t=>isTd(t)||isOv(t)).sort((a,b)=>{
-    const po={Critical:0,High:1,Medium:2,Low:3,Backlog:4};
-    return po[a.priority]-po[b.priority];
-  });
-  if(!show.length){el.innerHTML='<div style="padding:20px;text-align:center;color:var(--td);font-size:11px;">No tasks due today</div>';return;}
-  el.innerHTML=show.map(t=>taskRowHTML(t,true)).join('');
+  const el = document.getElementById('todayList'); if (!el) return;
+  let show = tasks.filter(t => isTd(t) || isOv(t));
+  if (!show.length) {
+    el.innerHTML = '<div style="padding:20px;text-align:center;color:var(--td);font-size:11px;">No tasks due today 🎉</div>';
+    return;
+  }
+  // Apply custom order if saved
+  const savedOrder = loadTodayOrder();
+  if (savedOrder.length) {
+    const ordered = [];
+    savedOrder.forEach(id => { const t = show.find(x => String(x.id) === String(id)); if (t) ordered.push(t); });
+    show.forEach(t => { if (!savedOrder.includes(String(t.id)) && !savedOrder.includes(t.id)) ordered.push(t); });
+    show = ordered;
+  } else {
+    const po = {Critical:0,High:1,Medium:2,Low:3,Backlog:4};
+    show.sort((a,b) => (po[a.priority]||3) - (po[b.priority]||3));
+  }
+  el.innerHTML = show.map(t => taskRowHTML(t, true)).join('');
+}
+
+function taskDragStart(e, taskId) {
+  e.preventDefault();
+  e.stopPropagation();
+  const container = document.getElementById('todayList');
+  const row = container.querySelector(`[data-taskid="${taskId}"]`);
+  if (!row) return;
+  _taskDragSrc = row;
+  const rect = row.getBoundingClientRect();
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  const offsetY = clientY - rect.top;
+
+  row.classList.add('task-dragging');
+
+  // Ghost
+  _taskDragGhost = document.createElement('div');
+  const t = tasks.find(x => x.id === taskId || String(x.id) === String(taskId));
+  _taskDragGhost.innerHTML = `<div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--gold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px;">📋 ${t ? t.name : ''}</div>`;
+  _taskDragGhost.style.cssText = `position:fixed;left:${rect.left+30}px;top:${rect.top}px;background:var(--s2);border:2px solid var(--gold);border-radius:8px;pointer-events:none;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.5);`;
+  document.body.appendChild(_taskDragGhost);
+
+  const onMove = (ev) => {
+    const cy = ev.touches ? ev.touches[0].clientY : ev.clientY;
+    _taskDragGhost.style.top = (cy - offsetY) + 'px';
+
+    const rows = [...container.querySelectorAll('.task-row:not(.task-dragging)')];
+    rows.forEach(r => r.classList.remove('task-drag-over'));
+    for (const r of rows) {
+      const rr = r.getBoundingClientRect();
+      if (cy < rr.top + rr.height / 2) { r.classList.add('task-drag-over'); break; }
+    }
+  };
+
+  const onUp = (ev) => {
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onUp);
+    document.removeEventListener('touchmove', onMove);
+    document.removeEventListener('touchend', onUp);
+
+    if (_taskDragGhost) { _taskDragGhost.remove(); _taskDragGhost = null; }
+    row.classList.remove('task-dragging');
+
+    const cy = ev.touches ? ev.changedTouches[0].clientY : ev.clientY;
+    const rows = [...container.querySelectorAll('.task-row:not(.task-dragging)')];
+    rows.forEach(r => r.classList.remove('task-drag-over'));
+
+    let insertBefore = null;
+    for (const r of rows) {
+      const rr = r.getBoundingClientRect();
+      if (cy < rr.top + rr.height / 2) { insertBefore = r; break; }
+    }
+
+    if (insertBefore) container.insertBefore(row, insertBefore);
+    else container.appendChild(row);
+
+    // Save new order
+    const newOrder = [...container.querySelectorAll('.task-row')].map(r => r.dataset.taskid).filter(Boolean);
+    saveTodayOrder(newOrder);
+    _taskDragSrc = null;
+  };
+
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onUp);
+  document.addEventListener('touchmove', onMove, { passive: false });
+  document.addEventListener('touchend', onUp);
 }
 
 function taskRowHTML(t, compact=false) {
   const ov=isOv(t), td2=isTd(t);
   const dueCls=ov?'ov':td2?'td':'';
   const dueLabel=ov?`${Math.round((new Date(today())-new Date(t.due))/86400000)}d late`:fmtDate(t.due);
-  return `<div class="task-row" onclick="openTaskPanel(${t.id})">
+  return `<div class="task-row" data-taskid="${t.id}" draggable="false" onclick="openTaskPanel(${t.id})">
+    <div class="task-drag-handle" onmousedown="taskDragStart(event,${t.id})" ontouchstart="taskDragStart(event,${t.id})" onclick="event.stopPropagation()" title="Drag to reorder">
+      <span></span><span></span><span></span>
+    </div>
     <div class="chk ${t.done?'done':''}" onclick="event.stopPropagation();toggleDone(${t.id})">${t.done?'✓':''}</div>
     <div class="task-body">
       <div class="task-name ${t.done?'done':''}">${t.name}</div>
