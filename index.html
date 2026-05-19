@@ -787,6 +787,26 @@ body{
 }
 
 
+/* ── SNOOZE / DEFER BUTTON ── */
+.snooze-btn { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-radius:5px; font-size:10px; font-weight:600; border:1px solid var(--b2); background:var(--s3); color:var(--tm); cursor:pointer; transition:all .15s; white-space:nowrap; }
+.snooze-btn:hover { background:var(--amberd); color:var(--amber); border-color:var(--amber); }
+.snooze-menu { position:absolute; right:0; top:100%; z-index:999; background:var(--s2); border:1px solid var(--b2); border-radius:var(--r); padding:4px; min-width:140px; box-shadow:0 8px 24px rgba(0,0,0,.4); }
+.snooze-menu-item { padding:7px 12px; font-size:11px; color:var(--tx); border-radius:5px; cursor:pointer; display:flex; align-items:center; gap:8px; }
+.snooze-menu-item:hover { background:var(--s3); color:var(--gold); }
+.task-row { position:relative; }
+
+/* ── DASHBOARD DRAG & DROP ── */
+.dash-section { position:relative; }
+.dash-drag-handle { position:absolute; top:10px; left:-18px; width:16px; height:32px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; cursor:grab; opacity:0; transition:opacity .2s; }
+.dash-drag-handle:active { cursor:grabbing; }
+.dash-drag-handle span { width:10px; height:2px; border-radius:1px; background:var(--b3); }
+.dash-section:hover .dash-drag-handle { opacity:1; }
+.dash-section.drag-over { outline:2px dashed var(--gold); border-radius:var(--r2); }
+.dash-section.dragging { opacity:.4; }
+#view-dashboard { position:relative; }
+.drag-mode-btn { font-size:10px; color:var(--td); background:none; border:1px solid var(--b2); border-radius:5px; padding:3px 8px; cursor:pointer; margin-left:8px; }
+.drag-mode-btn.active { color:var(--gold); border-color:var(--gold); background:var(--goldd); }
+
 /* ── TASK LINKS ── */
 .tl-section { margin-top:4px; }
 .tl-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
@@ -1012,100 +1032,102 @@ body{
     </div>
   </div>
 
-  <!-- Focus -->
-  <div class="focus au d2" id="focusPanel">
-    <span class="focus-ico">🎯</span>
-    <div style="flex:1;">
-      <div class="focus-l">Top Priority Right Now</div>
-      <div class="focus-t" id="focusTask">Loading top priority...</div>
-      <div class="focus-s" id="focusMeta">—</div>
-    </div>
-    <button class="btn btn-primary btn-sm" onclick="markFocusDone()">Mark Done</button>
+  <!-- Drag container header -->
+  <div style="display:flex;align-items:center;margin-bottom:4px;">
+    <span style="font-size:10px;color:var(--td);">Dashboard</span>
+    <button class="drag-mode-btn" id="dragModeBtn" onclick="toggleDragMode()" title="Reorder sections">⠿ Reorder</button>
   </div>
 
-  <!-- Tasks + Team -->
-  <div class="g21 au d3">
+  <div id="dashDragContainer" style="display:flex;flex-direction:column;gap:12px;">
 
-    <!-- Today Tasks -->
-    <div class="panel">
-      <div class="panel-h">
-        <div class="panel-t">Today's Tasks</div>
-        <div style="display:flex;gap:6px;">
-          <button class="btn btn-ghost btn-sm" onclick="openAddModal()">+ Add</button>
-          <button class="btn btn-ghost btn-sm" onclick="showView('tasks')">All →</button>
+    <!-- Focus -->
+    <div class="dash-section" data-sec="focus">
+      <div class="focus au d2" id="focusPanel">
+        <span class="focus-ico">🎯</span>
+        <div style="flex:1;">
+          <div class="focus-l">Top Priority Right Now</div>
+          <div class="focus-t" id="focusTask">Loading top priority...</div>
+          <div class="focus-s" id="focusMeta">—</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="markFocusDone()">Mark Done</button>
+      </div>
+    </div>
+
+    <!-- Tasks + Team -->
+    <div class="dash-section" data-sec="todayRow">
+      <div class="g21 au d3">
+        <!-- Today Tasks -->
+        <div class="panel">
+          <div class="panel-h">
+            <div class="panel-t">Today's Tasks</div>
+            <div style="display:flex;gap:6px;">
+              <button class="btn btn-ghost btn-sm" onclick="openAddModal()">+ Add</button>
+              <button class="btn btn-ghost btn-sm" onclick="showView('tasks')">All →</button>
+            </div>
+          </div>
+          <div class="panel-b0 panel-scroll" id="todayList">
+            <div style="padding:20px;text-align:center;color:var(--td);">Loading tasks...</div>
+          </div>
+        </div>
+        <!-- Right column -->
+        <div class="col">
+          <div class="panel">
+            <div class="panel-h">
+              <div class="panel-t">Team Follow-up</div>
+              <button class="btn btn-ghost btn-sm" onclick="showView('network')">All</button>
+            </div>
+            <div class="panel-b" id="teamFollowup">
+              <div style="color:var(--td);font-size:11px;">Add team contacts in Network tab</div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-h"><div class="panel-t">Week Progress</div></div>
+            <div class="panel-b" id="weekProgress">
+              <div style="color:var(--td);font-size:11px;">Loading...</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="panel-b0 panel-scroll" id="todayList">
-        <div style="padding:20px;text-align:center;color:var(--td);">Loading tasks...</div>
-      </div>
     </div>
 
-    <!-- Right column -->
-    <div class="col">
-
-      <!-- Team Follow-up -->
-      <div class="panel">
-        <div class="panel-h">
-          <div class="panel-t">Team Follow-up</div>
-          <button class="btn btn-ghost btn-sm" onclick="showView('network')">All</button>
+    <!-- Bottom Row -->
+    <div class="dash-section" data-sec="bottomRow">
+      <div class="g3 au d4">
+        <div class="panel">
+          <div class="panel-h">
+            <div class="panel-t">Daily Habits</div>
+            <button class="btn btn-ghost btn-sm" onclick="openHabitModal()">+ Habit</button>
+          </div>
+          <div class="panel-b" id="habitPanel">
+            <div style="color:var(--td);font-size:11px;">Add habits to track daily progress</div>
+          </div>
         </div>
-        <div class="panel-b" id="teamFollowup">
-          <div style="color:var(--td);font-size:11px;">Add team contacts in Network tab</div>
+        <div class="panel">
+          <div class="panel-h">
+            <div class="panel-t">Active Goals</div>
+            <button class="btn btn-ghost btn-sm" onclick="openGoalModal()">+ Goal</button>
+          </div>
+          <div class="panel-b" id="goalPanel">
+            <div style="color:var(--td);font-size:11px;">Add professional goals to track</div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-h">
+            <div class="panel-t">Reporting</div>
+            <span style="font-size:10px;color:var(--green);background:var(--greend);padding:2px 8px;border-radius:3px;">Dr. Kamal</span>
+          </div>
+          <div class="panel-b" id="reportPanel">
+            <div class="rm"><span class="rm-l">April Monthly Report</span><span class="rm-v" style="color:var(--rose);">Overdue</span></div>
+            <div class="rm"><span class="rm-l">Week 19 Summary</span><span class="rm-v" style="color:var(--green);">✓ Sent</span></div>
+            <div class="rm"><span class="rm-l">Campaign ROI Sheet</span><span class="rm-v" style="color:var(--amber);">Draft</span></div>
+            <div class="rm"><span class="rm-l">Ecom Performance</span><span class="rm-v" style="color:var(--tm);">May 22</span></div>
+            <div class="rm"><span class="rm-l">Google Maps Audit</span><span class="rm-v" style="color:var(--tm);">May 25</span></div>
+          </div>
         </div>
       </div>
-
-      <!-- Week Progress -->
-      <div class="panel">
-        <div class="panel-h"><div class="panel-t">Week Progress</div></div>
-        <div class="panel-b" id="weekProgress">
-          <div style="color:var(--td);font-size:11px;">Loading...</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- Bottom Row -->
-  <div class="g3 au d4">
-
-    <!-- Habits -->
-    <div class="panel">
-      <div class="panel-h">
-        <div class="panel-t">Daily Habits</div>
-        <button class="btn btn-ghost btn-sm" onclick="openHabitModal()">+ Habit</button>
-      </div>
-      <div class="panel-b" id="habitPanel">
-        <div style="color:var(--td);font-size:11px;">Add habits to track daily progress</div>
-      </div>
     </div>
 
-    <!-- Goals -->
-    <div class="panel">
-      <div class="panel-h">
-        <div class="panel-t">Active Goals</div>
-        <button class="btn btn-ghost btn-sm" onclick="openGoalModal()">+ Goal</button>
-      </div>
-      <div class="panel-b" id="goalPanel">
-        <div style="color:var(--td);font-size:11px;">Add professional goals to track</div>
-      </div>
-    </div>
-
-    <!-- Reporting -->
-    <div class="panel">
-      <div class="panel-h">
-        <div class="panel-t">Reporting</div>
-        <span style="font-size:10px;color:var(--green);background:var(--greend);padding:2px 8px;border-radius:3px;">Dr. Kamal</span>
-      </div>
-      <div class="panel-b" id="reportPanel">
-        <div class="rm"><span class="rm-l">April Monthly Report</span><span class="rm-v" style="color:var(--rose);">Overdue</span></div>
-        <div class="rm"><span class="rm-l">Week 19 Summary</span><span class="rm-v" style="color:var(--green);">✓ Sent</span></div>
-        <div class="rm"><span class="rm-l">Campaign ROI Sheet</span><span class="rm-v" style="color:var(--amber);">Draft</span></div>
-        <div class="rm"><span class="rm-l">Ecom Performance</span><span class="rm-v" style="color:var(--tm);">May 22</span></div>
-        <div class="rm"><span class="rm-l">Google Maps Audit</span><span class="rm-v" style="color:var(--tm);">May 25</span></div>
-      </div>
-    </div>
-
-  </div>
+  </div><!-- /dashDragContainer -->
 </div>
 
 <!-- ══════════════ ALL TASKS ══════════════ -->
@@ -2070,7 +2092,12 @@ function init() {
   setInterval(updateDate, 60000);
   setInterval(()=>{ if(sheetsUrl) loadFromSheets(false); }, 60000);
   injectAppsScript();
+  applyDashOrder();
+  initDashDrag();
+  initPersonalLife();
 }
+
+// Remove duplicate initPersonalLife from end if present
 
 // ════════════════════════════════════════
 // HELPERS
@@ -2130,6 +2157,137 @@ function updateDate() {
   const el3=document.getElementById('wkNum'); if(el3) el3.textContent=getWeekNum();
   const el4=document.getElementById('wkRange');
   if(el4) el4.textContent=`${fmtDate(thisWeekStart())} – ${fmtDate(thisWeekEnd())}, 2026`;
+}
+
+// ════════════════════════════════════════
+// DEFER / SNOOZE
+// ════════════════════════════════════════
+function toggleSnoozeMenu(id, btn) {
+  const menu = document.getElementById('snooze-menu-' + id);
+  if (!menu) return;
+  const isOpen = menu.style.display !== 'none';
+  // Close all menus first
+  document.querySelectorAll('.snooze-menu').forEach(m => m.style.display = 'none');
+  if (!isOpen) {
+    menu.style.display = '';
+    // Close on outside click
+    setTimeout(() => {
+      const handler = (e) => {
+        if (!menu.contains(e.target) && e.target !== btn) {
+          menu.style.display = 'none';
+          document.removeEventListener('click', handler);
+        }
+      };
+      document.addEventListener('click', handler);
+    }, 10);
+  }
+}
+
+function deferTask(id, days) {
+  const t = tasks.find(x => x.id === id); if (!t) return;
+  const base = (t.due && t.due >= today()) ? t.due : today();
+  const d = new Date(base + 'T00:00:00');
+  d.setDate(d.getDate() + days);
+  const newDue = d.toISOString().split('T')[0];
+  t.due = newDue;
+  t.followUp = newDue;
+  t.updatedAt = new Date().toISOString();
+  // Close menu
+  const menu = document.getElementById('snooze-menu-' + id);
+  if (menu) menu.style.display = 'none';
+  save(LS.tasks, tasks);
+  pushTask(t);
+  renderAll();
+  const label = days === 1 ? 'Tomorrow' : days === 7 ? 'Next week' : `In ${days} days`;
+  toast(`Deferred → ${label} (${newDue}) ⏭`, '📅');
+}
+
+function deferTaskCustom(id) {
+  const t = tasks.find(x => x.id === id); if (!t) return;
+  const menu = document.getElementById('snooze-menu-' + id);
+  if (menu) menu.style.display = 'none';
+  const picked = prompt('Enter new due date (YYYY-MM-DD):', t.due || today());
+  if (!picked || !/^\d{4}-\d{2}-\d{2}$/.test(picked)) return;
+  t.due = picked; t.followUp = picked;
+  t.updatedAt = new Date().toISOString();
+  save(LS.tasks, tasks); pushTask(t); renderAll();
+  toast(`Deferred → ${picked} ✓`, '📅');
+}
+
+// ════════════════════════════════════════
+// DASHBOARD DRAG & DROP ORDER
+// ════════════════════════════════════════
+const DASH_ORDER_KEY = 'pl_dash_order';
+const DASH_SECTIONS_DEFAULT = ['focus','todayRow','bottomRow'];
+
+function loadDashOrder() {
+  try { return JSON.parse(localStorage.getItem(DASH_ORDER_KEY) || 'null') || DASH_SECTIONS_DEFAULT; }
+  catch(e) { return DASH_SECTIONS_DEFAULT; }
+}
+function saveDashOrder(order) { localStorage.setItem(DASH_ORDER_KEY, JSON.stringify(order)); }
+
+let _dragSrc = null;
+function initDashDrag() {
+  const container = document.getElementById('dashDragContainer');
+  if (!container) return;
+  const sections = container.querySelectorAll('.dash-section');
+  sections.forEach(sec => {
+    sec.setAttribute('draggable', 'true');
+    sec.addEventListener('dragstart', e => {
+      _dragSrc = sec;
+      sec.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    sec.addEventListener('dragend', () => {
+      sec.classList.remove('dragging');
+      container.querySelectorAll('.dash-section').forEach(s => s.classList.remove('drag-over'));
+      // Save new order
+      const newOrder = [...container.querySelectorAll('.dash-section')].map(s => s.dataset.sec);
+      saveDashOrder(newOrder);
+    });
+    sec.addEventListener('dragover', e => {
+      e.preventDefault();
+      if (sec !== _dragSrc) sec.classList.add('drag-over');
+    });
+    sec.addEventListener('dragleave', () => sec.classList.remove('drag-over'));
+    sec.addEventListener('drop', e => {
+      e.preventDefault();
+      sec.classList.remove('drag-over');
+      if (_dragSrc && _dragSrc !== sec) {
+        const allSecs = [...container.querySelectorAll('.dash-section')];
+        const srcIdx = allSecs.indexOf(_dragSrc);
+        const dstIdx = allSecs.indexOf(sec);
+        if (srcIdx < dstIdx) sec.after(_dragSrc);
+        else sec.before(_dragSrc);
+      }
+    });
+  });
+}
+
+function applyDashOrder() {
+  const container = document.getElementById('dashDragContainer');
+  if (!container) return;
+  const order = loadDashOrder();
+  order.forEach(secId => {
+    const el = container.querySelector(`.dash-section[data-sec="${secId}"]`);
+    if (el) container.appendChild(el);
+  });
+}
+
+function toggleDragMode() {
+  const btn = document.getElementById('dragModeBtn');
+  const container = document.getElementById('dashDragContainer');
+  if (!btn || !container) return;
+  const isActive = btn.classList.toggle('active');
+  btn.textContent = isActive ? '✓ Done' : '⠿ Reorder';
+  container.querySelectorAll('.dash-drag-handle').forEach(h => {
+    h.style.display = isActive ? 'flex' : 'none';
+  });
+  if (!isActive) {
+    const newOrder = [...container.querySelectorAll('.dash-section')].map(s => s.dataset.sec);
+    saveDashOrder(newOrder);
+    toast('Dashboard order saved ✓', '⠿');
+  }
 }
 
 // ════════════════════════════════════════
@@ -2268,7 +2426,19 @@ function taskRowHTML(t, compact=false) {
         ${t.recurring!=='None'?`<span class="rec">↻${t.recurring}</span>`:''}
       </div>
     </div>
-    <div class="task-due ${dueCls}">${dueLabel}</div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">
+      <div class="task-due ${dueCls}">${dueLabel}</div>
+      ${(!t.done)?`<div style="position:relative;display:inline-block;">
+        <button class="snooze-btn" onclick="event.stopPropagation();toggleSnoozeMenu(${t.id},this)" title="Defer task">⏭ Defer</button>
+        <div class="snooze-menu" id="snooze-menu-${t.id}" style="display:none;">
+          <div class="snooze-menu-item" onclick="event.stopPropagation();deferTask(${t.id},1)">📅 Tomorrow</div>
+          <div class="snooze-menu-item" onclick="event.stopPropagation();deferTask(${t.id},2)">⏩ In 2 days</div>
+          <div class="snooze-menu-item" onclick="event.stopPropagation();deferTask(${t.id},3)">📆 In 3 days</div>
+          <div class="snooze-menu-item" onclick="event.stopPropagation();deferTask(${t.id},7)">🗓 Next week</div>
+          <div class="snooze-menu-item" onclick="event.stopPropagation();deferTaskCustom(${t.id})">✏️ Pick date...</div>
+        </div>
+      </div>`:''}
+    </div>
   </div>`;
 }
 
@@ -4406,7 +4576,6 @@ function initPersonalLife() {
 // START
 // ════════════════════════════════════════
 init();
-initPersonalLife();
 </script>
 
 <!-- Task Link Modal -->
