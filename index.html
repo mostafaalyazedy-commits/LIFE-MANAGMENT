@@ -796,16 +796,24 @@ body{
 .task-row { position:relative; }
 
 /* ── DASHBOARD DRAG & DROP ── */
-.dash-section { position:relative; }
-.dash-drag-handle { position:absolute; top:10px; left:-18px; width:16px; height:32px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; cursor:grab; opacity:0; transition:opacity .2s; }
-.dash-drag-handle:active { cursor:grabbing; }
-.dash-drag-handle span { width:10px; height:2px; border-radius:1px; background:var(--b3); }
-.dash-section:hover .dash-drag-handle { opacity:1; }
-.dash-section.drag-over { outline:2px dashed var(--gold); border-radius:var(--r2); }
-.dash-section.dragging { opacity:.4; }
-#view-dashboard { position:relative; }
-.drag-mode-btn { font-size:10px; color:var(--td); background:none; border:1px solid var(--b2); border-radius:5px; padding:3px 8px; cursor:pointer; margin-left:8px; }
+.dash-section { position:relative; transition:transform .15s, opacity .15s; }
+.dash-section.drag-mode { cursor:grab; }
+.dash-section.drag-mode:active { cursor:grabbing; }
+.dash-section.drag-mode .panel,
+.dash-section.drag-mode .focus,
+.dash-section.drag-mode .g21,
+.dash-section.drag-mode .g3 { pointer-events:none; user-select:none; }
+.dash-section.dragging { opacity:.35; transform:scale(.98); }
+.dash-section.drag-over-top { border-top:3px solid var(--gold); padding-top:3px; }
+.dash-section.drag-over-bot { border-bottom:3px solid var(--gold); padding-bottom:3px; }
+.drag-mode-overlay { position:absolute; inset:0; z-index:10; border-radius:var(--r2); border:2px dashed transparent; transition:border-color .15s, background .15s; cursor:grab; display:none; align-items:center; justify-content:center; }
+.dash-section.drag-mode .drag-mode-overlay { display:flex; }
+.drag-mode-overlay:hover { border-color:var(--gold); background:rgba(201,169,110,.06); }
+.drag-handle-icon { font-size:22px; color:var(--gold); opacity:.7; pointer-events:none; }
+.drag-mode-btn { font-size:10px; color:var(--td); background:none; border:1px solid var(--b2); border-radius:5px; padding:4px 10px; cursor:pointer; margin-left:8px; transition:all .15s; }
 .drag-mode-btn.active { color:var(--gold); border-color:var(--gold); background:var(--goldd); }
+.dash-reorder-hint { font-size:10px; color:var(--gold); background:var(--goldd); border-radius:5px; padding:4px 10px; display:none; margin-left:8px; }
+.dash-reorder-hint.show { display:inline-block; }
 
 /* ── TASK LINKS ── */
 .tl-section { margin-top:4px; }
@@ -1033,15 +1041,16 @@ body{
   </div>
 
   <!-- Drag container header -->
-  <div style="display:flex;align-items:center;margin-bottom:4px;">
+  <div style="display:flex;align-items:center;margin-bottom:8px;">
     <span style="font-size:10px;color:var(--td);">Dashboard</span>
     <button class="drag-mode-btn" id="dragModeBtn" onclick="toggleDragMode()" title="Reorder sections">⠿ Reorder</button>
+    <span class="dash-reorder-hint" id="dashReorderHint">اسحب أي قسم لتغيير ترتيبه ← ثم اضغط ✓ Done</span>
   </div>
 
   <div id="dashDragContainer" style="display:flex;flex-direction:column;gap:12px;">
 
     <!-- Focus -->
-    <div class="dash-section" data-sec="focus">
+    <div class="dash-section" data-sec="focus"><div class="drag-mode-overlay" onmousedown="dashDragStart(event,this.parentElement)"><span class="drag-handle-icon">⠿</span></div>
       <div class="focus au d2" id="focusPanel">
         <span class="focus-ico">🎯</span>
         <div style="flex:1;">
@@ -1054,7 +1063,7 @@ body{
     </div>
 
     <!-- Tasks + Team -->
-    <div class="dash-section" data-sec="todayRow">
+    <div class="dash-section" data-sec="todayRow"><div class="drag-mode-overlay" onmousedown="dashDragStart(event,this.parentElement)"><span class="drag-handle-icon">⠿</span></div>
       <div class="g21 au d3">
         <!-- Today Tasks -->
         <div class="panel">
@@ -1091,7 +1100,7 @@ body{
     </div>
 
     <!-- Bottom Row -->
-    <div class="dash-section" data-sec="bottomRow">
+    <div class="dash-section" data-sec="bottomRow"><div class="drag-mode-overlay" onmousedown="dashDragStart(event,this.parentElement)"><span class="drag-handle-icon">⠿</span></div>
       <div class="g3 au d4">
         <div class="panel">
           <div class="panel-h">
@@ -2226,43 +2235,13 @@ function loadDashOrder() {
 }
 function saveDashOrder(order) { localStorage.setItem(DASH_ORDER_KEY, JSON.stringify(order)); }
 
+let _dashDragMode = false;
 let _dragSrc = null;
-function initDashDrag() {
-  const container = document.getElementById('dashDragContainer');
-  if (!container) return;
-  const sections = container.querySelectorAll('.dash-section');
-  sections.forEach(sec => {
-    sec.setAttribute('draggable', 'true');
-    sec.addEventListener('dragstart', e => {
-      _dragSrc = sec;
-      sec.classList.add('dragging');
-      e.dataTransfer.effectAllowed = 'move';
-    });
-    sec.addEventListener('dragend', () => {
-      sec.classList.remove('dragging');
-      container.querySelectorAll('.dash-section').forEach(s => s.classList.remove('drag-over'));
-      // Save new order
-      const newOrder = [...container.querySelectorAll('.dash-section')].map(s => s.dataset.sec);
-      saveDashOrder(newOrder);
-    });
-    sec.addEventListener('dragover', e => {
-      e.preventDefault();
-      if (sec !== _dragSrc) sec.classList.add('drag-over');
-    });
-    sec.addEventListener('dragleave', () => sec.classList.remove('drag-over'));
-    sec.addEventListener('drop', e => {
-      e.preventDefault();
-      sec.classList.remove('drag-over');
-      if (_dragSrc && _dragSrc !== sec) {
-        const allSecs = [...container.querySelectorAll('.dash-section')];
-        const srcIdx = allSecs.indexOf(_dragSrc);
-        const dstIdx = allSecs.indexOf(sec);
-        if (srcIdx < dstIdx) sec.after(_dragSrc);
-        else sec.before(_dragSrc);
-      }
-    });
-  });
-}
+let _dragGhost = null;
+let _dragStartY = 0;
+let _dragOffsetY = 0;
+
+function initDashDrag() { /* init is now mouse-event based, done inline */ }
 
 function applyDashOrder() {
   const container = document.getElementById('dashDragContainer');
@@ -2276,18 +2255,83 @@ function applyDashOrder() {
 
 function toggleDragMode() {
   const btn = document.getElementById('dragModeBtn');
+  const hint = document.getElementById('dashReorderHint');
   const container = document.getElementById('dashDragContainer');
   if (!btn || !container) return;
-  const isActive = btn.classList.toggle('active');
-  btn.textContent = isActive ? '✓ Done' : '⠿ Reorder';
-  container.querySelectorAll('.dash-drag-handle').forEach(h => {
-    h.style.display = isActive ? 'flex' : 'none';
+  _dashDragMode = !_dashDragMode;
+  btn.classList.toggle('active', _dashDragMode);
+  btn.textContent = _dashDragMode ? '✓ Done' : '⠿ Reorder';
+  if (hint) hint.classList.toggle('show', _dashDragMode);
+  container.querySelectorAll('.dash-section').forEach(sec => {
+    sec.classList.toggle('drag-mode', _dashDragMode);
   });
-  if (!isActive) {
+  if (!_dashDragMode) {
     const newOrder = [...container.querySelectorAll('.dash-section')].map(s => s.dataset.sec);
     saveDashOrder(newOrder);
     toast('Dashboard order saved ✓', '⠿');
   }
+}
+
+function dashDragStart(e, sec) {
+  if (!_dashDragMode) return;
+  e.preventDefault();
+  _dragSrc = sec;
+  _dragStartY = e.clientY;
+  const rect = sec.getBoundingClientRect();
+  _dragOffsetY = e.clientY - rect.top;
+
+  // Ghost
+  _dragGhost = sec.cloneNode(true);
+  _dragGhost.style.cssText = `position:fixed;left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;opacity:.7;z-index:9999;pointer-events:none;border-radius:12px;background:var(--s2);border:2px solid var(--gold);box-shadow:0 16px 40px rgba(0,0,0,.5);transition:none;`;
+  document.body.appendChild(_dragGhost);
+  sec.classList.add('dragging');
+
+  const onMove = (ev) => {
+    const cy = ev.touches ? ev.touches[0].clientY : ev.clientY;
+    _dragGhost.style.top = (cy - _dragOffsetY) + 'px';
+    // Find target
+    const container = document.getElementById('dashDragContainer');
+    const sections = [...container.querySelectorAll('.dash-section:not(.dragging)')];
+    sections.forEach(s => s.classList.remove('drag-over-top','drag-over-bot'));
+    let target = null;
+    let pos = 'after';
+    for (const s of sections) {
+      const r = s.getBoundingClientRect();
+      const mid = r.top + r.height/2;
+      if (cy < mid) { target = s; pos = 'before'; break; }
+      else { target = s; pos = 'after'; }
+    }
+    if (target) target.classList.add(pos === 'before' ? 'drag-over-top' : 'drag-over-bot');
+  };
+
+  const onUp = (ev) => {
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onUp);
+    document.removeEventListener('touchmove', onMove);
+    document.removeEventListener('touchend', onUp);
+    if (_dragGhost) { _dragGhost.remove(); _dragGhost = null; }
+    _dragSrc.classList.remove('dragging');
+    const cy = ev.touches ? ev.changedTouches[0].clientY : ev.clientY;
+    const container = document.getElementById('dashDragContainer');
+    const sections = [...container.querySelectorAll('.dash-section:not(.dragging)')];
+    sections.forEach(s => s.classList.remove('drag-over-top','drag-over-bot'));
+    let target = null; let pos = 'after';
+    for (const s of sections) {
+      const r = s.getBoundingClientRect();
+      if (cy < r.top + r.height/2) { target = s; pos = 'before'; break; }
+      else { target = s; pos = 'after'; }
+    }
+    if (target && target !== _dragSrc) {
+      if (pos === 'before') target.before(_dragSrc);
+      else target.after(_dragSrc);
+    }
+    _dragSrc = null;
+  };
+
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onUp);
+  document.addEventListener('touchmove', onMove, {passive:true});
+  document.addEventListener('touchend', onUp);
 }
 
 // ════════════════════════════════════════
